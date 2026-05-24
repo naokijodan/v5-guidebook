@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3つの翻訳パターンから選ぶ — 一括登録シート V5</title>
+<style>
+  :root {
+    --ink: #3a3245;
+    --ink-soft: #7b7387;
+    --cream: #fff9f0;
+    --card: #ffffff;
+    --peach: #ff8a65;
+    --mint: #2bd4a0;
+    --sky: #4fa8ff;
+    --grape: #9b6bff;
+    --sun: #ffc94d;
+    --pink: #ff6fa5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,201,77,0.18), transparent 28%),
+      radial-gradient(circle at 88% 14%, rgba(79,168,255,0.16), transparent 30%),
+      radial-gradient(circle at 70% 88%, rgba(255,111,165,0.14), transparent 32%),
+      var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Header ---------- */
+  header { padding: 76px 0 48px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+    color: #fff; padding: 8px 20px; border-radius: 999px; margin-bottom: 24px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.35);
+  }
+  h1 {
+    font-size: clamp(26px, 4.6vw, 42px); font-weight: 900; line-height: 1.35; margin-bottom: 22px;
+  }
+  h1 .hl {
+    background: linear-gradient(transparent 62%, rgba(255,201,77,0.65) 62%);
+    padding: 0 4px; border-radius: 4px;
+  }
+  .lead {
+    font-size: clamp(15px, 2.2vw, 17px); color: var(--ink-soft); max-width: 640px; margin: 0 auto;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 40px 0 56px; }
+  .section-head { text-align: center; margin-bottom: 38px; }
+  .section-head h2 { font-size: clamp(22px, 3.6vw, 30px); font-weight: 900; }
+  .section-head .emoji { font-size: 30px; display: block; margin-bottom: 6px; }
+  .section-head .sub { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ---------- Choice cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; align-items: stretch; }
+
+  /* card is a clickable link */
+  a.card {
+    position: relative; background: var(--card); border-radius: 26px; padding: 28px 22px 24px;
+    box-shadow: 0 14px 32px rgba(160,140,120,0.14);
+    border: 3px solid #fff;
+    display: flex; flex-direction: column;
+    text-decoration: none; color: inherit;
+    transition: transform .18s, box-shadow .18s;
+  }
+  a.card:hover { transform: translateY(-6px); box-shadow: 0 22px 42px rgba(160,140,120,0.22); }
+  a.card:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+  .card .emoji-top { font-size: 40px; text-align: center; margin-bottom: 8px; }
+  .card .badge { text-align: center; font-size: 12px; font-weight: 800; color: var(--ink-soft); letter-spacing: .1em; margin-bottom: 4px; }
+  .card h3 { text-align: center; font-size: 18px; font-weight: 900; margin-bottom: 18px; line-height: 1.45; }
+  .card .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; border-top: 2px dotted #efe6d8; font-size: 14px; }
+  .card .row .k { color: var(--ink-soft); font-weight: 700; white-space: nowrap; }
+  .card .row .v { text-align: right; font-weight: 700; }
+  .card .row .v small { color: var(--ink-soft); font-weight: 600; font-size: 11.5px; }
+
+  /* "こんな人に" block */
+  .card .who {
+    margin-top: 16px; font-size: 13px; color: var(--ink); line-height: 1.7; flex: 1;
+    background: var(--cream); border-radius: 16px; padding: 14px 15px;
+  }
+  .card .who .who-h { display: block; font-weight: 900; color: var(--ink-soft); font-size: 12px; letter-spacing: .04em; margin-bottom: 8px; }
+  .card .who ul { list-style: none; margin: 0; padding: 0; }
+  .card .who li { position: relative; padding-left: 22px; margin-bottom: 6px; }
+  .card .who li:last-child { margin-bottom: 0; }
+  .card .who li::before { content: "✔"; position: absolute; left: 0; top: 0; color: var(--mint); font-weight: 900; }
+
+  .card .note {
+    margin-top: 12px; font-size: 12.5px; color: #b07d00; line-height: 1.6;
+    background: rgba(255,201,77,0.18); border-radius: 14px; padding: 10px 13px;
+  }
+
+  /* in-card "詳しく見る" button (visual cue; whole card is the link) */
+  .card .go {
+    margin-top: 16px; text-align: center;
+    padding: 13px 16px; border-radius: 16px;
+    font-weight: 900; font-size: 15px; color: #fff;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 10px 22px rgba(79,168,255,0.28);
+    transition: transform .15s, box-shadow .15s;
+  }
+  a.card:hover .go { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(79,168,255,0.4); }
+
+  /* chips */
+  .chip { display: inline-block; font-size: 13px; padding: 3px 12px; border-radius: 999px; font-weight: 800; }
+  .chip.good { background: rgba(43,212,160,0.18); color: #169c74; }
+  .chip.mid { background: rgba(255,201,77,0.28); color: #b07d00; }
+  .chip.no { background: rgba(255,111,165,0.18); color: #d14a7d; }
+  .chip.yes { background: rgba(79,168,255,0.18); color: #2f7fd1; }
+
+  /* ---------- Featured card ---------- */
+  a.card.featured {
+    border: 3px solid var(--sun);
+    background: linear-gradient(180deg, #fffdf6, #fff);
+    box-shadow: 0 20px 44px rgba(255,170,60,0.30);
+    transform: scale(1.03) translateY(-6px);
+    z-index: 2;
+  }
+  a.card.featured:hover { transform: scale(1.03) translateY(-12px); box-shadow: 0 26px 52px rgba(255,170,60,0.38); }
+  a.card.featured .ribbon {
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    font-size: 13px; font-weight: 900; color: #fff; padding: 7px 20px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.45); white-space: nowrap;
+  }
+  a.card.featured .go { background: linear-gradient(90deg, var(--peach), var(--pink)); box-shadow: 0 10px 22px rgba(255,111,165,0.34); }
+  a.card.featured:hover .go { box-shadow: 0 14px 28px rgba(255,111,165,0.46); }
+
+  /* ---------- Next-step buttons ---------- */
+  .nextstep { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .big-btn {
+    flex: 1 1 300px; max-width: 380px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; text-align: center;
+    padding: 22px 24px; border-radius: 22px;
+    font-weight: 900; font-size: clamp(15px, 2.4vw, 18px); color: #fff;
+    box-shadow: 0 12px 26px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .big-btn .b-emoji { font-size: 24px; }
+  .big-btn.ghost {
+    background: #fff; color: var(--ink-soft);
+    box-shadow: 0 10px 22px rgba(160,140,120,0.14);
+    border: 2px solid rgba(0,0,0,0.05);
+  }
+  .big-btn.secondary { background: linear-gradient(90deg, var(--sky), var(--grape)); }
+  .big-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(79,168,255,0.42); }
+  .big-btn.ghost:hover { box-shadow: 0 16px 30px rgba(160,140,120,0.2); color: var(--ink); }
+
+  footer { padding: 50px 0 76px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .cards { grid-template-columns: 1fr; }
+    a.card.featured { transform: none; }
+    a.card.featured:hover { transform: translateY(-6px); }
+  }
+  @media (max-width: 600px) {
+    header { padding: 56px 0 40px; }
+    .nextstep { flex-direction: column; align-items: stretch; }
+    .big-btn { max-width: none; }
+  }
+
+  /* Respect reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    a.card, .big-btn, .card .go { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">🔀 一括登録シート V5</span>
+      <h1><span class="hl">3つの翻訳パターンから選ぶ</span> 🌍</h1>
+      <p class="lead">翻訳のやり方は3つ。コストの持ち方・手間・精度が違います。あなたに合うものを選んでください😊</p>
+    </div>
+  </header>
+
+  <!-- ========== 3つの選択カード ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🤔</span>
+        <h2>どれにする？</h2>
+        <p class="sub">カードをタップすると、くわしい説明ページにすすみます👇</p>
+      </div>
+
+      <div class="cards">
+
+        <!-- Pattern 1 -->
+        <a class="card" href="torikomikun.html">
+          <div class="emoji-top" aria-hidden="true">🛒</div>
+          <div class="badge">PATTERN 01</div>
+          <h3>とりこみ君で翻訳</h3>
+          <div class="row"><span class="k">精度</span><span class="v"><span class="chip good">高い</span></span></div>
+          <div class="row"><span class="k">コスト</span><span class="v">1品 約5円</span></div>
+          <div class="row"><span class="k">管理</span><span class="v">外注さんがAPI管理<br><small>外注費に上乗せ</small></span></div>
+          <div class="who">
+            <span class="who-h">こんな人に</span>
+            <ul>
+              <li>作業を外注さんに任せたい</li>
+              <li>自分でAPIを管理したくない</li>
+              <li>商品ページから画像込みで手軽に取り込みたい</li>
+            </ul>
+          </div>
+          <span class="go">詳しく見る →</span>
+        </a>
+
+        <!-- Pattern 2 (featured / 一番おすすめ) -->
+        <a class="card featured" href="external-ai.html">
+          <span class="ribbon">👑 一番おすすめ</span>
+          <div class="emoji-top" aria-hidden="true">🤖</div>
+          <div class="badge">PATTERN 02</div>
+          <h3>外部AI（CLI・Codexアプリ）で翻訳</h3>
+          <div class="row"><span class="k">精度</span><span class="v"><span class="chip good">高い</span></span></div>
+          <div class="row"><span class="k">コスト</span><span class="v">サブスクの範囲内</span></div>
+          <div class="row"><span class="k">管理</span><span class="v">本人のサブスク</span></div>
+          <div class="who">
+            <span class="who-h">こんな人に</span>
+            <ul>
+              <li>すでにCLIやCodex/Claude等のサブスクを使っている</li>
+              <li>コストを気にせず使いたい</li>
+              <li>AIと相談しながら仕上げ・スキル編集をしたい</li>
+            </ul>
+          </div>
+          <div class="note">💡 導入の壁と時間はかかるが、いちばん融通が利く。</div>
+          <span class="go">詳しく見る →</span>
+        </a>
+
+        <!-- Pattern 3 -->
+        <a class="card" href="sheet-api.html">
+          <div class="emoji-top" aria-hidden="true">📊</div>
+          <div class="badge">PATTERN 03</div>
+          <h3>シート上でAPI翻訳</h3>
+          <div class="row"><span class="k">精度</span><span class="v"><span class="chip mid">まずまず</span></span></div>
+          <div class="row"><span class="k">コスト</span><span class="v">1品 約1〜2円<br><small>画像枚数で変動</small></span></div>
+          <div class="row"><span class="k">管理</span><span class="v">本人のAPI</span></div>
+          <div class="who">
+            <span class="who-h">こんな人に</span>
+            <ul>
+              <li>外部ツールを入れずシート内で完結させたい</li>
+              <li>自分でAPIを管理できる</li>
+              <li>文字数やプロンプトの調整を自分でやれる</li>
+            </ul>
+          </div>
+          <span class="go">詳しく見る →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ページ下部ナビ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🧭</span>
+        <h2>もどる</h2>
+      </div>
+      <div class="nextstep">
+        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">←</span>トップに戻る</a>
+        <a class="big-btn secondary" href="tags.html"><span class="b-emoji" aria-hidden="true">🏷️</span>タグ設定にもどる</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">一括登録シート V5 😊</div></footer>
+</body>
+</html>

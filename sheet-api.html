@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シート上でAPI翻訳（route②）— 一括登録シート V5</title>
+<style>
+  :root {
+    --ink: #3a3245;
+    --ink-soft: #7b7387;
+    --cream: #fff9f0;
+    --card: #ffffff;
+    --peach: #ff8a65;
+    --mint: #2bd4a0;
+    --sky: #4fa8ff;
+    --grape: #9b6bff;
+    --sun: #ffc94d;
+    --pink: #ff6fa5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,201,77,0.18), transparent 28%),
+      radial-gradient(circle at 88% 14%, rgba(79,168,255,0.16), transparent 30%),
+      radial-gradient(circle at 70% 88%, rgba(255,111,165,0.14), transparent 32%),
+      var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Header ---------- */
+  header { padding: 76px 0 48px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+    color: #fff; padding: 8px 20px; border-radius: 999px; margin-bottom: 18px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.35);
+  }
+  /* お安く crown-style badge */
+  .crown-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 900; letter-spacing: 0.02em;
+    color: #169c74; padding: 9px 22px; border-radius: 999px; margin-bottom: 24px;
+    background: linear-gradient(90deg, rgba(43,212,160,0.20), rgba(79,168,255,0.18));
+    box-shadow: 0 10px 24px rgba(43,212,160,0.30);
+    border: 2px solid #fff;
+    position: relative;
+  }
+  .crown-badge .cb-emoji { font-size: 19px; }
+  h1 {
+    font-size: clamp(25px, 4.4vw, 40px); font-weight: 900; line-height: 1.35; margin-bottom: 22px;
+  }
+  h1 .hl {
+    background: linear-gradient(transparent 62%, rgba(255,201,77,0.65) 62%);
+    padding: 0 4px; border-radius: 4px;
+  }
+  .lead {
+    font-size: clamp(15px, 2.2vw, 17px); color: var(--ink-soft); max-width: 700px; margin: 0 auto;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 36px 0 44px; }
+  .section-head { text-align: center; margin-bottom: 32px; }
+  .section-head h2 { font-size: clamp(21px, 3.4vw, 28px); font-weight: 900; }
+  .section-head .emoji { font-size: 30px; display: block; margin-bottom: 6px; }
+  .section-head .sub { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ---------- "こんな人に" intro card ---------- */
+  .intro {
+    background: var(--card); border-radius: 26px; padding: 24px 24px 22px;
+    box-shadow: 0 14px 32px rgba(160,140,120,0.14);
+    border: 3px solid #fff;
+    max-width: 720px; margin: 0 auto;
+  }
+  .intro.featured {
+    border: 3px solid var(--mint);
+    background: linear-gradient(180deg, #f6fffb, #fff);
+    box-shadow: 0 20px 44px rgba(43,212,160,0.20);
+  }
+  .intro .who-h { display: block; font-weight: 900; color: var(--ink-soft); font-size: 13px; letter-spacing: .04em; margin-bottom: 12px; }
+  .intro ul { list-style: none; margin: 0 0 16px; padding: 0; }
+  .intro li { position: relative; padding-left: 26px; margin-bottom: 9px; font-size: 14.5px; }
+  .intro li:last-child { margin-bottom: 0; }
+  .intro li::before { content: "✔"; position: absolute; left: 0; top: 0; color: var(--mint); font-weight: 900; }
+  .intro .cost-note {
+    margin-top: 4px; font-size: 13.5px; color: #169c74; line-height: 1.7;
+    background: rgba(43,212,160,0.16); border-radius: 14px; padding: 12px 15px;
+  }
+
+  /* ---------- Generic info cards ---------- */
+  .info-card {
+    background: var(--card); border-radius: 24px; padding: 24px 24px 22px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+    max-width: 760px; margin: 0 auto;
+  }
+  .info-card + .info-card { margin-top: 18px; }
+  .info-card .ic-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .info-card .ic-emoji {
+    flex: 0 0 46px; width: 46px; height: 46px; border-radius: 14px;
+    display: grid; place-items: center; font-size: 24px;
+    background: rgba(79,168,255,0.16);
+  }
+  .info-card .ic-emoji.peach { background: rgba(255,138,101,0.18); }
+  .info-card .ic-emoji.mint { background: rgba(43,212,160,0.18); }
+  .info-card .ic-emoji.grape { background: rgba(155,107,255,0.16); }
+  .info-card .ic-emoji.sun { background: rgba(255,201,77,0.24); }
+  .info-card .ic-title { font-size: 16px; font-weight: 900; line-height: 1.4; }
+  .info-card p { font-size: 14px; line-height: 1.85; }
+  .info-card p + p { margin-top: 10px; }
+  .info-card .ic-list { list-style: none; margin: 0; padding: 0; }
+  .info-card .ic-list li { position: relative; padding-left: 24px; margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
+  .info-card .ic-list li:last-child { margin-bottom: 0; }
+  .info-card .ic-list li::before { content: "•"; position: absolute; left: 4px; top: -1px; color: var(--peach); font-weight: 900; font-size: 18px; }
+
+  /* inline UI label chips */
+  .ui {
+    display: inline-block; font-size: 12.5px; font-weight: 800;
+    background: rgba(79,168,255,0.14); color: #2f7fd1;
+    padding: 1px 9px; border-radius: 8px; white-space: nowrap;
+    line-height: 1.7;
+  }
+  .ui.set { background: rgba(155,107,255,0.14); color: #7a4fd1; }
+  .ui.path { background: rgba(58,50,69,0.06); color: var(--ink-soft); font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; white-space: normal; }
+  .ui.tool { background: rgba(43,212,160,0.16); color: #169c74; }
+  .pick { font-weight: 800; color: var(--mint); }
+  .tag-rec {
+    display: inline-block; font-size: 11px; font-weight: 800; color: #169c74;
+    background: rgba(43,212,160,0.18); padding: 1px 8px; border-radius: 999px; margin-left: 4px;
+  }
+  .tag-def {
+    display: inline-block; font-size: 11px; font-weight: 800; color: #b07d00;
+    background: rgba(255,201,77,0.24); padding: 1px 8px; border-radius: 999px; margin-left: 4px;
+  }
+
+  /* ---------- Numbered steps ---------- */
+  .steps { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+  .step {
+    position: relative; background: var(--card); border-radius: 22px;
+    padding: 22px 22px 20px 70px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+  }
+  .step .num {
+    position: absolute; left: 18px; top: 20px;
+    width: 38px; height: 38px; border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 18px; font-weight: 900; color: #fff;
+    background: linear-gradient(135deg, var(--sky), var(--grape));
+    box-shadow: 0 8px 16px rgba(79,168,255,0.30);
+  }
+  .step.s2 .num { background: linear-gradient(135deg, var(--mint), var(--sky)); box-shadow: 0 8px 16px rgba(43,212,160,0.28); }
+  .step.s3 .num { background: linear-gradient(135deg, var(--sun), var(--peach)); box-shadow: 0 8px 16px rgba(255,170,60,0.30); }
+  .step.s4 .num { background: linear-gradient(135deg, var(--peach), var(--pink)); box-shadow: 0 8px 16px rgba(255,111,165,0.30); }
+  .step.s5 .num { background: linear-gradient(135deg, var(--grape), var(--pink)); box-shadow: 0 8px 16px rgba(155,107,255,0.30); }
+  .step.s6 .num { background: linear-gradient(135deg, var(--sky), var(--mint)); box-shadow: 0 8px 16px rgba(79,168,255,0.28); }
+  .step.s7 .num { background: linear-gradient(135deg, var(--sun), var(--mint)); box-shadow: 0 8px 16px rgba(255,201,77,0.30); }
+  .step.s8 .num { background: linear-gradient(135deg, var(--mint), var(--grape)); box-shadow: 0 8px 16px rgba(43,212,160,0.28); }
+  /* インストール/ガイド用ボタン（ステップ内） */
+  .step .install-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 10px 0 2px; text-decoration: none;
+    font-weight: 900; font-size: 14px; color: #fff;
+    padding: 11px 20px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 8px 18px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .step .install-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(79,168,255,0.42); }
+  .step .st-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; line-height: 1.5; }
+  .step p { font-size: 14px; line-height: 1.85; }
+  .step p + p { margin-top: 8px; }
+  .step .st-sub {
+    margin-top: 12px; background: var(--cream); border-radius: 14px;
+    padding: 12px 15px; border: 1px dashed rgba(255,138,101,0.4);
+    font-size: 13.5px; line-height: 1.8;
+  }
+  .step .st-sub ul { list-style: none; margin: 6px 0 0; padding: 0; }
+  .step .st-sub li { position: relative; padding-left: 20px; margin-bottom: 8px; }
+  .step .st-sub li:last-child { margin-bottom: 0; }
+  .step .st-sub li::before { content: "›"; position: absolute; left: 4px; top: -1px; color: var(--peach); font-weight: 900; }
+  .step .st-sub .opt-h { font-weight: 900; color: var(--ink-soft); font-size: 12.5px; display: block; margin-bottom: 2px; }
+  .step .shot-slot {
+    margin-top: 12px; border: 2px dashed rgba(79,168,255,0.28); border-radius: 14px;
+    padding: 14px 12px; text-align: center; font-size: 12px; color: var(--ink-soft);
+    background: rgba(79,168,255,0.05);
+  }
+
+  /* ---------- 強み cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; align-items: stretch; max-width: 760px; margin: 0 auto; }
+  .card {
+    position: relative; background: var(--card); border-radius: 24px; padding: 24px 20px 22px;
+    box-shadow: 0 14px 32px rgba(160,140,120,0.14);
+    border: 3px solid #fff;
+    display: flex; flex-direction: column;
+    transition: transform .18s;
+  }
+  .card:hover { transform: translateY(-5px); }
+  .card .emoji-top { font-size: 36px; text-align: center; margin-bottom: 10px; }
+  .card h3 { text-align: center; font-size: 15.5px; font-weight: 900; margin-bottom: 12px; line-height: 1.45; }
+  .card .body {
+    font-size: 13.5px; color: var(--ink); line-height: 1.8; flex: 1;
+    background: var(--cream); border-radius: 16px; padding: 14px 15px; text-align: left;
+  }
+
+  /* ---------- 注意 / 安心カード ---------- */
+  .warns { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+  .warn {
+    background: var(--card); border-radius: 22px; padding: 20px 22px 18px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border-left: 6px solid var(--sun);
+  }
+  .warn.safe { border-left-color: var(--mint); }
+  .warn .w-title { font-size: 15.5px; font-weight: 900; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .warn p { font-size: 14px; line-height: 1.8; }
+  .warn strong { color: #b07d00; }
+  .warn.safe strong { color: #169c74; }
+
+  /* ---------- Next-step buttons ---------- */
+  .nextstep { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .big-btn {
+    flex: 1 1 300px; max-width: 380px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; text-align: center;
+    padding: 22px 24px; border-radius: 22px;
+    font-weight: 900; font-size: clamp(15px, 2.4vw, 18px); color: #fff;
+    box-shadow: 0 12px 26px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .big-btn .b-emoji { font-size: 24px; }
+  .big-btn.ghost {
+    background: #fff; color: var(--ink-soft);
+    box-shadow: 0 10px 22px rgba(160,140,120,0.14);
+    border: 2px solid rgba(0,0,0,0.05);
+  }
+  .big-btn.secondary { background: linear-gradient(90deg, var(--sky), var(--grape)); }
+  .big-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(79,168,255,0.42); }
+  .big-btn.ghost:hover { box-shadow: 0 16px 30px rgba(160,140,120,0.2); color: var(--ink); }
+
+  footer { padding: 50px 0 76px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    header { padding: 56px 0 40px; }
+    section { padding: 30px 0 38px; }
+    .step { padding: 20px 18px 18px 18px; }
+    .step .num { position: static; margin-bottom: 12px; }
+    .info-card { padding: 20px 18px; }
+    .nextstep { flex-direction: column; align-items: stretch; }
+    .big-btn { max-width: none; }
+  }
+
+  /* Respect reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .card, .big-btn { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Lightbox: clickable shot-slot (additive) ---------- */
+  /* 既存の .shot-slot ルールはそのまま。クリック反応のみ追記する */
+  .step .shot-slot {
+    cursor: pointer;
+    transition: background .18s, box-shadow .18s, transform .18s, border-color .18s;
+  }
+  .step .shot-slot:hover {
+    background: rgba(79,168,255,0.12);
+    border-color: rgba(79,168,255,0.5);
+    box-shadow: 0 8px 20px rgba(79,168,255,0.22);
+    transform: translateY(-2px);
+  }
+  .step .shot-slot:focus-visible {
+    outline: 3px solid rgba(79,168,255,0.55);
+    outline-offset: 2px;
+  }
+  /* 拡大できることを示す小さなヒント（既存テキストと並存） */
+  .shot-slot .zoom-hint {
+    display: block; margin-top: 8px;
+    font-size: 11px; font-weight: 800; letter-spacing: .02em;
+    color: #2f7fd1;
+  }
+  /* 将来 img を入れた時に箱へ収まるサムネ表示 */
+  .shot-slot img {
+    display: block; max-width: 100%; height: auto;
+    margin: 0 auto; border-radius: 10px;
+  }
+  /* 画像割り当て済みスロット = 小さな「画像を見る」ボタン */
+  .step .shot-slot.has-img {
+    display: inline-flex; align-items: center; gap: 6px;
+    width: auto; margin: 0;
+    padding: 7px 15px; border-radius: 999px;
+    border: none; background: rgba(79,168,255,0.14);
+    color: #2f7fd1; font-size: 12.5px; font-weight: 800;
+    text-align: left;
+  }
+  .step .shot-slot.has-img:hover {
+    background: rgba(79,168,255,0.24);
+    transform: none; box-shadow: none;
+  }
+  /* 画像ボタンを横一列にまとめる */
+  .step .shot-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 10px;
+  }
+
+  /* ---------- Lightbox overlay ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+    background: rgba(40,32,50,0.72);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox .lb-content {
+    position: relative; max-width: 92vw; max-height: 88vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox .lb-content img {
+    display: block; max-width: 92vw; max-height: 88vh;
+    width: auto; height: auto;
+    border-radius: 16px; background: #fff;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  }
+  /* img が無い時のプレースホルダ枠 */
+  .lightbox .lb-placeholder {
+    display: grid; place-items: center; text-align: center;
+    width: min(560px, 86vw); min-height: min(340px, 60vh);
+    padding: 28px 24px;
+    font-size: clamp(15px, 2.4vw, 19px); font-weight: 800; line-height: 1.8;
+    color: var(--ink-soft);
+    background: var(--card);
+    border: 3px dashed rgba(79,168,255,0.45); border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .lightbox .lb-close {
+    position: absolute; top: -14px; right: -14px;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 24px; font-weight: 900; line-height: 1; color: #fff;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 20px rgba(255,111,165,0.5);
+  }
+  .lightbox .lb-close:hover { transform: scale(1.06); }
+  .lightbox .lb-close:focus-visible {
+    outline: 3px solid #fff; outline-offset: 2px;
+  }
+  @media (max-width: 600px) {
+    .lightbox .lb-close { top: -10px; right: -10px; width: 40px; height: 40px; font-size: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .step .shot-slot, .lightbox .lb-close { transition: none; }
+  }
+
+  /* ---------- Lightbox prev/next navigation ---------- */
+  .lightbox .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 28px; font-weight: 900; line-height: 1; color: var(--ink);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.32);
+    transition: transform .15s, background .15s, opacity .15s;
+  }
+  .lightbox .lb-prev { left: 10px; }
+  .lightbox .lb-next { right: 10px; }
+  .lightbox .lb-nav:hover:not(:disabled) { transform: translateY(-50%) scale(1.08); background: #fff; }
+  .lightbox .lb-nav:disabled { opacity: 0.3; cursor: default; }
+  .lightbox .lb-nav:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .lightbox .lb-counter {
+    position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+    padding: 5px 16px; border-radius: 999px;
+    background: rgba(40,32,50,0.78); color: #fff;
+    font-size: 13px; font-weight: 800; white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  }
+  @media (max-width: 600px) {
+    .lightbox .lb-nav { width: 40px; height: 40px; font-size: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox .lb-nav { transition: none; }
+  }
+</style>
+<link rel="stylesheet" href="videos/video-modal.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">📊 PATTERN 03 ・ 一括登録シート V5</span>
+      <h1>シート上でAPI翻訳<br><span class="hl">サイドパネルで進捗を見ながらバッチ翻訳</span> 📊</h1>
+      <p class="lead">スプレッドシート上でOpenAI APIを使って翻訳する方法です。サイドパネルで進捗を見ながら、200〜300行のまとまった件数も止まらずに翻訳できます😊</p>
+    </div>
+  </header>
+
+  <!-- ========== こんな人に ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🙋</span>
+        <h2>こんな人に</h2>
+      </div>
+      <div class="intro featured">
+        <span class="who-h">こんな方にぴったり</span>
+        <ul>
+          <li>外部ツールを入れずシート内で完結させたい</li>
+          <li>自分でOpenAI APIを管理できる</li>
+          <li>文字数やプロンプトの調整を自分でやれる</li>
+        </ul>
+        <div class="cost-note">💰 コストは<strong>1品 約1〜2円</strong>（画像枚数で変動）。APIは本人が管理します。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== この方法の仕組み ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🧠</span>
+        <h2>この方法の仕組み</h2>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji grape" aria-hidden="true">🔄</span>
+          <span class="ic-title">サイドパネルの「司令塔方式」で完走</span>
+        </div>
+        <p>シート上で<strong>OpenAI API</strong>を呼んで翻訳します。サイドパネルが少しずつ（数行ずつ）処理を繰り返す「<strong>司令塔方式</strong>」なので、GASの6分制限にかからず、大量の行も最後まで完走します。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 準備するもの ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🎒</span>
+        <h2>準備するもの</h2>
+        <p class="sub">はじめる前に、これを用意します👇</p>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji peach" aria-hidden="true">🔑</span>
+          <span class="ic-title">OpenAI APIキー</span>
+        </div>
+        <p><span class="ui path">platform.openai.com/api-keys</span> で取得します。</p>
+        <p>OpenAIダッシュボードで <span class="ui">Spending limits</span>（利用上限）の設定を<strong>推奨</strong>します。想定外の課金を防げます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 初期設定 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">⚙️</span>
+        <h2>初期設定</h2>
+        <p class="sub">最初に一度だけ。順番にすすめれば大丈夫です😊</p>
+      </div>
+
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/08_api_setup.mp4">▶ 動画で見る</button></div>
+
+      <div class="steps">
+
+        <div class="step s1">
+          <span class="num" aria-hidden="true">1</span>
+          <div class="st-title">API設定を開く</div>
+          <p>メニュー <span class="ui set">🌐 eBay 翻訳 (AI)</span> →　<span class="ui">🔑 API設定 (APIキー登録)</span> を開きます。</p>
+          <div class="st-sub">
+            📌 開くダイアログの名称は <span class="ui">⚙️ Gemini 翻訳ツール 設定</span> ですが、OpenAIの設定も<strong>ここで行います</strong>。名前に惑わされず進めてください。
+          </div>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-01.jpg" data-alt="メニュー「eBay 翻訳 (AI)→API設定 (APIキー登録)」を開く">📷 画像</div>
+          </div>
+        </div>
+
+        <div class="step s2">
+          <span class="num" aria-hidden="true">2</span>
+          <div class="st-title">APIキーとモデルを設定</div>
+          <p>基本は <span class="pick">OpenAI</span> でOKです。<span class="ui set">OpenAI 設定</span> の <span class="ui">OpenAI API キー</span> に <span class="ui path">sk-</span> から始まるキーを貼り付け、<span class="ui">OpenAI モデル</span> は <span class="ui">gpt-5.4-mini</span> を選びます（とりあえず mini でOK）。</p>
+          <div class="st-sub">
+            💡 <span class="ui">Gemini</span> のAPIキーを入れて試すこともできます。
+          </div>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-02.jpg" data-alt="OpenAI APIキーを貼り付け、モデルは gpt-5.4-mini を選ぶ（担当者名もここで設定できる）">📷 画像</div>
+          </div>
+        </div>
+
+        <div class="step s3">
+          <span class="num" aria-hidden="true">3</span>
+          <div class="st-title">担当者名（任意）</div>
+          <p><span class="ui set">共通設定</span> の <span class="ui">担当者名</span> を入れると、v5インポートの<strong>担当欄</strong>に入ります。空のままでもOKです。</p>
+        </div>
+
+        <div class="step s4">
+          <span class="num" aria-hidden="true">4</span>
+          <div class="st-title">タグの登録（必須）</div>
+          <p><span class="ui set">TagShipping</span> シートの<strong>A列</strong>に、扱うジャンルのタグを<strong>必ず</strong>登録しておきます。このタグはカテゴリーIDの<strong>候補絞り込み</strong>にも使われます。</p>
+        </div>
+
+        <div class="step s5">
+          <span class="num" aria-hidden="true">5</span>
+          <div class="st-title">翻訳プロンプトの編集（任意）</div>
+          <p>メニュー <span class="ui set">🌐 eBay 翻訳 (AI)</span> →　<span class="ui">🔑 翻訳プロンプト編集</span> から、専用シート <span class="ui set">翻訳プロンプト</span> の <span class="ui">A2</span> を編集できます。<strong>空にするとデフォルトに戻ります。</strong></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 基本の使い方 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🚀</span>
+        <h2>基本の使い方</h2>
+        <p class="sub">設定が終わったら、毎回の流れはこれだけ👇</p>
+      </div>
+
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/09_api_use.mp4">▶ 動画で見る</button></div>
+
+      <div class="steps">
+
+        <div class="step s1">
+          <span class="num" aria-hidden="true">1</span>
+          <div class="st-title">作業範囲を選んでサイドパネルを開く</div>
+          <p><span class="ui set">インポート用</span> シートで翻訳したい行を選び、メニュー <span class="ui set">🌐 eBay 翻訳 (AI)</span> →　<span class="ui">🔑 サイドパネルでバッチ翻訳</span> を開きます。</p>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-03.jpg" data-alt="作業範囲を選んで、メニューから「サイドパネルでバッチ翻訳」を開く">📷 画像</div>
+          </div>
+        </div>
+
+        <div class="step s2">
+          <span class="num" aria-hidden="true">2</span>
+          <div class="st-title">行を確認・チャンクサイズを決めて開始</div>
+          <p><span class="ui">📥 選択範囲を取り込む</span> で開始行・終了行を入れ、合っているか確認します。<span class="ui">チャンクサイズ（1回に処理する行数）</span> は <strong>15 推奨</strong>（上限15）。あとは <span class="ui">開始</span> を押すだけです。進捗バー・成功／失敗の件数が表示されます。</p>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-04.jpg" data-alt="開始行・終了行を確認し、チャンクサイズ15にして「開始」を押す">📷 画像</div>
+          </div>
+        </div>
+
+        <div class="step s3">
+          <span class="num" aria-hidden="true">3</span>
+          <div class="st-title">途中でやめる・再開する</div>
+          <p>途中でやめたいときは <span class="ui">キャンセル</span>。ブラウザを閉じても、またメニューから開けば<strong>続きから再開</strong>できます。</p>
+        </div>
+
+        <div class="step s4">
+          <span class="num" aria-hidden="true">4</span>
+          <div class="st-title">完了を確認する</div>
+          <p>完了すると <span class="ui">✅ 処理完了！</span> と表示され、結果は <span class="ui set">v5インポート</span> シートに<strong>追記</strong>されます（既存の行は上書きしません）。</p>
+        </div>
+
+        <div class="step s5">
+          <span class="num" aria-hidden="true">5</span>
+          <div class="st-title">カテゴリIDの空欄を最終調整</div>
+          <p>タグやカテゴリIDが出ていない行は、最終調整します。カテゴリIDが分からないときは、新しく作った <span class="ui set">ebayカテゴリー発見君</span> で日本語検索してIDをコピーし、<span class="ui">カテゴリーID</span> 列に貼り付けます。</p>
+          <a class="install-btn" href="https://chromewebstore.google.com/detail/ebay%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E7%99%BA%E8%A6%8B%E5%90%9B/odkfnbgokfieockaliialpdjpjalhfab" target="_blank" rel="noopener">🔎 ebayカテゴリー発見君を入れる →</a>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-05.jpg" data-alt="ebayカテゴリー発見君（Chromeウェブストア）">📷 ①発見君（ストア）</div>
+            <div class="shot-slot has-img" data-img="images/sa-06.jpg" data-alt="日本語で検索して、ぴったりのカテゴリIDをコピーする">📷 ②日本語検索→IDをコピー</div>
+          </div>
+        </div>
+
+        <div class="step s6">
+          <span class="num" aria-hidden="true">6</span>
+          <div class="st-title">仕入れ先コードをコピー</div>
+          <p>書込先 <span class="ui set">v5インポート</span> に入ったデータの <span class="ui">仕入れ先コード</span> の列だけをコピーします。</p>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-07.jpg" data-alt="v5インポートの仕入れ先コードの列だけをコピーする">📷 画像</div>
+          </div>
+        </div>
+
+        <div class="step s7">
+          <span class="num" aria-hidden="true">7</span>
+          <div class="st-title">作業シートに「値のみ貼り付け」→ label を埋める</div>
+          <p>作業シートに <span class="ui">値のみ貼り付け</span> します（そのまま貼ると条件付き書式が壊れるため）。そのあと左上の <span class="ui">翻訳orSKU</span> ボタンを押すと label が生成されます。</p>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/tk-16.jpg" data-alt="作業シートに「値のみ貼り付け」する（条件付き書式を消さないため）">📷 ①値のみ貼り付け</div>
+            <div class="shot-slot has-img" data-img="images/tk-17.jpg" data-alt="左上の「翻訳orSKU」ボタンを押して label を生成する">📷 ②翻訳orSKU</div>
+          </div>
+        </div>
+
+        <div class="step s8">
+          <span class="num" aria-hidden="true">8</span>
+          <div class="st-title">データをコピーして一括出品に貼り付け</div>
+          <p>v5出品用シートに生成されたデータを選択してコピーし、<span class="ui">一括出品（EAGLE）</span> に貼り付けて登録すれば完了です。</p>
+          <div class="shot-row">
+            <div class="shot-slot has-img" data-img="images/sa-08.jpg" data-alt="v5出品シートの生成データを選択してコピーする">📷 ①データを選択してコピー</div>
+            <div class="shot-slot has-img" data-img="images/sa-09.jpg" data-alt="一括出品（EAGLE）に貼り付けて登録する">📷 ②EAGLEに貼り付け</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== カテゴリIDも自動で判定 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🆔</span>
+        <h2>カテゴリIDも自動で判定</h2>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji mint" aria-hidden="true">🎯</span>
+          <span class="ic-title">翻訳と同時に最適なカテゴリーIDを選ぶ</span>
+        </div>
+        <p>翻訳と同時に、AIがeBay公式カテゴリーの候補から<strong>最適なIDを選び</strong>、システムが公式リストで照合してから記入します（許可タグをもとに候補を絞り込み）。</p>
+        <p>存在しない番号は<strong>記入されません</strong>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== このパターンの手間・注意 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">⚠️</span>
+        <h2>このパターンの手間・注意</h2>
+      </div>
+
+      <div class="warns">
+        <div class="warn">
+          <div class="w-title"><span aria-hidden="true">✏️</span>調整は自分で行う</div>
+          <p>文字数の微調整や、翻訳の癖を変えたいときの<strong>プロンプト編集</strong>は、自分で行う必要があります（精度はまずまず）。</p>
+        </div>
+
+        <div class="warn">
+          <div class="w-title"><span aria-hidden="true">🚫</span>処理中はシートを触らない</div>
+          <p>処理中は対象のシートを<strong>手で編集しないでください</strong>。途中の書き込みとぶつかる恐れがあります。</p>
+        </div>
+
+        <div class="warn">
+          <div class="w-title"><span aria-hidden="true">🔁</span>失敗行はやり直しボタンがない</div>
+          <p>失敗した行は<strong>件数で表示</strong>されます。失敗行だけをやり直すボタンはないので、その範囲を選び直して再度翻訳します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ページ下部ナビ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🧭</span>
+        <h2>もどる</h2>
+      </div>
+      <div class="nextstep">
+        <a class="big-btn secondary" href="patterns.html"><span class="b-emoji" aria-hidden="true">←</span>3つの翻訳パターンに戻る</a>
+        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">🏠</span>トップに戻る</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">一括登録シート V5 😊</div></footer>
+
+  <!-- ========== Lightbox overlay (試作) ========== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="スクリーンショット拡大表示" aria-hidden="true">
+    <div class="lb-content" id="lbContent">
+      <button type="button" class="lb-close" id="lbClose" aria-label="閉じる">×</button>
+      <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="前の画像">‹</button>
+      <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="次の画像">›</button>
+      <span class="lb-counter" id="lbCounter" aria-live="polite"></span>
+      <!-- 拡大コンテンツ（img もしくはプレースホルダ）はJSで差し込みます -->
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lbContent = document.getElementById('lbContent');
+    var lbClose = document.getElementById('lbClose');
+    var lbPrev = document.getElementById('lbPrev');
+    var lbNext = document.getElementById('lbNext');
+    var lbCounter = document.getElementById('lbCounter');
+    var lastFocused = null;
+
+    // 現在表示中のグループ（同じ shot-row 内のスロット）と位置
+    var currentGroup = [];
+    var currentIndex = 0;
+    var currentMedia = null;
+
+    function clearMedia() {
+      if (currentMedia && currentMedia.parentNode === lbContent) {
+        lbContent.removeChild(currentMedia);
+      }
+      currentMedia = null;
+    }
+
+    // 1つのスロットから拡大表示用の要素を作る
+    function buildMedia(slot) {
+      var dataImg = slot.getAttribute('data-img');
+      var srcImg = slot.querySelector('img');
+      if (dataImg) {
+        var bigD = document.createElement('img');
+        bigD.src = dataImg;
+        bigD.alt = slot.getAttribute('data-alt') || '';
+        return bigD;
+      }
+      if (srcImg) {
+        var big = document.createElement('img');
+        big.src = srcImg.getAttribute('src');
+        big.alt = srcImg.getAttribute('alt') || '';
+        return big;
+      }
+      var ph = document.createElement('div');
+      ph.className = 'lb-placeholder';
+      ph.textContent = '📷 ここにスクリーンショットが入ります（後で差し込み）';
+      return ph;
+    }
+
+    // 前へ／次へボタンとカウンターの表示を更新する
+    function updateNav() {
+      var multi = currentGroup.length > 1;
+      lbPrev.style.display = multi ? '' : 'none';
+      lbNext.style.display = multi ? '' : 'none';
+      if (multi) {
+        lbCounter.style.display = '';
+        lbCounter.textContent = (currentIndex + 1) + ' / ' + currentGroup.length;
+        lbPrev.disabled = (currentIndex === 0);
+        lbNext.disabled = (currentIndex === currentGroup.length - 1);
+      } else {
+        lbCounter.style.display = 'none';
+      }
+    }
+
+    function renderCurrent() {
+      clearMedia();
+      currentMedia = buildMedia(currentGroup[currentIndex]);
+      lbContent.appendChild(currentMedia);
+      updateNav();
+    }
+
+    function showAt(index) {
+      if (index < 0 || index >= currentGroup.length) return;
+      currentIndex = index;
+      renderCurrent();
+    }
+
+    function openLightbox(slot) {
+      var row = slot.closest ? slot.closest('.shot-row') : null;
+      if (row) {
+        currentGroup = Array.prototype.slice.call(row.querySelectorAll('.shot-slot'));
+      } else {
+        currentGroup = [slot];
+      }
+      currentIndex = currentGroup.indexOf(slot);
+      if (currentIndex < 0) currentIndex = 0;
+
+      renderCurrent();
+
+      lastFocused = document.activeElement;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      clearMedia();
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+      lastFocused = null;
+    }
+
+    // すべての .shot-slot をクリック可能にする
+    var slots = document.querySelectorAll('.shot-slot');
+    Array.prototype.forEach.call(slots, function (slot) {
+      slot.setAttribute('tabindex', '0');
+      slot.setAttribute('role', 'button');
+      slot.addEventListener('click', function () { openLightbox(slot); });
+      slot.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          openLightbox(slot);
+        }
+      });
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', function () { showAt(currentIndex - 1); });
+    lbNext.addEventListener('click', function () { showAt(currentIndex + 1); });
+
+    // 閉じる: 暗幕（背景）クリック。中央コンテンツのクリックでは閉じない
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // キーボード: Esc で閉じる、← → で前後の画像へ
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        showAt(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        showAt(currentIndex + 1);
+      }
+    });
+  })();
+  </script>
+<script src="videos/video-modal.js"></script>
+</body>
+</html>

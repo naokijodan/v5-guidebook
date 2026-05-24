@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一括登録シート V5 — eBay出品の「3つの翻訳パターン」</title>
+<style>
+  :root {
+    --ink: #3a3245;
+    --ink-soft: #7b7387;
+    --cream: #fff9f0;
+    --card: #ffffff;
+    --peach: #ff8a65;
+    --mint: #2bd4a0;
+    --sky: #4fa8ff;
+    --grape: #9b6bff;
+    --sun: #ffc94d;
+    --pink: #ff6fa5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,201,77,0.18), transparent 28%),
+      radial-gradient(circle at 88% 14%, rgba(79,168,255,0.16), transparent 30%),
+      radial-gradient(circle at 70% 88%, rgba(255,111,165,0.14), transparent 32%),
+      var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Header ---------- */
+  header { padding: 76px 0 56px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+    color: #fff; padding: 8px 20px; border-radius: 999px; margin-bottom: 24px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.35);
+  }
+  h1 {
+    font-size: clamp(26px, 4.6vw, 42px); font-weight: 900; line-height: 1.35; margin-bottom: 22px;
+  }
+  h1 .hl {
+    background: linear-gradient(transparent 62%, rgba(255,201,77,0.65) 62%);
+    padding: 0 4px; border-radius: 4px;
+  }
+  .lead {
+    font-size: clamp(15px, 2.2vw, 17px); color: var(--ink-soft); max-width: 640px; margin: 0 auto;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 56px 0; }
+  .section-head { text-align: center; margin-bottom: 38px; }
+  .section-head h2 { font-size: clamp(22px, 3.6vw, 30px); font-weight: 900; }
+  .section-head .emoji { font-size: 30px; display: block; margin-bottom: 6px; }
+  .section-head .sub { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ---------- Feature accordions ---------- */
+  .features { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; align-items: start; }
+  .feature {
+    background: var(--card); border-radius: 24px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+    overflow: hidden;
+    transition: box-shadow .18s, transform .18s;
+  }
+  .feature:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(160,140,120,0.18); }
+  .feature.open { box-shadow: 0 18px 38px rgba(160,140,120,0.20); }
+
+  .feature .acc-btn {
+    width: 100%; border: none; background: transparent; cursor: pointer;
+    text-align: left; font-family: inherit; color: inherit;
+    display: flex; gap: 15px; align-items: flex-start;
+    padding: 24px 22px;
+  }
+  .feature .ic {
+    flex: 0 0 56px; width: 56px; height: 56px; border-radius: 18px;
+    display: grid; place-items: center; font-size: 28px;
+  }
+  .feature:nth-child(1) .ic { background: rgba(255,201,77,0.22); }
+  .feature:nth-child(2) .ic { background: rgba(79,168,255,0.18); }
+  .feature:nth-child(3) .ic { background: rgba(43,212,160,0.18); }
+  .feature:nth-child(4) .ic { background: rgba(255,111,165,0.18); }
+  .feature:nth-child(5) .ic { background: rgba(155,107,255,0.18); }
+  .feature .acc-body-text { flex: 1; min-width: 0; }
+  .feature .ft-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; line-height: 1.5; }
+  .feature .ft-short { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+  .feature .acc-arrow {
+    flex: 0 0 28px; width: 28px; height: 28px; margin-top: 14px;
+    border-radius: 999px; background: rgba(0,0,0,0.04);
+    display: grid; place-items: center; color: var(--ink-soft);
+    font-size: 15px; font-weight: 900; transition: transform .25s, background .2s, color .2s;
+  }
+  .feature.open .acc-arrow { transform: rotate(180deg); background: rgba(255,138,101,0.2); color: var(--peach); }
+
+  .feature .acc-panel {
+    overflow: hidden; max-height: 0;
+    transition: max-height .3s ease;
+  }
+  .feature .acc-inner {
+    padding: 0 22px 24px 93px;
+    font-size: 14px; color: var(--ink); line-height: 1.85;
+  }
+  .feature .acc-inner .detail-box {
+    background: var(--cream); border-radius: 16px; padding: 14px 16px;
+    border: 1px dashed rgba(255,138,101,0.4);
+  }
+
+  /* ---------- Comparison cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; align-items: stretch; }
+  .card {
+    position: relative; background: var(--card); border-radius: 26px; padding: 28px 22px 24px;
+    box-shadow: 0 14px 32px rgba(160,140,120,0.14);
+    border: 3px solid #fff;
+    display: flex; flex-direction: column;
+    transition: transform .18s;
+  }
+  .card:hover { transform: translateY(-5px); }
+  .card .emoji-top { font-size: 40px; text-align: center; margin-bottom: 8px; }
+  .card .badge { text-align: center; font-size: 12px; font-weight: 800; color: var(--ink-soft); letter-spacing: .1em; margin-bottom: 4px; }
+  .card h3 { text-align: center; font-size: 18px; font-weight: 900; margin-bottom: 18px; }
+  .card .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; border-top: 2px dotted #efe6d8; font-size: 14px; }
+  .card .row .k { color: var(--ink-soft); font-weight: 700; white-space: nowrap; }
+  .card .row .v { text-align: right; font-weight: 700; }
+  .card .row .v small { color: var(--ink-soft); font-weight: 600; font-size: 11.5px; }
+  .card .feat {
+    margin-top: 16px; font-size: 13px; color: var(--ink-soft); line-height: 1.7; flex: 1;
+    background: var(--cream); border-radius: 16px; padding: 12px 14px;
+  }
+  .card .card-link {
+    margin-top: 14px; display: block; text-align: center; text-decoration: none;
+    font-weight: 900; font-size: 14px; color: #fff;
+    padding: 13px 16px; border-radius: 14px;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 8px 18px rgba(79,168,255,0.28);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .card .card-link:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(79,168,255,0.40); }
+  .card.featured .card-link {
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.34);
+  }
+  .card.featured .card-link:hover { box-shadow: 0 12px 24px rgba(255,111,165,0.46); }
+
+  .chip { display: inline-block; font-size: 13px; padding: 3px 12px; border-radius: 999px; font-weight: 800; }
+  .chip.good { background: rgba(43,212,160,0.18); color: #169c74; }
+  .chip.mid { background: rgba(255,201,77,0.28); color: #b07d00; }
+  .chip.no { background: rgba(255,111,165,0.18); color: #d14a7d; }
+  .chip.yes { background: rgba(79,168,255,0.18); color: #2f7fd1; }
+
+  /* ---------- Featured card ---------- */
+  .card.featured {
+    border: 3px solid var(--sun);
+    background: linear-gradient(180deg, #fffdf6, #fff);
+    box-shadow: 0 20px 44px rgba(255,170,60,0.30);
+    transform: scale(1.03) translateY(-6px);
+    z-index: 2;
+  }
+  .card.featured:hover { transform: scale(1.03) translateY(-10px); }
+  .card.featured .ribbon {
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    font-size: 13px; font-weight: 900; color: #fff; padding: 7px 20px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.45); white-space: nowrap;
+  }
+
+  /* ---------- Next-step buttons ---------- */
+  .nextstep { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .big-btn {
+    flex: 1 1 300px; max-width: 380px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; text-align: center;
+    padding: 22px 24px; border-radius: 22px;
+    font-weight: 900; font-size: clamp(15px, 2.4vw, 18px); color: #fff;
+    box-shadow: 0 12px 26px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .big-btn .b-emoji { font-size: 24px; }
+  .big-btn.primary { background: linear-gradient(90deg, var(--peach), var(--pink)); box-shadow: 0 12px 26px rgba(255,111,165,0.34); }
+  .big-btn.secondary { background: linear-gradient(90deg, var(--sky), var(--grape)); }
+  .big-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(79,168,255,0.42); }
+  .big-btn.primary:hover { box-shadow: 0 18px 34px rgba(255,111,165,0.46); }
+
+  footer { padding: 50px 0 76px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .cards { grid-template-columns: 1fr; }
+    .card.featured { transform: none; }
+    .card.featured:hover { transform: translateY(-5px); }
+  }
+  @media (max-width: 600px) {
+    .features { grid-template-columns: 1fr; }
+    header { padding: 56px 0 44px; }
+    .feature .acc-btn { padding: 20px 18px; gap: 13px; }
+    .feature .ic { flex-basis: 50px; width: 50px; height: 50px; font-size: 26px; border-radius: 16px; }
+    .feature .acc-inner { padding: 0 18px 22px 18px; }
+    .nextstep { flex-direction: column; align-items: stretch; }
+    .big-btn { max-width: none; }
+  }
+
+  /* ---------- Intro / CTA sheet ---------- */
+  .cta-wrap { text-align: center; margin-bottom: 34px; }
+  .cta-sheet {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    text-decoration: none; text-align: center;
+    padding: 24px 40px; border-radius: 24px;
+    font-weight: 900; font-size: clamp(16px, 2.8vw, 21px); color: #fff;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 16px 34px rgba(255,111,165,0.40);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .cta-sheet:hover { transform: translateY(-3px); box-shadow: 0 22px 44px rgba(255,111,165,0.52); }
+
+  /* ---------- 便利ツール案内（カテゴリ発見君） ---------- */
+  .tool-note {
+    text-align: center; margin-top: 22px;
+    font-size: 14px; color: var(--ink-soft); line-height: 1.9;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+    max-width: 640px; margin-left: auto; margin-right: auto;
+  }
+  .tool-note .tool-link {
+    display: inline-block; margin-top: 8px;
+    font-weight: 900; font-size: 14px; color: #fff; text-decoration: none;
+    padding: 10px 20px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 8px 18px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .tool-note .tool-link:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(79,168,255,0.42); }
+
+  .setup-steps {
+    list-style: none; counter-reset: step;
+    max-width: 720px; margin: 0 auto;
+    display: grid; gap: 14px;
+  }
+  .setup-steps li {
+    counter-increment: step;
+    position: relative;
+    background: var(--card); border-radius: 20px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+    padding: 18px 22px 18px 70px;
+    font-size: 14.5px; line-height: 1.8; color: var(--ink);
+  }
+  .setup-steps li::before {
+    content: counter(step);
+    position: absolute; left: 18px; top: 16px;
+    width: 38px; height: 38px; border-radius: 999px;
+    display: grid; place-items: center;
+    font-size: 17px; font-weight: 900; color: #fff;
+    background: linear-gradient(135deg, var(--sky), var(--grape));
+    box-shadow: 0 6px 14px rgba(79,168,255,0.32);
+  }
+  .setup-steps li a { color: var(--pink); font-weight: 800; text-decoration: none; border-bottom: 2px solid rgba(255,111,165,0.35); }
+  .setup-steps li a:hover { border-bottom-color: var(--pink); }
+
+  @media (max-width: 600px) {
+    .cta-sheet { padding: 20px 26px; width: 100%; }
+    .setup-steps li { padding: 16px 18px 16px 62px; }
+    .setup-steps li::before { left: 14px; width: 34px; height: 34px; font-size: 15px; }
+  }
+
+  /* Respect reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .feature .acc-panel, .feature .acc-arrow, .card, .feature, .diff, .big-btn, .cta-sheet { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+<link rel="stylesheet" href="videos/video-modal.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">✨ 一括登録シート V5</span>
+      <h1>一括登録シート V5<br><span class="hl">eBay出品の「3つの翻訳パターン」</span> 🌍</h1>
+      <p class="lead">V5では、商品ページの取り込みから英語の出品データ生成までを自動化。翻訳のやり方を、目的に合わせて3つから選べます😊</p>
+    </div>
+  </header>
+
+  <!-- ========== V5でできるようになったこと ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🎉</span>
+        <h2>V5でできるようになったこと</h2>
+        <p class="sub">カードをタップすると、くわしい説明がひらきます👇</p>
+      </div>
+
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/01_can.mp4">▶ 動画で見る</button></div>
+
+      <div class="features">
+
+        <!-- 1 -->
+        <div class="feature">
+          <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc1">
+            <span class="ic" aria-hidden="true">🏷️</span>
+            <span class="acc-body-text">
+              <span class="ft-title">タグの自動判定</span>
+              <span class="ft-short">商品のジャンル札をAIが自動で</span>
+            </span>
+            <span class="acc-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="acc-panel" id="acc1" role="region">
+            <div class="acc-inner">
+              <div class="detail-box">AIが、あなたが登録したタグ一覧の中から商品に合うものを自動で選んで付けます。タグ1つで送料・カテゴリー・翻訳・利益率などがその行に自動で当たり、計算作業がほぼゼロに。これまでカテゴリーや送料ごとに分けていたシートも、タグで1枚にまとめられます。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="feature">
+          <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc2">
+            <span class="ic" aria-hidden="true">🆔</span>
+            <span class="acc-body-text">
+              <span class="ft-title">カテゴリIDの自動判定</span>
+              <span class="ft-short">正しいeBayカテゴリーを自動選択</span>
+            </span>
+            <span class="acc-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="acc-panel" id="acc2" role="region">
+            <div class="acc-inner">
+              <div class="detail-box">AIがeBay公式カテゴリーの候補から最適なIDを選び、システムが公式リストで検証してから記入します。存在しない番号や、手数料の高い誤カテゴリーを防ぎます。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="feature">
+          <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc3">
+            <span class="ic" aria-hidden="true">📋</span>
+            <span class="acc-body-text">
+              <span class="ft-title">Item Specificsの自動出力</span>
+              <span class="ft-short">商品仕様の項目を自動で記入</span>
+            </span>
+            <span class="acc-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="acc-panel" id="acc3" role="region">
+            <div class="acc-inner">
+              <div class="detail-box">商品のジャンルに応じた必須項目（ブランド・型番など）を、AIが自動で埋めます。ジャンルごとに必要な項目セットが切り替わり、eBayの絞り込み検索にもヒット。露出（SEO）が増えます。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="feature">
+          <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc4">
+            <span class="ic" aria-hidden="true">🚫</span>
+            <span class="acc-body-text">
+              <span class="ft-title">参考eBay IDの作成が不要</span>
+              <span class="ft-short">面倒な下準備がいらなくなった</span>
+            </span>
+            <span class="acc-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="acc-panel" id="acc4" role="region">
+            <div class="acc-inner">
+              <div class="detail-box">カテゴリIDを直接指定できるようになったため、これまで必要だった「参考eBay ID」を事前に用意する手間がなくなりました。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="feature">
+          <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc5">
+            <span class="ic" aria-hidden="true">🖼️</span>
+            <span class="acc-body-text">
+              <span class="ft-title">画像もタイトル生成に使えて精度アップ（SEO）</span>
+              <span class="ft-short">画像から情報を読み取る</span>
+            </span>
+            <span class="acc-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="acc-panel" id="acc5" role="region">
+            <div class="acc-inner">
+              <div class="detail-box">商品画像をAIに渡せるようになり、テキストだけでは分からない情報（型番・トレカの番号など）も読み取って、より正確なタイトル・商品情報を生成。翻訳の精度が上がり、eBayの検索でも見つけてもらいやすくなります（SEO）。</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 一括シートV5を導入する ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🚀</span>
+        <h2>一括シートV5を導入する</h2>
+        <p class="sub">まずは配布用のシートを手に入れましょう。</p>
+      </div>
+
+      <div class="cta-wrap">
+        <a class="cta-sheet" href="setup.html">📊 一括シートV5導入はこちら →</a>
+      </div>
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/02_intro.mp4">▶ 動画で見る</button></div>
+      <div class="nextstep">
+        <a class="big-btn secondary" href="tags.html"><span class="b-emoji" aria-hidden="true">🏷️</span>タグ設定のしかたを見る</a>
+      </div>
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/03_tags.mp4">▶ 動画で見る</button></div>
+      <p class="tool-note">🔎 出品のとき、eBayのカテゴリIDを<strong>日本語で探せる</strong>無料の拡張機能「<strong>ebayカテゴリー発見君</strong>」も便利です。カテゴリIDが分からないときに、ぴったりのIDをすぐ見つけられます。<br><a class="tool-link" href="https://chromewebstore.google.com/detail/ebay%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E7%99%BA%E8%A6%8B%E5%90%9B/odkfnbgokfieockaliialpdjpjalhfab" target="_blank" rel="noopener">🔎 ebayカテゴリー発見君を入れる →</a></p>
+    </div>
+  </section>
+
+  <!-- ========== 3つの翻訳パターン ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🔀</span>
+        <h2>3つの翻訳パターン</h2>
+      </div>
+
+      <div class="cards">
+
+        <!-- Pattern 1 -->
+        <div class="card">
+          <div class="emoji-top" aria-hidden="true">🧩</div>
+          <div class="badge">PATTERN 01</div>
+          <h3>とりこみ君で翻訳</h3>
+          <div class="row"><span class="k">精度</span><span class="v"><span class="chip good">高い</span></span></div>
+          <div class="row"><span class="k">コスト</span><span class="v">1品 約5円</span></div>
+          <div class="row"><span class="k">管理</span><span class="v">外注さんがAPI管理<br><small>外注費に上乗せ</small></span></div>
+          <div class="row"><span class="k">出力をAIに口頭で修正</span><span class="v"><span class="chip yes">できる</span></span></div>
+          <div class="feat">🔌 Chrome拡張で商品ページから画像込みで取り込み＆翻訳。</div>
+          <a class="card-link" href="torikomikun.html">くわしく見る →</a>
+        </div>
+
+        <!-- Pattern 2 (featured) -->
+        <div class="card featured">
+          <span class="ribbon">👑 一番おすすめ</span>
+          <div class="emoji-top" aria-hidden="true">🤖</div>
+          <div class="badge">PATTERN 02</div>
+          <h3>外部AI(CLI・Codexアプリ)で翻訳</h3>
+          <div class="row"><span class="k">精度</span><span class="v"><span class="chip good">高い</span></span></div>
+          <div class="row"><span class="k">コスト</span><span class="v">サブスク範囲内</span></div>
+          <div class="row"><span class="k">管理</span><span class="v">本人のサブスク</span></div>
+          <div class="row"><span class="k">出力をAIに口頭で修正</span><span class="v"><span class="chip yes">できる</span><br><small>対話で修正・スキル編集も</small></span></div>
+          <div class="feat">💬 導入の壁と時間はかかるが融通が利く。</div>
+          <a class="card-link" href="external-ai.html">くわしく見る →</a>
+        </div>
+
+        <!-- Pattern 3 -->
+        <div class="card">
+          <div class="emoji-top" aria-hidden="true">📊</div>
+          <div class="badge">PATTERN 03</div>
+          <h3>シート上でAPI翻訳</h3>
+          <div class="row"><span class="k">精度</span><span class="v"><span class="chip mid">まずまず</span></span></div>
+          <div class="row"><span class="k">コスト</span><span class="v">1品 約1〜2円<br><small>画像枚数で変動</small></span></div>
+          <div class="row"><span class="k">管理</span><span class="v">本人のAPI</span></div>
+          <div class="row"><span class="k">出力をAIに口頭で修正</span><span class="v"><span class="chip no">できない</span><br><small>自分で編集</small></span></div>
+          <div class="feat">⏳ サイドパネルで進捗を見ながらバッチ翻訳。</div>
+          <a class="card-link" href="sheet-api.html">くわしく見る →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">一括登録シート V5 😊</div></footer>
+
+  <script>
+    // 各カードを独立に開閉するアコーディオン(最小限のJS)
+    (function () {
+      var buttons = document.querySelectorAll('.feature .acc-btn');
+      buttons.forEach(function (btn) {
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        var feature = btn.closest('.feature');
+        btn.addEventListener('click', function () {
+          var isOpen = btn.getAttribute('aria-expanded') === 'true';
+          if (isOpen) {
+            btn.setAttribute('aria-expanded', 'false');
+            feature.classList.remove('open');
+            panel.style.maxHeight = null;
+          } else {
+            btn.setAttribute('aria-expanded', 'true');
+            feature.classList.add('open');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          }
+        });
+      });
+      // 開いているパネルの高さをリサイズ時に追従(レスポンシブで折り返しが変わるため)
+      window.addEventListener('resize', function () {
+        document.querySelectorAll('.feature.open .acc-panel').forEach(function (panel) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        });
+      });
+    })();
+  </script>
+<script src="videos/video-modal.js"></script>
+</body>
+</html>

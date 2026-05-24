@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一括登録シート V5 — タグ設定コーナー</title>
+<style>
+  :root {
+    --ink: #3a3245;
+    --ink-soft: #7b7387;
+    --cream: #fff9f0;
+    --card: #ffffff;
+    --peach: #ff8a65;
+    --mint: #2bd4a0;
+    --sky: #4fa8ff;
+    --grape: #9b6bff;
+    --sun: #ffc94d;
+    --pink: #ff6fa5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,201,77,0.18), transparent 28%),
+      radial-gradient(circle at 88% 14%, rgba(79,168,255,0.16), transparent 30%),
+      radial-gradient(circle at 70% 88%, rgba(255,111,165,0.14), transparent 32%),
+      var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Top nav ---------- */
+  .topnav { padding: 22px 0 0; }
+  .topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .home-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    text-decoration: none; font-weight: 800; font-size: 14px; color: var(--ink-soft);
+    background: rgba(255,255,255,0.8); padding: 9px 16px; border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(160,140,120,0.12);
+    transition: transform .15s, box-shadow .15s, color .15s;
+  }
+  .home-link:hover { transform: translateY(-2px); color: var(--peach); box-shadow: 0 10px 20px rgba(160,140,120,0.18); }
+  .brand-tag {
+    font-size: 12.5px; font-weight: 800; color: #fff; padding: 7px 15px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 6px 14px rgba(79,168,255,0.30);
+  }
+
+  /* ---------- Header ---------- */
+  header { padding: 48px 0 50px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+    color: #fff; padding: 8px 20px; border-radius: 999px; margin-bottom: 24px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.35);
+  }
+  h1 {
+    font-size: clamp(25px, 4.4vw, 40px); font-weight: 900; line-height: 1.35; margin-bottom: 22px;
+  }
+  h1 .hl {
+    background: linear-gradient(transparent 62%, rgba(255,201,77,0.65) 62%);
+    padding: 0 4px; border-radius: 4px;
+  }
+  .lead {
+    font-size: clamp(15px, 2.2vw, 17px); color: var(--ink-soft); max-width: 660px; margin: 0 auto;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 48px 0; }
+  .section-head { text-align: center; margin-bottom: 34px; }
+  .section-head h2 { font-size: clamp(22px, 3.6vw, 30px); font-weight: 900; }
+  .section-head .emoji { font-size: 30px; display: block; margin-bottom: 6px; }
+  .section-head .sub { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ---------- Plain explain card ---------- */
+  .explain {
+    background: var(--card); border-radius: 26px; padding: 28px 26px;
+    box-shadow: 0 14px 32px rgba(160,140,120,0.13);
+    border: 3px solid #fff;
+    font-size: 15px; line-height: 1.95;
+  }
+  .explain p { margin-bottom: 12px; }
+  .explain p:last-child { margin-bottom: 0; }
+  .explain .ex-emoji { font-size: 34px; display: block; text-align: center; margin-bottom: 12px; }
+  .tagsample { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 18px 0 6px; }
+  .tagsample .t {
+    display: inline-block; font-size: 14px; font-weight: 800; padding: 8px 18px; border-radius: 999px;
+  }
+  .tagsample .t.a { background: rgba(255,201,77,0.28); color: #b07d00; }
+  .tagsample .t.b { background: rgba(79,168,255,0.18); color: #2f7fd1; }
+  .tagsample .t.c { background: rgba(255,111,165,0.18); color: #d14a7d; }
+
+  /* ---------- Feature grid (what happens) ---------- */
+  .features { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; align-items: stretch; }
+  .feature {
+    background: var(--card); border-radius: 24px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+    padding: 22px 22px;
+    display: flex; gap: 15px; align-items: flex-start;
+    transition: box-shadow .18s, transform .18s;
+  }
+  .feature:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(160,140,120,0.18); }
+  .feature .ic {
+    flex: 0 0 54px; width: 54px; height: 54px; border-radius: 18px;
+    display: grid; place-items: center; font-size: 27px;
+  }
+  .feature:nth-child(1) .ic { background: rgba(255,201,77,0.22); }
+  .feature:nth-child(2) .ic { background: rgba(79,168,255,0.18); }
+  .feature:nth-child(3) .ic { background: rgba(43,212,160,0.18); }
+  .feature:nth-child(4) .ic { background: rgba(255,111,165,0.18); }
+  .feature:nth-child(5) .ic { background: rgba(155,107,255,0.18); }
+  .feature .ft-body { flex: 1; min-width: 0; }
+  .feature .ft-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; line-height: 1.5; }
+  .feature .ft-short { font-size: 13.5px; color: var(--ink-soft); line-height: 1.7; }
+
+  /* ---------- Before / After ---------- */
+  .ba { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: stretch; }
+  .ba-card {
+    background: var(--card); border-radius: 26px; padding: 26px 22px;
+    box-shadow: 0 14px 32px rgba(160,140,120,0.14);
+    border: 3px solid #fff;
+    display: flex; flex-direction: column;
+  }
+  .ba-card .ba-emoji { font-size: 38px; text-align: center; margin-bottom: 8px; }
+  .ba-card .ba-badge { text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 6px; }
+  .ba-card h3 { text-align: center; font-size: 18px; font-weight: 900; margin-bottom: 16px; }
+  .ba-card p { font-size: 14px; line-height: 1.85; color: var(--ink); }
+  .ba-card.after { border: 3px solid var(--sun); background: linear-gradient(180deg, #fffdf6, #fff); box-shadow: 0 20px 44px rgba(255,170,60,0.26); }
+  .ba-arrow { align-self: center; font-size: 34px; color: var(--peach); font-weight: 900; }
+  .chip { display: inline-block; font-size: 12.5px; padding: 3px 12px; border-radius: 999px; font-weight: 800; margin-bottom: 10px; }
+  .chip.old { background: rgba(255,111,165,0.18); color: #d14a7d; }
+  .chip.new { background: rgba(43,212,160,0.18); color: #169c74; }
+
+  /* ---------- Steps ---------- */
+  .steps { display: grid; gap: 18px; }
+  .step {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--card); border-radius: 24px; padding: 24px 24px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .step:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(160,140,120,0.18); }
+  .step .num {
+    flex: 0 0 48px; width: 48px; height: 48px; border-radius: 16px;
+    display: grid; place-items: center; font-size: 22px; font-weight: 900; color: #fff;
+  }
+  .step:nth-child(1) .num { background: linear-gradient(135deg, var(--sun), var(--peach)); }
+  .step:nth-child(2) .num { background: linear-gradient(135deg, var(--sky), var(--grape)); }
+  .step .st-body { flex: 1; min-width: 0; }
+  .step .st-title { font-size: 16.5px; font-weight: 800; margin-bottom: 5px; line-height: 1.5; }
+  .step .st-text { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
+  .step .st-text strong { color: var(--ink); }
+
+  /* ---------- Caution cards ---------- */
+  .cautions { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .caution {
+    background: var(--card); border-radius: 24px; padding: 24px 20px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px dashed rgba(255,138,101,0.45);
+    text-align: center;
+  }
+  .caution .c-emoji { font-size: 32px; display: block; margin-bottom: 10px; }
+  .caution .c-title { font-size: 15px; font-weight: 800; margin-bottom: 6px; line-height: 1.5; }
+  .caution .c-text { font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; }
+
+  /* ---------- Clarify (悪い例 → 改善例) ---------- */
+  .clarify {
+    margin-top: 20px; background: var(--card); border-radius: 22px;
+    border: 2px solid rgba(0,0,0,0.04); box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    padding: 24px 22px;
+  }
+  .clarify .cl-head { font-size: 15.5px; font-weight: 900; color: var(--ink); margin-bottom: 16px; text-align: center; line-height: 1.6; }
+  .clarify .cl-row { display: flex; align-items: stretch; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .clarify .cl-bad, .clarify .cl-good {
+    flex: 1 1 240px; display: flex; flex-direction: column; gap: 6px;
+    padding: 12px 14px; border-radius: 14px;
+  }
+  .clarify .cl-bad { background: rgba(255,111,165,0.10); }
+  .clarify .cl-good { background: rgba(43,212,160,0.12); }
+  .clarify .cl-lbl { font-size: 11.5px; font-weight: 900; }
+  .clarify .cl-bad .cl-lbl { color: #d14a7d; }
+  .clarify .cl-good .cl-lbl { color: #169c74; }
+  .clarify .cl-tag { font-size: 14.5px; font-weight: 800; color: var(--ink); }
+  .clarify .cl-arrow { align-self: center; font-size: 22px; font-weight: 900; color: var(--peach); flex: 0 0 auto; }
+  .clarify .cl-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.85; margin-top: 4px; }
+  @media (max-width: 600px) {
+    .clarify .cl-arrow { transform: rotate(90deg); align-self: center; }
+  }
+
+  /* ---------- Next-step buttons ---------- */
+  .nextstep { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .big-btn {
+    flex: 1 1 300px; max-width: 380px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; text-align: center;
+    padding: 22px 24px; border-radius: 22px;
+    font-weight: 900; font-size: clamp(15px, 2.4vw, 18px); color: #fff;
+    box-shadow: 0 12px 26px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .big-btn .b-emoji { font-size: 24px; }
+  .big-btn.secondary { background: linear-gradient(90deg, var(--sky), var(--grape)); }
+  .big-btn.ghost {
+    background: #fff; color: var(--ink-soft);
+    box-shadow: 0 10px 22px rgba(160,140,120,0.14);
+    border: 2px solid rgba(0,0,0,0.05);
+  }
+  .big-btn.primary { background: linear-gradient(90deg, var(--peach), var(--pink)); box-shadow: 0 12px 26px rgba(255,111,165,0.34); }
+  .big-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(79,168,255,0.42); }
+  .big-btn.primary:hover { box-shadow: 0 18px 34px rgba(255,111,165,0.46); }
+  .big-btn.ghost:hover { box-shadow: 0 16px 30px rgba(160,140,120,0.2); color: var(--ink); }
+
+  footer { padding: 50px 0 76px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .cautions { grid-template-columns: 1fr; }
+    .ba { grid-template-columns: 1fr; }
+    .ba-arrow { transform: rotate(90deg); margin: -4px 0; }
+    .ba-card.after { box-shadow: 0 14px 32px rgba(255,170,60,0.22); }
+  }
+  @media (max-width: 600px) {
+    .features { grid-template-columns: 1fr; }
+    header { padding: 36px 0 40px; }
+    .feature { padding: 20px 18px; gap: 13px; }
+    .feature .ic { flex-basis: 50px; width: 50px; height: 50px; font-size: 25px; border-radius: 16px; }
+    .step { padding: 20px 18px; gap: 14px; }
+    .nextstep { flex-direction: column; align-items: stretch; }
+    .big-btn { max-width: none; }
+    .topnav .wrap { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+
+  /* Respect reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .feature, .step, .card, .big-btn, .home-link, .ba-card { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Screenshot slot (base box) ---------- */
+  .step .shot-slot {
+    margin-top: 12px; border: 2px dashed rgba(79,168,255,0.28); border-radius: 14px;
+    padding: 14px 12px; text-align: center; font-size: 12px; color: var(--ink-soft);
+    background: rgba(79,168,255,0.05);
+  }
+
+  /* ---------- Lightbox: clickable shot-slot (additive) ---------- */
+  /* 既存の .shot-slot ルールはそのまま。クリック反応のみ追記する */
+  .step .shot-slot {
+    cursor: pointer;
+    transition: background .18s, box-shadow .18s, transform .18s, border-color .18s;
+  }
+  .step .shot-slot:hover {
+    background: rgba(79,168,255,0.12);
+    border-color: rgba(79,168,255,0.5);
+    box-shadow: 0 8px 20px rgba(79,168,255,0.22);
+    transform: translateY(-2px);
+  }
+  .step .shot-slot:focus-visible {
+    outline: 3px solid rgba(79,168,255,0.55);
+    outline-offset: 2px;
+  }
+  /* 拡大できることを示す小さなヒント（既存テキストと並存） */
+  .shot-slot .zoom-hint {
+    display: block; margin-top: 8px;
+    font-size: 11px; font-weight: 800; letter-spacing: .02em;
+    color: #2f7fd1;
+  }
+  /* 将来 img を入れた時に箱へ収まるサムネ表示 */
+  .shot-slot img {
+    display: block; max-width: 100%; height: auto;
+    margin: 0 auto; border-radius: 10px;
+  }
+  /* 画像割り当て済みスロット = 小さな「画像を見る」ボタン */
+  .step .shot-slot.has-img {
+    display: inline-flex; align-items: center; gap: 6px;
+    width: auto; margin: 0;
+    padding: 7px 15px; border-radius: 999px;
+    border: none; background: rgba(79,168,255,0.14);
+    color: #2f7fd1; font-size: 12.5px; font-weight: 800;
+    text-align: left;
+  }
+  .step .shot-slot.has-img:hover {
+    background: rgba(79,168,255,0.24);
+    transform: none; box-shadow: none;
+  }
+  /* 画像ボタンを横一列にまとめる */
+  .step .shot-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 10px;
+  }
+
+  /* ---------- Settings bullet list (Step 2 内) ---------- */
+  .step .setlist { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .step .setlist li {
+    font-size: 13.5px; line-height: 1.7; color: var(--ink-soft);
+    padding-left: 18px; position: relative;
+  }
+  .step .setlist li::before {
+    content: "•"; position: absolute; left: 3px; top: 0;
+    color: var(--sky); font-weight: 900;
+  }
+  .step .setlist b { color: var(--ink); }
+  .step .setlist .must {
+    display: inline-block; font-size: 10.5px; font-weight: 900; color: #fff;
+    background: var(--peach); border-radius: 999px; padding: 1px 8px; margin: 0 2px;
+    vertical-align: middle;
+  }
+  .step .setlist .opt {
+    display: inline-block; font-size: 10.5px; font-weight: 900; color: var(--ink-soft);
+    background: rgba(0,0,0,0.06); border-radius: 999px; padding: 1px 8px; margin: 0 2px;
+    vertical-align: middle;
+  }
+  .step .st-note {
+    margin-top: 12px; font-size: 12.5px; line-height: 1.8;
+    color: var(--ink-soft); background: rgba(79,168,255,0.08);
+    border-radius: 12px; padding: 12px 14px;
+  }
+  .step .st-note b { color: var(--ink); }
+
+  /* ---------- Tag creation rule box (Step 1 内) ---------- */
+  .tagrule {
+    margin-top: 16px;
+    background: linear-gradient(180deg, #fff8ec, #fff);
+    border: 3px solid var(--sun); border-radius: 22px;
+    padding: 24px 22px; text-align: center;
+    box-shadow: 0 14px 34px rgba(255,170,60,0.22);
+  }
+  .tagrule .tr-eyebrow {
+    display: inline-block; font-size: 13px; font-weight: 900; color: #fff;
+    padding: 7px 18px; border-radius: 999px; margin-bottom: 14px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.30);
+  }
+  .tagrule h3 { font-size: clamp(16.5px, 2.6vw, 22px); font-weight: 900; line-height: 1.5; margin-bottom: 10px; color: var(--ink); }
+  .tagrule .g { color: #6f42d6; }
+  .tagrule .s { color: #2f7fd1; }
+  .tagrule .tr-lead { font-size: 14px; color: var(--ink-soft); line-height: 1.9; max-width: 600px; margin: 0 auto 16px; }
+  .tagrule .tr-lead .sp { font-weight: 900; color: var(--sky); }
+  .tagrule .tr-legend { font-size: 12.5px; font-weight: 800; color: var(--ink-soft); margin-bottom: 14px; }
+  .tagrule .tr-examples { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 640px; margin: 0 auto 16px; }
+  .tagrule .tr-ex {
+    font-size: 13.5px; font-weight: 800; color: var(--ink);
+    padding: 7px 14px; border-radius: 999px; white-space: nowrap;
+    background: rgba(255,201,77,0.18);
+  }
+  .tagrule .tr-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.9; }
+  .tagrule .tr-note .ok { color: #169c74; font-weight: 900; }
+  .tagrule .tr-note .ng { color: #d14a7d; font-weight: 900; }
+
+  /* ---------- Lightbox overlay ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+    background: rgba(40,32,50,0.72);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox .lb-content {
+    position: relative; max-width: 92vw; max-height: 88vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox .lb-content img {
+    display: block; max-width: 92vw; max-height: 88vh;
+    width: auto; height: auto;
+    border-radius: 16px; background: #fff;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  }
+  /* img が無い時のプレースホルダ枠 */
+  .lightbox .lb-placeholder {
+    display: grid; place-items: center; text-align: center;
+    width: min(560px, 86vw); min-height: min(340px, 60vh);
+    padding: 28px 24px;
+    font-size: clamp(15px, 2.4vw, 19px); font-weight: 800; line-height: 1.8;
+    color: var(--ink-soft);
+    background: var(--card);
+    border: 3px dashed rgba(79,168,255,0.45); border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .lightbox .lb-close {
+    position: absolute; top: -14px; right: -14px;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 24px; font-weight: 900; line-height: 1; color: #fff;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 20px rgba(255,111,165,0.5);
+  }
+  .lightbox .lb-close:hover { transform: scale(1.06); }
+  .lightbox .lb-close:focus-visible {
+    outline: 3px solid #fff; outline-offset: 2px;
+  }
+  @media (max-width: 600px) {
+    .lightbox .lb-close { top: -10px; right: -10px; width: 40px; height: 40px; font-size: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .step .shot-slot, .lightbox .lb-close { transition: none; }
+  }
+
+  /* ---------- Lightbox prev/next navigation ---------- */
+  .lightbox .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 28px; font-weight: 900; line-height: 1; color: var(--ink);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.32);
+    transition: transform .15s, background .15s, opacity .15s;
+  }
+  .lightbox .lb-prev { left: 10px; }
+  .lightbox .lb-next { right: 10px; }
+  .lightbox .lb-nav:hover:not(:disabled) { transform: translateY(-50%) scale(1.08); background: #fff; }
+  .lightbox .lb-nav:disabled { opacity: 0.3; cursor: default; }
+  .lightbox .lb-nav:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .lightbox .lb-counter {
+    position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+    padding: 5px 16px; border-radius: 999px;
+    background: rgba(40,32,50,0.78); color: #fff;
+    font-size: 13px; font-weight: 800; white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  }
+  @media (max-width: 600px) {
+    .lightbox .lb-nav { width: 40px; height: 40px; font-size: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox .lb-nav { transition: none; }
+  }
+</style>
+<link rel="stylesheet" href="videos/video-modal.css">
+</head>
+<body>
+  <!-- ========== Top nav ========== -->
+  <nav class="topnav">
+    <div class="wrap">
+      <a class="home-link" href="index.html"><span aria-hidden="true">🏠</span>トップに戻る</a>
+      <span class="brand-tag">一括登録シート V5</span>
+    </div>
+  </nav>
+
+  <!-- ========== Header ========== -->
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">🏷️ タグ設定コーナー</span>
+      <h1>タグ設定<br><span class="hl">シート1枚で、違うジャンルをまとめて管理</span> 🗂️</h1>
+      <p class="lead">V5の大きなポイント。商品に「タグ（ジャンル札）」を付けるだけで、その商品に合った設定が自動でぴったり当たります😊</p>
+    </div>
+  </header>
+
+  <!-- ========== タグとは？ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🏷️</span>
+        <h2>タグとは？</h2>
+      </div>
+      <div class="explain">
+        <span class="ex-emoji" aria-hidden="true">🪧</span>
+        <p>タグとは、商品のジャンルを表す「札」のことです。たとえばこんな感じです👇</p>
+        <div class="tagsample">
+          <span class="t a">🧸 フィギュア</span>
+          <span class="t b">⌚ 時計</span>
+          <span class="t c">🗡️ 日本刀</span>
+        </div>
+        <p>翻訳のとき、AIが「あなたが登録したタグ一覧」の中から、その商品にいちばん合うものを自動で1つ選んで付けてくれます。商品ごとにジャンルが分かるので、ジャンルに合った設定をまとめて当てられるのです。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== タグを付けると、何が起きる？ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">✨</span>
+        <h2>タグを付けると、何が起きる？</h2>
+        <p class="sub">タグ1つで、その商品の行に次がまとめて自動で当たります👇</p>
+      </div>
+
+      <div class="features">
+
+        <!-- 1 -->
+        <div class="feature">
+          <span class="ic" aria-hidden="true">📦</span>
+          <span class="ft-body">
+            <span class="ft-title">送料・配送方法</span>
+            <span class="ft-short">ジャンルに合った送料と配送方法が自動で入ります。</span>
+          </span>
+        </div>
+
+        <!-- 2 -->
+        <div class="feature">
+          <span class="ic" aria-hidden="true">🆔</span>
+          <span class="ft-body">
+            <span class="ft-title">eBayカテゴリー</span>
+            <span class="ft-short">そのジャンルに合うeBayのカテゴリーが選ばれます。</span>
+          </span>
+        </div>
+
+        <!-- 3 -->
+        <div class="feature">
+          <span class="ic" aria-hidden="true">📋</span>
+          <span class="ft-body">
+            <span class="ft-title">Item Specifics</span>
+            <span class="ft-short">商品仕様の項目（ブランド・型番など）が切り替わります。</span>
+          </span>
+        </div>
+
+        <!-- 4 -->
+        <div class="feature">
+          <span class="ic" aria-hidden="true">💰</span>
+          <span class="ft-body">
+            <span class="ft-title">利益率・手数料 など</span>
+            <span class="ft-short">ジャンルごとに変えたい利益率や手数料も当たります。</span>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="explain" style="margin-top:18px;">
+        <span class="ex-emoji" aria-hidden="true">💡</span>
+        <p style="text-align:center; font-weight:800; font-size:16px;">翻訳プロンプトの“タグ別切り替え”は V4 の機能です</p>
+        <p>V4はテキストだけの翻訳で、コスト優先の最安モデルを使っていたため、精度を補う目的でカテゴリーごとに専用の翻訳プロンプトを用意していました。V5ではAIモデルを引き上げ、さらに商品画像も取り込んで翻訳するため精度が高く、翻訳プロンプトは「1つ」に統一されています。カテゴリーごとにプロンプトを作り分ける必要はありません。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ビフォー → アフター ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🔄</span>
+        <h2>ビフォー → アフター</h2>
+        <p class="sub">何が一番ラクになったのか、見くらべてみましょう</p>
+      </div>
+
+      <div class="ba">
+        <!-- Before -->
+        <div class="ba-card before">
+          <div class="ba-emoji" aria-hidden="true">😵‍💫</div>
+          <div class="ba-badge">BEFORE</div>
+          <h3>V3まで</h3>
+          <p style="text-align:center;"><span class="chip old">シート全体で共通</span></p>
+          <p>設定はシート全体でひとつだけ。送料やカテゴリーが違う商品は、ジャンルごとに<strong style="color:var(--ink)">別のシートに分けて</strong>管理する必要がありました。</p>
+        </div>
+
+        <div class="ba-arrow" aria-hidden="true">➡️</div>
+
+        <!-- After -->
+        <div class="ba-card after">
+          <div class="ba-emoji" aria-hidden="true">😊</div>
+          <div class="ba-badge">AFTER</div>
+          <h3>V5</h3>
+          <p style="text-align:center;"><span class="chip new">行ごとに切り替え</span></p>
+          <p>タグで「行ごと」に設定が切り替わります。だから違うジャンルの商品を<strong style="color:var(--ink)">1枚のシートに混ぜて</strong>も、それぞれ正しく処理されます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 設定のしかた（かんたん2ステップ） ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🪜</span>
+        <h2>設定のしかた（かんたん2ステップ）</h2>
+      </div>
+
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/03_tags.mp4">▶ 動画で見る</button></div>
+
+      <div class="steps">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">1</span>
+          <span class="st-body">
+            <span class="st-title">🏷️ タグを登録する</span>
+            <span class="st-text">「TagShipping」シートの<strong>A列</strong>に、扱うジャンルのタグを登録します。シート右側に出る一覧を参考にすると選びやすいです。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/tag-01.jpg" data-alt="TagShipping シートのA列『タグ名』にジャンルのタグを登録する">📷 画像①（タグを入れる場所）</div>
+              <div class="shot-slot has-img" data-img="images/tag-02.jpg" data-alt="シート右側『使えるタグ名（U列）・翻訳プロンプト（V列）』の参考一覧">📷 画像②（使えるタグの参考一覧）</div>
+            </div>
+            <div class="tagrule">
+              <span class="tr-eyebrow">🏷️ タグ作成のルール</span>
+              <h3>先頭に<span class="g">ジャンル</span>、スペースのあとに<span class="s">補足</span>を足せます</h3>
+              <p class="tr-lead">ジャンルのあとにスペースで補足を書くと、AIはその補足まで読み取り、商品情報や画像も見て、登録したタグの中から正しいものを選びます。補足は<span class="sp">いくつでも</span>足せます。スペースは<span class="sp">全角でも半角でもOK</span>（全角のほうが見やすくおすすめです）。</p>
+              <p class="tr-legend"><span class="g">■</span> 先頭＝ジャンル　／　<span class="s">■</span> スペースのあと＝補足</p>
+              <div class="tr-examples">
+                <div class="tr-ex"><span class="g">漫画</span>　<span class="s">一冊</span></div>
+                <div class="tr-ex"><span class="g">漫画</span>　<span class="s">15冊以上</span></div>
+                <div class="tr-ex"><span class="g">フィギュア</span>　<span class="s">新品</span>　<span class="s">単品</span></div>
+                <div class="tr-ex"><span class="g">フィギュア</span>　<span class="s">中古</span>　<span class="s">送料7000</span></div>
+                <div class="tr-ex"><span class="g">トレカ</span>　<span class="s">PSA10</span></div>
+              </div>
+              <p class="tr-note"><span class="ok">✅ スペースで区切る</span>　／　<span class="ng">❌ くっつけると別のタグになります</span></p>
+            </div>
+          </span>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">2</span>
+          <span class="st-body">
+            <span class="st-title">⚙️ 細かく設定する</span>
+            <span class="st-text">各タグの行に、効かせたい設定を入れます。<strong>空欄なら共通設定</strong>が自動で使われます。</span>
+            <ul class="setlist">
+              <li><b>送料</b>：EP送料・CE送料・CF/CD送料の3種類を入力</li>
+              <li><b>参考eBay ID</b>：将来カテゴリIDに変わると不要。今はここに入力する</li>
+              <li><b>SKU略称</b>：タグごとでも自由な形でもOK。空欄でもよい</li>
+              <li><b>テンプレート名</b><span class="must">必須</span>：このタグに使うテンプレートをドロップダウンから選ぶ</li>
+              <li><b>送料上限カテゴリ</b>：必ず正しく選ぶ（例：ゲーム など）。ここで<b>O列「想定関税閾値」</b>が決まる</li>
+              <li><b>利益率・広告費率・手数料率</b>：任意の値。カテゴリごと／販売価格ごとの利益率・広告比率を調整できる（タグ名の工夫で）</li>
+              <li><b>低価格配送・高価格配送</b>：それぞれ配送方法を選ぶ</li>
+              <li><b>送料切替基準</b>：仕入れ価格ベースで設定する</li>
+              <li><b>商品状態</b>：タグに合わせて設定する</li>
+              <li><b>翻訳プロンプト</b>：V5では空白でOK</li>
+              <li><b>DDP/DDU設定</b><span class="opt">任意</span>：「このカテゴリはDDP」のように設定できる</li>
+            </ul>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/tag-03.jpg" data-alt="TagShipping シートの設定列（送料・テンプレート名・送料上限カテゴリ・利益率など）を入力する">📷 設定シートの画像</div>
+            </div>
+            <p class="st-note">📌 配布シートに入っている値は<b>あくまで参考</b>です。今後、<b>ご自身の取り扱いに合わせて変更</b>してください。</p>
+          </span>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AI判定を有効に使うポイント ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">💡</span>
+        <h2>AI判定を有効に使うポイント</h2>
+        <p class="sub">このコツを押さえると、AIがより正しくタグを選びます😊</p>
+      </div>
+
+      <div class="cautions">
+
+        <div class="caution">
+          <span class="c-emoji" aria-hidden="true">📝</span>
+          <span class="c-title">使うタグをA列に登録</span>
+          <span class="c-text">AIは登録済みのタグの中から選びます。扱うジャンルを先にA列へ登録しておきましょう。</span>
+        </div>
+
+        <div class="caution">
+          <span class="c-emoji" aria-hidden="true">✍️</span>
+          <span class="c-title">補足は具体的に書く</span>
+          <span class="c-text">「ジャンル＋スペース＋補足」で具体的に作るほど、AIが補足まで読んで正しく使い分けます。</span>
+        </div>
+
+        <div class="caution">
+          <span class="c-emoji" aria-hidden="true">⚙️</span>
+          <span class="c-title">テンプレと上限カテゴリは正しく</span>
+          <span class="c-text">テンプレート名（必須）と送料上限カテゴリは正しく設定しておきましょう。関税の想定にも関わる大事な項目です。</span>
+        </div>
+
+      </div>
+
+      <div class="clarify">
+        <p class="cl-head">🗣️ タグは明確に — AIに「具体的に教えてあげる」</p>
+        <div class="cl-row">
+          <div class="cl-bad"><span class="cl-lbl">悪い例</span><span class="cl-tag">時計セイコー中古</span></div>
+          <span class="cl-arrow" aria-hidden="true">→</span>
+          <div class="cl-good"><span class="cl-lbl">改善例</span><span class="cl-tag">時計　セイコー　中古</span></div>
+        </div>
+        <div class="cl-row">
+          <div class="cl-bad"><span class="cl-lbl">悪い例</span><span class="cl-tag">フィギュア　7000　中古</span></div>
+          <span class="cl-arrow" aria-hidden="true">→</span>
+          <div class="cl-good">
+            <span class="cl-lbl">改善例</span>
+            <span class="cl-tag">フィギュア　まとめ　３〜５体　7000　中古</span>
+            <span class="cl-tag">フィギュア　３〜５体　中古</span>
+            <span class="cl-tag">フィギュア　大量まとめ　中古</span>
+          </div>
+        </div>
+        <p class="cl-note">コツは「具体的に教えてあげる」こと。「7000」だけでは数量か価格か伝わりません。「まとめ」「３〜５体」「大量まとめ」など言葉で具体的に書くと、AIが正しく判定できます。細かく使い分けたいときほど具体的に、汎用の設定で良ければ「時計　中古」のようにシンプルでもOKです。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ページ下部ナビ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🚀</span>
+        <h2>次に進む</h2>
+      </div>
+      <div class="nextstep">
+        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">←</span>トップに戻る</a>
+        <a class="big-btn secondary" href="patterns.html"><span class="b-emoji" aria-hidden="true">🔀</span>次：3つの翻訳パターン →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">一括登録シート V5 😊</div></footer>
+
+  <!-- ========== Lightbox overlay (試作) ========== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="スクリーンショット拡大表示" aria-hidden="true">
+    <div class="lb-content" id="lbContent">
+      <button type="button" class="lb-close" id="lbClose" aria-label="閉じる">×</button>
+      <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="前の画像">‹</button>
+      <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="次の画像">›</button>
+      <span class="lb-counter" id="lbCounter" aria-live="polite"></span>
+      <!-- 拡大コンテンツ（img もしくはプレースホルダ）はJSで差し込みます -->
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lbContent = document.getElementById('lbContent');
+    var lbClose = document.getElementById('lbClose');
+    var lbPrev = document.getElementById('lbPrev');
+    var lbNext = document.getElementById('lbNext');
+    var lbCounter = document.getElementById('lbCounter');
+    var lastFocused = null;
+
+    // 現在表示中のグループ（同じ shot-row 内のスロット）と位置
+    var currentGroup = [];
+    var currentIndex = 0;
+
+    // 直前に差し込んだ拡大要素（再オープン時に消すため）
+    var currentMedia = null;
+
+    function clearMedia() {
+      if (currentMedia && currentMedia.parentNode === lbContent) {
+        lbContent.removeChild(currentMedia);
+      }
+      currentMedia = null;
+    }
+
+    // 1つのスロットから拡大表示用の要素を作る
+    function buildMedia(slot) {
+      var dataImg = slot.getAttribute('data-img');
+      var srcImg = slot.querySelector('img');
+      if (dataImg) {
+        // data-img があれば、その画像を拡大表示
+        var bigD = document.createElement('img');
+        bigD.src = dataImg;
+        bigD.alt = slot.getAttribute('data-alt') || '';
+        return bigD;
+      }
+      if (srcImg) {
+        // .shot-slot 内に画像があれば、それを拡大表示（src / alt を引き継ぐ）
+        var big = document.createElement('img');
+        big.src = srcImg.getAttribute('src');
+        big.alt = srcImg.getAttribute('alt') || '';
+        return big;
+      }
+      // 画像未取得（プレースホルダのみ）の場合の代替表示
+      var ph = document.createElement('div');
+      ph.className = 'lb-placeholder';
+      ph.textContent = '📷 ここにスクリーンショットが入ります（後で差し込み）';
+      return ph;
+    }
+
+    // 前へ／次へボタンとカウンターの表示を更新する
+    function updateNav() {
+      var multi = currentGroup.length > 1;
+      lbPrev.style.display = multi ? '' : 'none';
+      lbNext.style.display = multi ? '' : 'none';
+      if (multi) {
+        lbCounter.style.display = '';
+        lbCounter.textContent = (currentIndex + 1) + ' / ' + currentGroup.length;
+        lbPrev.disabled = (currentIndex === 0);
+        lbNext.disabled = (currentIndex === currentGroup.length - 1);
+      } else {
+        lbCounter.style.display = 'none';
+      }
+    }
+
+    // 現在の index の画像を描画し直す
+    function renderCurrent() {
+      clearMedia();
+      currentMedia = buildMedia(currentGroup[currentIndex]);
+      lbContent.appendChild(currentMedia);
+      updateNav();
+    }
+
+    // index を移動して描画する（範囲外は無視）
+    function showAt(index) {
+      if (index < 0 || index >= currentGroup.length) return;
+      currentIndex = index;
+      renderCurrent();
+    }
+
+    function openLightbox(slot) {
+      // 同じ shot-row 内のスロットをグループにする。なければ単独表示
+      var row = slot.closest ? slot.closest('.shot-row') : null;
+      if (row) {
+        currentGroup = Array.prototype.slice.call(row.querySelectorAll('.shot-slot'));
+      } else {
+        currentGroup = [slot];
+      }
+      currentIndex = currentGroup.indexOf(slot);
+      if (currentIndex < 0) currentIndex = 0;
+
+      renderCurrent();
+
+      lastFocused = document.activeElement;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      clearMedia();
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+      lastFocused = null;
+    }
+
+    // すべての .shot-slot をクリック可能にする
+    var slots = document.querySelectorAll('.shot-slot');
+    Array.prototype.forEach.call(slots, function (slot) {
+      slot.setAttribute('tabindex', '0');
+      slot.setAttribute('role', 'button');
+      slot.addEventListener('click', function () { openLightbox(slot); });
+      // キーボード操作（Enter / Space）でも開ける
+      slot.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          openLightbox(slot);
+        }
+      });
+    });
+
+    // 閉じる: × ボタン
+    lbClose.addEventListener('click', closeLightbox);
+
+    // 前へ／次へボタン
+    lbPrev.addEventListener('click', function () { showAt(currentIndex - 1); });
+    lbNext.addEventListener('click', function () { showAt(currentIndex + 1); });
+
+    // 閉じる: 暗幕（背景）クリック。中央コンテンツのクリックでは閉じない
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // キーボード操作: Esc で閉じる、← → で前後の画像へ
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        showAt(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        showAt(currentIndex + 1);
+      }
+    });
+  })();
+  </script>
+<script src="videos/video-modal.js"></script>
+</body>
+</html>

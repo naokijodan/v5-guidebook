@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一括シートV5を導入する — 一括登録シート V5</title>
+<style>
+  :root {
+    --ink: #3a3245;
+    --ink-soft: #7b7387;
+    --cream: #fff9f0;
+    --card: #ffffff;
+    --peach: #ff8a65;
+    --mint: #2bd4a0;
+    --sky: #4fa8ff;
+    --grape: #9b6bff;
+    --sun: #ffc94d;
+    --pink: #ff6fa5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,201,77,0.18), transparent 28%),
+      radial-gradient(circle at 88% 14%, rgba(79,168,255,0.16), transparent 30%),
+      radial-gradient(circle at 70% 88%, rgba(255,111,165,0.14), transparent 32%),
+      var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Top nav ---------- */
+  .topnav { padding: 22px 0 0; }
+  .topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .home-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    text-decoration: none; font-weight: 800; font-size: 14px; color: var(--ink-soft);
+    background: rgba(255,255,255,0.8); padding: 9px 16px; border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(160,140,120,0.12);
+    transition: transform .15s, box-shadow .15s, color .15s;
+  }
+  .home-link:hover { transform: translateY(-2px); color: var(--peach); box-shadow: 0 10px 20px rgba(160,140,120,0.18); }
+  .brand-tag {
+    font-size: 12.5px; font-weight: 800; color: #fff; padding: 7px 15px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 6px 14px rgba(79,168,255,0.30);
+  }
+
+  /* ---------- Header ---------- */
+  header { padding: 48px 0 50px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+    color: #fff; padding: 8px 20px; border-radius: 999px; margin-bottom: 24px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.35);
+  }
+  h1 {
+    font-size: clamp(25px, 4.4vw, 40px); font-weight: 900; line-height: 1.35; margin-bottom: 22px;
+  }
+  h1 .hl {
+    background: linear-gradient(transparent 62%, rgba(255,201,77,0.65) 62%);
+    padding: 0 4px; border-radius: 4px;
+  }
+  .lead {
+    font-size: clamp(15px, 2.2vw, 17px); color: var(--ink-soft); max-width: 660px; margin: 0 auto;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 48px 0; }
+  .section-head { text-align: center; margin-bottom: 34px; }
+  .section-head h2 { font-size: clamp(22px, 3.6vw, 30px); font-weight: 900; }
+  .section-head .emoji { font-size: 30px; display: block; margin-bottom: 6px; }
+  .section-head .sub { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ---------- Intro / CTA sheet (from index.html) ---------- */
+  .cta-wrap { text-align: center; margin-bottom: 34px; }
+  .cta-sheet {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    text-decoration: none; text-align: center;
+    padding: 24px 40px; border-radius: 24px;
+    font-weight: 900; font-size: clamp(16px, 2.8vw, 21px); color: #fff;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 16px 34px rgba(255,111,165,0.40);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .cta-sheet:hover { transform: translateY(-3px); box-shadow: 0 22px 44px rgba(255,111,165,0.52); }
+
+  /* ---------- Steps ---------- */
+  .steps { display: grid; gap: 18px; }
+  .step {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--card); border-radius: 24px; padding: 24px 24px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .step:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(160,140,120,0.18); }
+  .step .num {
+    flex: 0 0 48px; width: 48px; height: 48px; border-radius: 16px;
+    display: grid; place-items: center; font-size: 22px; font-weight: 900; color: #fff;
+  }
+  .step:nth-child(1) .num { background: linear-gradient(135deg, var(--sun), var(--peach)); }
+  .step:nth-child(2) .num { background: linear-gradient(135deg, var(--sky), var(--grape)); }
+  .step:nth-child(3) .num { background: linear-gradient(135deg, var(--mint), var(--sky)); }
+  .step:nth-child(4) .num { background: linear-gradient(135deg, var(--pink), var(--grape)); }
+  .step:nth-child(5) .num { background: linear-gradient(135deg, var(--grape), var(--peach)); }
+  .step:nth-child(6) .num { background: linear-gradient(135deg, var(--pink), var(--sun)); }
+  .step .st-body { flex: 1; min-width: 0; }
+  .step .st-title { font-size: 16.5px; font-weight: 800; margin-bottom: 5px; line-height: 1.5; }
+  .step .st-text { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
+  .step .step-alert { display: block; margin: 4px 0 10px; padding: 11px 14px; background: rgba(255,170,60,0.14); border: 2px solid rgba(255,170,60,0.55); border-radius: 14px; font-size: 12.5px; font-weight: 800; color: #9a6a00; line-height: 1.7; }
+  .step .st-text strong { color: var(--ink); }
+  .step .st-text a { color: var(--pink); font-weight: 800; text-decoration: none; border-bottom: 2px solid rgba(255,111,165,0.35); }
+  .step .st-text a:hover { border-bottom-color: var(--pink); }
+
+  /* ---------- Next-step buttons ---------- */
+  .nextstep { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .big-btn {
+    flex: 1 1 300px; max-width: 380px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; text-align: center;
+    padding: 22px 24px; border-radius: 22px;
+    font-weight: 900; font-size: clamp(15px, 2.4vw, 18px); color: #fff;
+    box-shadow: 0 12px 26px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .big-btn .b-emoji { font-size: 24px; }
+  .big-btn.secondary { background: linear-gradient(90deg, var(--sky), var(--grape)); }
+  .big-btn.ghost {
+    background: #fff; color: var(--ink-soft);
+    box-shadow: 0 10px 22px rgba(160,140,120,0.14);
+    border: 2px solid rgba(0,0,0,0.05);
+  }
+  .big-btn.primary { background: linear-gradient(90deg, var(--peach), var(--pink)); box-shadow: 0 12px 26px rgba(255,111,165,0.34); }
+  .big-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(79,168,255,0.42); }
+  .big-btn.primary:hover { box-shadow: 0 18px 34px rgba(255,111,165,0.46); }
+  .big-btn.ghost:hover { box-shadow: 0 16px 30px rgba(160,140,120,0.2); color: var(--ink); }
+
+  footer { padding: 50px 0 76px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 600px) {
+    header { padding: 36px 0 40px; }
+    .step { padding: 20px 18px; gap: 14px; }
+    .cta-sheet { padding: 20px 26px; width: 100%; }
+    .nextstep { flex-direction: column; align-items: stretch; }
+    .big-btn { max-width: none; }
+    .topnav .wrap { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+
+  /* Respect reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .step, .card, .big-btn, .home-link, .cta-sheet { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Screenshot slot (base box) ---------- */
+  .step .shot-slot {
+    margin-top: 12px; border: 2px dashed rgba(79,168,255,0.28); border-radius: 14px;
+    padding: 14px 12px; text-align: center; font-size: 12px; color: var(--ink-soft);
+    background: rgba(79,168,255,0.05);
+  }
+
+  /* ---------- Lightbox: clickable shot-slot (additive) ---------- */
+  /* 既存の .shot-slot ルールはそのまま。クリック反応のみ追記する */
+  .step .shot-slot {
+    cursor: pointer;
+    transition: background .18s, box-shadow .18s, transform .18s, border-color .18s;
+  }
+  .step .shot-slot:hover {
+    background: rgba(79,168,255,0.12);
+    border-color: rgba(79,168,255,0.5);
+    box-shadow: 0 8px 20px rgba(79,168,255,0.22);
+    transform: translateY(-2px);
+  }
+  .step .shot-slot:focus-visible {
+    outline: 3px solid rgba(79,168,255,0.55);
+    outline-offset: 2px;
+  }
+  /* 拡大できることを示す小さなヒント（既存テキストと並存） */
+  .shot-slot .zoom-hint {
+    display: block; margin-top: 8px;
+    font-size: 11px; font-weight: 800; letter-spacing: .02em;
+    color: #2f7fd1;
+  }
+  /* 将来 img を入れた時に箱へ収まるサムネ表示 */
+  .shot-slot img {
+    display: block; max-width: 100%; height: auto;
+    margin: 0 auto; border-radius: 10px;
+  }
+  /* 画像割り当て済みスロット = 小さな「画像を見る」ボタン */
+  .step .shot-slot.has-img {
+    display: inline-flex; align-items: center; gap: 6px;
+    width: auto; margin: 0;
+    padding: 7px 15px; border-radius: 999px;
+    border: none; background: rgba(79,168,255,0.14);
+    color: #2f7fd1; font-size: 12.5px; font-weight: 800;
+    text-align: left;
+  }
+  .step .shot-slot.has-img:hover {
+    background: rgba(79,168,255,0.24);
+    transform: none; box-shadow: none;
+  }
+  /* 画像ボタンを横一列にまとめる */
+  .step .shot-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 10px;
+  }
+
+  /* ---------- Lightbox overlay ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+    background: rgba(40,32,50,0.72);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox .lb-content {
+    position: relative; max-width: 92vw; max-height: 88vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox .lb-content img {
+    display: block; max-width: 92vw; max-height: 88vh;
+    width: auto; height: auto;
+    border-radius: 16px; background: #fff;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  }
+  /* img が無い時のプレースホルダ枠 */
+  .lightbox .lb-placeholder {
+    display: grid; place-items: center; text-align: center;
+    width: min(560px, 86vw); min-height: min(340px, 60vh);
+    padding: 28px 24px;
+    font-size: clamp(15px, 2.4vw, 19px); font-weight: 800; line-height: 1.8;
+    color: var(--ink-soft);
+    background: var(--card);
+    border: 3px dashed rgba(79,168,255,0.45); border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .lightbox .lb-close {
+    position: absolute; top: -14px; right: -14px;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 24px; font-weight: 900; line-height: 1; color: #fff;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 20px rgba(255,111,165,0.5);
+  }
+  .lightbox .lb-close:hover { transform: scale(1.06); }
+  .lightbox .lb-close:focus-visible {
+    outline: 3px solid #fff; outline-offset: 2px;
+  }
+  @media (max-width: 600px) {
+    .lightbox .lb-close { top: -10px; right: -10px; width: 40px; height: 40px; font-size: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .step .shot-slot, .lightbox .lb-close { transition: none; }
+  }
+
+  /* ---------- Lightbox prev/next navigation ---------- */
+  .lightbox .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 28px; font-weight: 900; line-height: 1; color: var(--ink);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.32);
+    transition: transform .15s, background .15s, opacity .15s;
+  }
+  .lightbox .lb-prev { left: 10px; }
+  .lightbox .lb-next { right: 10px; }
+  .lightbox .lb-nav:hover:not(:disabled) { transform: translateY(-50%) scale(1.08); background: #fff; }
+  .lightbox .lb-nav:disabled { opacity: 0.3; cursor: default; }
+  .lightbox .lb-nav:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .lightbox .lb-counter {
+    position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+    padding: 5px 16px; border-radius: 999px;
+    background: rgba(40,32,50,0.78); color: #fff;
+    font-size: 13px; font-weight: 800; white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  }
+  @media (max-width: 600px) {
+    .lightbox .lb-nav { width: 40px; height: 40px; font-size: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox .lb-nav { transition: none; }
+  }
+</style>
+<link rel="stylesheet" href="videos/video-modal.css">
+</head>
+<body>
+  <!-- ========== Top nav ========== -->
+  <nav class="topnav">
+    <div class="wrap">
+      <a class="home-link" href="index.html"><span aria-hidden="true">🏠</span>トップにもどる</a>
+      <span class="brand-tag">一括登録シート V5</span>
+    </div>
+  </nav>
+
+  <!-- ========== Header ========== -->
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">🚀 導入ガイド ・ 一括登録シート V5</span>
+      <h1>一括シートV5を<span class="hl">導入する</span> 🚀</h1>
+      <p class="lead">配布用のシートを手に入れて、かんたんに始めましょう。</p>
+    </div>
+  </header>
+
+  <!-- ========== CTA ========== -->
+  <section>
+    <div class="wrap">
+      <div class="cta-wrap">
+        <a class="cta-sheet" href="https://docs.google.com/spreadsheets/d/1EMGy24CkZNmTfYf6HmnP0YL30vJzAWhqlM475edCwh0/edit?gid=1499391446#gid=1499391446" target="_blank" rel="noopener noreferrer">📊 配布用シートを開く →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 設定のしかた ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">⚙️</span>
+        <h2>設定のしかた</h2>
+      </div>
+
+      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/02_intro.mp4">▶ 動画で見る</button></div>
+
+      <div class="steps">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">1</span>
+          <span class="st-body">
+            <span class="st-title">シートをコピーする</span>
+            <span class="st-text">上のボタンからシートを開き、「ファイル」→「コピーを作成」で自分のGoogleドライブに複製します。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/setup-01.jpg" data-alt="シートのファイルメニューから「コピーを作成」を選ぶ">📷 画像①</div>
+              <div class="shot-slot has-img" data-img="images/setup-02.jpg" data-alt="「ドキュメントをコピー」ダイアログで名前を確認して「コピーを作成」を押す">📷 画像②</div>
+            </div>
+          </span>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">2</span>
+          <span class="st-body">
+            <span class="st-title">初回の承認をする</span>
+            <span class="st-text">初回はメニューを開くと承認（スクリプトの実行許可）を求められるので許可します。途中で「このアプリはGoogleで確認されていません」と出ますが、ご自身が作ったシートなので、画像の順に進めて大丈夫です。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/auth-01.jpg" data-alt="「認証が必要です」→ OK を押す">📷 画像①</div>
+              <div class="shot-slot has-img" data-img="images/auth-02.jpg" data-alt="「このアプリはGoogleで確認されていません」→ 詳細 をクリック">📷 画像②</div>
+              <div class="shot-slot has-img" data-img="images/auth-03.jpg" data-alt="詳細を開き「（安全ではないページ）に移動」をクリック">📷 画像③</div>
+              <div class="shot-slot has-img" data-img="images/auth-04.jpg" data-alt="アクセス権限を確認して「許可」を押す">📷 画像④</div>
+            </div>
+          </span>
+        </div>
+
+        <!-- Step 3: EAGLE -->
+        <div class="step">
+          <span class="num" aria-hidden="true">3</span>
+          <span class="st-body">
+            <span class="st-title">EAGLE連携を設定する</span>
+            <span class="step-alert">⚠️ 重要：初期設定より先に、このEAGLE連携を行ってください。順番が逆だと、ポリシーやテンプレートが正しく反映されません。</span>
+            <span class="st-text">設定メニューの「EAGLEシート初期作成」を開き、APIトークンを入力します。初回は「テンプレート・ポリシーも取得する」をONにして「保存して開始」を押すと、Policy_Master（テンプレート・配送ポリシー）が自動で作成されます。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/eagle-01.jpg" data-alt="設定メニューから「EAGLEシート初期作成」を開く">📷 画像①</div>
+              <div class="shot-slot has-img" data-img="images/eagle-02.jpg" data-alt="「初回セットアップ」→ OK を押す">📷 画像②</div>
+              <div class="shot-slot has-img" data-img="images/eagle-03.jpg" data-alt="APIトークンを貼り付け、「テンプレート・ポリシーも取得する」をON">📷 画像③</div>
+              <div class="shot-slot has-img" data-img="images/eagle-04.jpg" data-alt="取得する列を選び「保存して開始」を押す">📷 画像④</div>
+              <div class="shot-slot has-img" data-img="images/eagle-05.jpg" data-alt="完了：Policy_Master（テンプレート・ポリシー）が作成される">📷 画像⑤</div>
+            </div>
+          </span>
+        </div>
+
+        <!-- Step 4: 初期設定 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">4</span>
+          <span class="st-body">
+            <span class="st-title">初期設定をする</span>
+            <span class="st-text">V5ではAPIキーの入力は不要（任意）です。設定メニューの「初期設定」を開き、「V5用シート設定」の『V5ルートを使う』にチェックして「保存」します。「APIキー未設定でも保存しますか？」と出たら「OK」を押します。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/init-01.jpg" data-alt="設定メニューから「初期設定」を開く">📷 画像①</div>
+              <div class="shot-slot has-img" data-img="images/init-02.jpg" data-alt="初期設定（統合版）。APIキーは任意なので空欄でOK">📷 画像②</div>
+              <div class="shot-slot has-img" data-img="images/init-03.jpg" data-alt="下にスクロールし「V5用シート設定」を開く">📷 画像③</div>
+              <div class="shot-slot has-img" data-img="images/init-04.jpg" data-alt="「V5ルートを使う」にチェックして「保存」を押す">📷 画像④</div>
+              <div class="shot-slot has-img" data-img="images/init-05.jpg" data-alt="「APIキー未設定でも保存しますか？」→ OK を押す">📷 画像⑤</div>
+            </div>
+          </span>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">5</span>
+          <span class="st-body">
+            <span class="st-title">タグを設定する</span>
+            <span class="st-text">「TagShipping」シートにタグを設定します（→ <a href="tags.html">タグ設定のページへ</a>）。</span>
+          </span>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step">
+          <span class="num" aria-hidden="true">6</span>
+          <span class="st-body">
+            <span class="st-title">翻訳パターンを選ぶ</span>
+            <span class="st-text">使う翻訳パターンを選び、各ページの手順で設定します（→ <a href="patterns.html">3つの翻訳パターンへ</a>）。</span>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ページ下部ナビ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🚀</span>
+        <h2>次に進む</h2>
+      </div>
+      <div class="nextstep">
+        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">←</span>トップにもどる</a>
+        <a class="big-btn secondary" href="tags.html"><span class="b-emoji" aria-hidden="true">🏷️</span>タグ設定のページ →</a>
+        <a class="big-btn primary" href="patterns.html"><span class="b-emoji" aria-hidden="true">🔀</span>3つの翻訳パターン →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">一括登録シート V5 😊</div></footer>
+
+  <!-- ========== Lightbox overlay (試作) ========== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="スクリーンショット拡大表示" aria-hidden="true">
+    <div class="lb-content" id="lbContent">
+      <button type="button" class="lb-close" id="lbClose" aria-label="閉じる">×</button>
+      <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="前の画像">‹</button>
+      <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="次の画像">›</button>
+      <span class="lb-counter" id="lbCounter" aria-live="polite"></span>
+      <!-- 拡大コンテンツ（img もしくはプレースホルダ）はJSで差し込みます -->
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lbContent = document.getElementById('lbContent');
+    var lbClose = document.getElementById('lbClose');
+    var lbPrev = document.getElementById('lbPrev');
+    var lbNext = document.getElementById('lbNext');
+    var lbCounter = document.getElementById('lbCounter');
+    var lastFocused = null;
+
+    // 現在表示中のグループ（同じ shot-row 内のスロット）と位置
+    var currentGroup = [];
+    var currentIndex = 0;
+
+    // 直前に差し込んだ拡大要素（再オープン時に消すため）
+    var currentMedia = null;
+
+    function clearMedia() {
+      if (currentMedia && currentMedia.parentNode === lbContent) {
+        lbContent.removeChild(currentMedia);
+      }
+      currentMedia = null;
+    }
+
+    // 1つのスロットから拡大表示用の要素を作る
+    function buildMedia(slot) {
+      var dataImg = slot.getAttribute('data-img');
+      var srcImg = slot.querySelector('img');
+      if (dataImg) {
+        // data-img があれば、その画像を拡大表示
+        var bigD = document.createElement('img');
+        bigD.src = dataImg;
+        bigD.alt = slot.getAttribute('data-alt') || '';
+        return bigD;
+      }
+      if (srcImg) {
+        // .shot-slot 内に画像があれば、それを拡大表示（src / alt を引き継ぐ）
+        var big = document.createElement('img');
+        big.src = srcImg.getAttribute('src');
+        big.alt = srcImg.getAttribute('alt') || '';
+        return big;
+      }
+      // 画像未取得（プレースホルダのみ）の場合の代替表示
+      var ph = document.createElement('div');
+      ph.className = 'lb-placeholder';
+      ph.textContent = '📷 ここにスクリーンショットが入ります（後で差し込み）';
+      return ph;
+    }
+
+    // 前へ／次へボタンとカウンターの表示を更新する
+    function updateNav() {
+      var multi = currentGroup.length > 1;
+      lbPrev.style.display = multi ? '' : 'none';
+      lbNext.style.display = multi ? '' : 'none';
+      if (multi) {
+        lbCounter.style.display = '';
+        lbCounter.textContent = (currentIndex + 1) + ' / ' + currentGroup.length;
+        lbPrev.disabled = (currentIndex === 0);
+        lbNext.disabled = (currentIndex === currentGroup.length - 1);
+      } else {
+        lbCounter.style.display = 'none';
+      }
+    }
+
+    // 現在の index の画像を描画し直す
+    function renderCurrent() {
+      clearMedia();
+      currentMedia = buildMedia(currentGroup[currentIndex]);
+      lbContent.appendChild(currentMedia);
+      updateNav();
+    }
+
+    // index を移動して描画する（範囲外は無視）
+    function showAt(index) {
+      if (index < 0 || index >= currentGroup.length) return;
+      currentIndex = index;
+      renderCurrent();
+    }
+
+    function openLightbox(slot) {
+      // 同じ shot-row 内のスロットをグループにする。なければ単独表示
+      var row = slot.closest ? slot.closest('.shot-row') : null;
+      if (row) {
+        currentGroup = Array.prototype.slice.call(row.querySelectorAll('.shot-slot'));
+      } else {
+        currentGroup = [slot];
+      }
+      currentIndex = currentGroup.indexOf(slot);
+      if (currentIndex < 0) currentIndex = 0;
+
+      renderCurrent();
+
+      lastFocused = document.activeElement;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      clearMedia();
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+      lastFocused = null;
+    }
+
+    // すべての .shot-slot をクリック可能にする
+    var slots = document.querySelectorAll('.shot-slot');
+    Array.prototype.forEach.call(slots, function (slot) {
+      slot.setAttribute('tabindex', '0');
+      slot.setAttribute('role', 'button');
+      slot.addEventListener('click', function () { openLightbox(slot); });
+      // キーボード操作（Enter / Space）でも開ける
+      slot.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          openLightbox(slot);
+        }
+      });
+    });
+
+    // 閉じる: × ボタン
+    lbClose.addEventListener('click', closeLightbox);
+
+    // 前へ／次へボタン
+    lbPrev.addEventListener('click', function () { showAt(currentIndex - 1); });
+    lbNext.addEventListener('click', function () { showAt(currentIndex + 1); });
+
+    // 閉じる: 暗幕（背景）クリック。中央コンテンツのクリックでは閉じない
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // キーボード操作: Esc で閉じる、← → で前後の画像へ
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        showAt(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        showAt(currentIndex + 1);
+      }
+    });
+  })();
+  </script>
+<script src="videos/video-modal.js"></script>
+</body>
+</html>
