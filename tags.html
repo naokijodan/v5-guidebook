@@ -865,6 +865,56 @@
     });
   })();
   </script>
+  <!-- 画像を常時表示（2列埋め込み）：data-img を img として埋め込み、クリックで従来どおり拡大 -->
+  <style>
+    .step .shot-row {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; align-items: start;
+    }
+    .step .shot-slot.has-img {
+      display: block; width: auto; margin: 0; padding: 0;
+      border: 1px solid rgba(79,168,255,0.25); border-radius: 12px;
+      background: #fff; overflow: hidden; cursor: zoom-in;
+    }
+    .step .shot-slot.has-img:hover {
+      border-color: rgba(79,168,255,0.55);
+      box-shadow: 0 8px 20px rgba(79,168,255,0.22); transform: none;
+    }
+    .step .shot-slot.has-img img {
+      display: block; width: 100%; height: auto;
+    }
+    .step .shot-slot.has-img .shot-cap {
+      display: block; padding: 6px 8px; text-align: center;
+      font-size: 12px; font-weight: 700; color: #2f7fd1;
+      background: rgba(79,168,255,0.06);
+    }
+    @media (max-width: 600px) {
+      .step .shot-row { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>
+  (function () {
+    var slots = document.querySelectorAll('.shot-slot.has-img');
+    Array.prototype.forEach.call(slots, function (slot) {
+      if (slot.querySelector('img')) return;
+      var src = slot.getAttribute('data-img');
+      if (!src) return;
+      var label = (slot.textContent || '').replace(/^\s*📷\s*/, '').trim();
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = slot.getAttribute('data-alt') || '';
+      img.loading = 'lazy';
+      slot.textContent = '';
+      slot.appendChild(img);
+      if (label) {
+        var cap = document.createElement('span');
+        cap.className = 'shot-cap';
+        cap.textContent = label;
+        slot.appendChild(cap);
+      }
+    });
+  })();
+  </script>
 <script src="videos/video-modal.js"></script>
 </body>
 </html>
