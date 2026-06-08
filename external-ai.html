@@ -172,6 +172,7 @@
   .step.s7 .num { background: linear-gradient(135deg, var(--sun), var(--grape)); box-shadow: 0 8px 16px rgba(255,170,60,0.28); }
   .step.s8 .num { background: linear-gradient(135deg, var(--mint), var(--grape)); box-shadow: 0 8px 16px rgba(43,212,160,0.28); }
   .step.s9 .num { background: linear-gradient(135deg, var(--peach), var(--sky)); box-shadow: 0 8px 16px rgba(255,138,101,0.28); }
+  .step.s10 .num { background: linear-gradient(135deg, var(--grape), var(--sky)); box-shadow: 0 8px 16px rgba(155,107,255,0.28); }
   .step .st-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; line-height: 1.5; }
   .step p { font-size: 14px; line-height: 1.85; }
   .step p + p { margin-top: 8px; }
@@ -515,6 +516,9 @@
           <div class="st-sub">
             📌 本文中の <span class="ui path">===（ここから下をコピーしてスキルに登録）===</span> より<strong>下</strong>を登録に使います。上は人向けの変更履歴なので、登録は不要です。
           </div>
+          <div class="st-sub">
+            📋 同じ画面の下に <span class="ui">最終チェック文をダウンロード（ebay-final-check.txt）</span> もあります。<strong>これも保存しておく</strong>と、翻訳のあとの再チェック（基本の使い方の手順6）に使えます。
+          </div>
           <div class="shot-row">
             <div class="shot-slot has-img" data-img="images/ex-01.jpg" data-alt="メニュー「eBay 翻訳 (AI)→スキル本文をダウンロード」を開く">📷 ①メニューを開く</div>
             <div class="shot-slot has-img" data-img="images/ex-02.jpg" data-alt="「ファイルとしてダウンロード」または「クリップボードにコピー」を押す（どちらでもOK）">📷 ②DL／コピー</div>
@@ -622,6 +626,12 @@
 
         <div class="step s6">
           <span class="num" aria-hidden="true">6</span>
+          <div class="st-title">最終チェックで再確認</div>
+          <p>1バッチ終わったら、保存しておいた<strong>最終チェック文（ebay-final-check.txt）をAIに渡して</strong>、出力を再チェックさせます。列ずれ・文字数・禁止ワード・タグ／カテゴリ・玩具の年齢区分などを、AIが<strong>実際のセルを読み戻して</strong>点検し、必要なら直してくれます。<strong>毎回、作業の最後に</strong>行うのがおすすめです😊</p>
+        </div>
+
+        <div class="step s7">
+          <span class="num" aria-hidden="true">7</span>
           <div class="st-title">気になる点は会話で修正を依頼</div>
           <p>出力に間違いや不満があれば、<strong>そのまま伝えると直してくれます</strong>（例：「タイトルをもう少し長く」「タグがフィギュアなのにアニメグッズになっている所を精査して」）。これがこの方法のいいところです😊</p>
           <div class="shot-row">
@@ -629,8 +639,8 @@
           </div>
         </div>
 
-        <div class="step s7">
-          <span class="num" aria-hidden="true">7</span>
+        <div class="step s8">
+          <span class="num" aria-hidden="true">8</span>
           <div class="st-title">書き込まれる → 仕入れ先コードをコピー</div>
           <p>結果が書込先 <span class="ui set">v5インポート</span> に書き戻されます。入った商品の <span class="ui">仕入れ先コード</span> の列だけをコピーします。</p>
           <div class="shot-row">
@@ -639,8 +649,8 @@
           </div>
         </div>
 
-        <div class="step s8">
-          <span class="num" aria-hidden="true">8</span>
+        <div class="step s9">
+          <span class="num" aria-hidden="true">9</span>
           <div class="st-title">作業シートに「値のみ貼り付け」→ label を埋める</div>
           <p>作業シートに <span class="ui">値のみ貼り付け</span> します（そのまま貼ると条件付き書式が壊れるため）。そのあと左上の <span class="ui">翻訳orSKU</span> ボタンを押すと label が生成されます。</p>
           <div class="shot-row">
@@ -648,8 +658,8 @@
           </div>
         </div>
 
-        <div class="step s9">
-          <span class="num" aria-hidden="true">9</span>
+        <div class="step s10">
+          <span class="num" aria-hidden="true">10</span>
           <div class="st-title">データをコピーして一括出品に貼り付け</div>
           <p>v5出品用シートに反映されたデータを選択してコピーし、<span class="ui">一括出品（EAGLE）</span> に貼り付けて登録すれば完了です。</p>
           <div class="shot-row">
