@@ -113,10 +113,10 @@
   .info-card .ic-title { font-size: 16px; font-weight: 900; line-height: 1.4; }
   .info-card p { font-size: 14px; line-height: 1.85; }
   .info-card p + p { margin-top: 10px; }
-  .info-card .ic-list { list-style: none; margin: 0; padding: 0; }
-  .info-card .ic-list li { position: relative; padding-left: 24px; margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
-  .info-card .ic-list li:last-child { margin-bottom: 0; }
-  .info-card .ic-list li::before { content: "•"; position: absolute; left: 4px; top: -1px; color: var(--peach); font-weight: 900; font-size: 18px; }
+  .info-card .ic-list, .warn .ic-list { list-style: none; margin: 0; padding: 0; }
+  .info-card .ic-list li, .warn .ic-list li { position: relative; padding-left: 24px; margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
+  .info-card .ic-list li:last-child, .warn .ic-list li:last-child { margin-bottom: 0; }
+  .info-card .ic-list li::before, .warn .ic-list li::before { content: "•"; position: absolute; left: 4px; top: -1px; color: var(--peach); font-weight: 900; font-size: 18px; }
   .info-card .guide-note { margin-top: 14px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.7; }
   .info-card .guide-btn {
     display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
@@ -263,6 +263,100 @@
   @media (prefers-reduced-motion: reduce) {
     .card, .big-btn { transition: none; }
     html { scroll-behavior: auto; }
+  }
+
+  /* ---------- MCP接続 info-card 拡張 ---------- */
+  /* おすすめ枠 */
+  .rec-box {
+    margin-top: 18px;
+    background: linear-gradient(180deg, #fffdf4, #fff);
+    border: 2px solid rgba(255,201,77,0.55);
+    border-radius: 18px;
+    padding: 18px 20px 16px;
+  }
+  .rec-box .rec-head {
+    font-size: 15px; font-weight: 900; margin-bottom: 8px;
+    color: #8a5a00;
+  }
+  .rec-box .rec-lead {
+    font-size: 13.5px; line-height: 1.8; margin-bottom: 12px;
+  }
+  /* コピペ枠（pre/code） */
+  .copy-pre {
+    background: rgba(58,50,69,0.05);
+    border: 1px solid rgba(58,50,69,0.12);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 12.5px; line-height: 1.85;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    white-space: pre-wrap; word-break: break-word;
+    color: var(--ink);
+    overflow-x: auto;
+    margin: 0;
+  }
+  /* 小さな注記 */
+  .ic-note-small {
+    margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.75;
+  }
+  /* 手動手順の details/summary */
+  .manual-details {
+    margin-top: 14px;
+    border: 1px solid rgba(58,50,69,0.1);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .manual-details summary {
+    cursor: pointer;
+    padding: 12px 16px;
+    font-size: 14px; font-weight: 900;
+    background: rgba(58,50,69,0.04);
+    list-style: none;
+    display: flex; align-items: center; gap: 8px;
+    user-select: none;
+  }
+  .manual-details summary::-webkit-details-marker { display: none; }
+  .manual-details summary::before {
+    content: "›";
+    font-size: 18px; font-weight: 900;
+    color: var(--ink-soft);
+    transition: transform .15s;
+    display: inline-block;
+    line-height: 1;
+  }
+  .manual-details[open] summary::before { transform: rotate(90deg); }
+  .manual-details summary:hover { background: rgba(58,50,69,0.07); }
+  .manual-details .det-body {
+    padding: 14px 18px 16px;
+  }
+  .manual-details .det-body ol {
+    margin: 0 0 12px 0; padding: 0 0 0 22px;
+    font-size: 13.5px; line-height: 1.85;
+  }
+  .manual-details .det-body ol li { margin-bottom: 6px; }
+  .manual-details .det-body ol li:last-child { margin-bottom: 0; }
+  /* details 間の区切り線 */
+  .manual-details + .manual-details {
+    margin-top: 6px;
+  }
+  /* 誘導リンク（末尾） */
+  .ic-link-note {
+    margin-top: 16px; font-size: 13.5px; line-height: 1.8;
+  }
+  .ic-link-note a {
+    color: #2f7fd1; font-weight: 800; text-decoration: none;
+  }
+  .ic-link-note a:hover { text-decoration: underline; }
+  /* 役割分担リスト（アイコン付き） */
+  .role-list {
+    list-style: none; margin: 10px 0 0; padding: 0;
+  }
+  .role-list li {
+    font-size: 13.5px; line-height: 1.8;
+    padding-left: 4px; margin-bottom: 4px;
+  }
+  .role-list li:last-child { margin-bottom: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .manual-details summary::before { transition: none; }
   }
 
   /* ---------- Lightbox: clickable shot-slot (additive) ---------- */
@@ -467,12 +561,87 @@
         <a class="guide-btn" href="https://naokijodan.github.io/codex-app-guide/" target="_blank" rel="noopener">📘 Codexアプリ導入ガイドを見る →</a>
       </div>
 
-      <div class="info-card">
+      <div class="info-card" id="mcp-connect">
         <div class="ic-head">
-          <span class="ic-emoji" aria-hidden="true">🔌</span>
-          <span class="ic-title">MCP「google-sheets」の接続</span>
+          <span class="ic-emoji sun" aria-hidden="true">🔌</span>
+          <span class="ic-title">MCP「google-sheets」の接続 ＝ ここがいちばん大事</span>
         </div>
-        <p>MCP <span class="ui">google-sheets</span> が、そのAI環境に接続済みであること。シートの読み書きに使います。</p>
+        <p>シートの読み込みと、翻訳結果の <span class="ui set">v5インポート</span> への書き戻しを担当するのが Google Sheets MCP です。これが無いと、AIは翻訳できてもシートに書き戻せません（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> や <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">認証エラー(401)</code> の原因はほぼこれ）。</p>
+
+        <ul class="role-list" style="margin-top:12px;">
+          <li>📊 <strong>Google Sheets MCP</strong> … シートの読み書き（本体）</li>
+          <li>🖼️ <strong>GAS（doGet）URL</strong> … 画像取得専用（書き込み機能なし）</li>
+        </ul>
+
+        <!-- おすすめ枠 -->
+        <div class="rec-box">
+          <div class="rec-head">👑 おすすめ：AIに聞いて、そのまま繋ぐ</div>
+          <p class="rec-lead">手順を覚えなくてOK。下の文章をそのままAIに貼ると、AIが自分の環境を調べて、繋がっているか・繋ぎ方を教えてくれます👇</p>
+          <pre class="copy-pre">あなたが今動いている環境に、Googleスプレッドシートを読み書きできる接続
+（google-sheets MCP）があるか確認してください。
+
+1. 使える接続／ツールを確認し、シートのセル・行を読み書きできるツールが
+   あるか調べる。
+2. 次のシートに「読み取りだけ」を軽くテストする（書き込みはしない）:
+   ここにシートのURLを貼る
+3. 結果を日本語で報告: 接続状態(OK/未接続) / 使えるツール名 / 読取テスト結果
+
+未接続なら、私が自分でつなげるように、「今あなたが動いているアプリ／CLIで
+google-sheets MCP を追加し、編集できるGoogleアカウントで認証する手順」を
+順番に教えてください。※「Google Drive」ではなく「Google Sheets（セル・行を
+書き込めるもの）」を選ぶよう明記してください。
+
+【禁止】Sheets API への curl 直接書込、GAS(doGet) URL での書込。これらで
+「書けた」と判断しないでください。判定は google-sheets MCP が使えるかだけ。</pre>
+          <p class="ic-note-small">💡 MCP追加とGoogle認証の最後の承認ボタンは人が押す操作です。AIは「やり方を教える」ところまで。</p>
+        </div>
+
+        <!-- 手動でつなぐ -->
+        <p style="margin-top:18px;font-size:13.5px;line-height:1.8;">自分で直接つなぎたい人は、お使いのツールを開いてください👇</p>
+
+        <details class="manual-details">
+          <summary>🅰 Codex app の手順</summary>
+          <div class="det-body">
+            <ol>
+              <li>左の「プラグイン」を開く</li>
+              <li>Google Sheets の連携を追加（インストール）</li>
+              <li>対象シートを編集できるGoogleアカウントで認証</li>
+              <li>Codexアプリを再起動</li>
+              <li>新しいチャットで実行</li>
+            </ol>
+            <p style="font-size:13px;font-weight:900;color:var(--ink-soft);margin-bottom:6px;">再実行のときの指示文</p>
+            <pre class="copy-pre">ebay-translation スキルを実行してください。
+シートの読み書きには Google Sheets MCP を使用してください。
+Sheets API への curl 直接書込や、doGet URL による書込は行わないでください。</pre>
+            <p class="ic-note-small">この一文を添えないと、AIが「Sheets APIを直接叩く」「GAS URLで書く」と遠回りして、また <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">unknown_action</code> や <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">401</code> に逆戻りすることがあります。</p>
+          </div>
+        </details>
+
+        <details class="manual-details">
+          <summary>🅱 Claude Code の手順</summary>
+          <div class="det-body">
+            <ol>
+              <li>google-sheets MCP サーバーを登録（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">claude mcp add</code> ／ 設定ファイル）</li>
+              <li>編集できるGoogleアカウントで認証</li>
+              <li>新しいセッションで実行</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="manual-details">
+          <summary>🅲 Gemini CLI の手順</summary>
+          <div class="det-body">
+            <ol>
+              <li>設定ファイルの <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">mcpServers</code> に google-sheets を追加</li>
+              <li>編集できるGoogleアカウントで認証</li>
+              <li>再起動して実行</li>
+            </ol>
+          </div>
+        </details>
+
+        <div class="ic-note-small" style="margin-top:14px;">⚠️ どの方法でも、「Google Drive」ではなく「Google Sheets」を選んでください（Driveだけだと特定タブへの行の書き込みに対応していないことが多いです）。</div>
+
+        <div class="ic-link-note">それでも書き込めないときは → <a href="#troubleshoot-write">下の「🆘 書き込めないとき」へ</a></div>
       </div>
 
       <div class="info-card">
@@ -739,6 +908,44 @@
         <div class="warn">
           <div class="w-title"><span aria-hidden="true">⏳</span>件数が多いと時間がかかる</div>
           <p>1件ずつAIが処理するため、<strong>件数が多いと時間がかかります</strong>。大量にこなしたいときは、その分の待ち時間を見込んでおきましょう。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 書き込めないとき ========== -->
+  <section id="troubleshoot-write">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🆘</span>
+        <h2>書き込めないとき（unknown_action / 認証エラー）</h2>
+        <p class="sub">AIが翻訳はできるのに、シートに書き戻せない――いちばん多いつまずきがこれです。</p>
+      </div>
+
+      <div class="warns">
+        <div class="warn">
+          <div class="w-title"><span aria-hidden="true">🔎</span>こんな症状が出ていませんか</div>
+          <ul class="ic-list" style="margin-top:6px;">
+            <li>AIが <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> を返す</li>
+            <li>Sheets API で <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">401</code>（CREDENTIALS_MISSING など）の認証エラーになる</li>
+            <li>渡したGAS（doGet）URLで書き込もうとして失敗する</li>
+            <li>シートの共有を「編集者」にしても直らない</li>
+          </ul>
+        </div>
+
+        <div class="warn safe">
+          <div class="w-title"><span aria-hidden="true">🔍</span>原因は共有設定ではありません</div>
+          <p>ebay-translation は、画像取得にGASのURL、シートの読み書きに Google Sheets MCP を使う設計です。GAS URLは画像取得専用で書き込み機能がありません（だから書込を投げると <code style="font-size:12px;background:rgba(43,212,160,0.12);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> になります）。書き込みの本体である Google Sheets MCP が、そのAI環境に接続されていない――これが原因です。MCPが無いと、シートを「編集者」にしても、そのAI側にGoogle認証が無いので書き込めません。</p>
+        </div>
+
+        <div class="warn">
+          <div class="w-title"><span aria-hidden="true">🛠️</span>直し方</div>
+          <p>上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」に戻って、お使いのAIにMCPを接続してください。いちばん簡単なのは、そこにある「👑 おすすめ：AIに聞いて、そのまま繋ぐ」のプロンプトをそのままAIに貼る方法です。</p>
+        </div>
+
+        <div class="warn safe">
+          <div class="w-title"><span aria-hidden="true">🔄</span>それでも無理なとき</div>
+          <p>連携メニューに Google Drive しか無い等で書込コネクタが用意できない環境では、AIの書き戻しは諦めて、生成された出品データ（CSV）を手でシートに貼る運用に切り替えてください。翻訳データの生成まではできているので、実害は「貼り付けのひと手間」だけです。</p>
         </div>
       </div>
     </div>
