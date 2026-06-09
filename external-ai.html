@@ -573,73 +573,317 @@
           <li>🖼️ <strong>GAS（doGet）URL</strong> … 画像取得専用（書き込み機能なし）</li>
         </ul>
 
-        <!-- おすすめ枠 -->
-        <div class="rec-box">
-          <div class="rec-head">👑 おすすめ：AIに聞いて、そのまま繋ぐ</div>
-          <p class="rec-lead">手順を覚えなくてOK。下の文章をそのままAIに貼ると、AIが自分の環境を調べて、繋がっているか・繋ぎ方を教えてくれます👇</p>
-          <pre class="copy-pre">あなたが今動いている環境に、Googleスプレッドシートを読み書きできる接続
-（google-sheets MCP）があるか確認してください。
-
-1. 使える接続／ツールを確認し、シートのセル・行を読み書きできるツールが
-   あるか調べる。
-2. 次のシートに「読み取りだけ」を軽くテストする（書き込みはしない）:
-   ここにシートのURLを貼る
-3. 結果を日本語で報告: 接続状態(OK/未接続) / 使えるツール名 / 読取テスト結果
-
-未接続なら、私が自分でつなげるように、「今あなたが動いているアプリ／CLIで
-google-sheets MCP を追加し、編集できるGoogleアカウントで認証する手順」を
-順番に教えてください。※「Google Drive」ではなく「Google Sheets（セル・行を
-書き込めるもの）」を選ぶよう明記してください。
-
-【禁止】Sheets API への curl 直接書込、GAS(doGet) URL での書込。これらで
-「書けた」と判断しないでください。判定は google-sheets MCP が使えるかだけ。</pre>
-          <p class="ic-note-small">💡 MCP追加とGoogle認証の最後の承認ボタンは人が押す操作です。AIは「やり方を教える」ところまで。</p>
+        <!-- ユーザーがやること -->
+        <div class="rec-box" style="margin-top:18px;background:linear-gradient(180deg,#f8fff8,#fff);border-color:rgba(43,212,160,0.45);">
+          <div class="rec-head" style="color:#137a5a;">✅ ユーザーがやることは基本3つ（環境により増えることがあります）</div>
+          <ol style="font-size:13.5px;line-height:1.9;margin:8px 0 0;padding:0 0 0 20px;">
+            <li>下の指示書全体をコピーして、自分のAI（Claude Code / Codex / Gemini）に貼り付ける</li>
+            <li>ブラウザが開いたらGoogleアカウントでログイン・承認する</li>
+            <li>AIが教えてくれるメールアドレスを、翻訳に使うスプレッドシートの「共有」に貼って「編集者」にする</li>
+          </ol>
+          <p class="ic-note-small" style="margin-top:10px;">💡 gcloud（Google公式ツール）やNode.jsがパソコンに入っていない場合、AIがインストールを案内することがあります。AIがコマンド実行の許可を求めたら「はい（Allow）」を選んでください。</p>
+          <p class="ic-note-small" style="margin-top:6px;">🔑 <strong>使うGoogleアカウントは個人アカウント（gmail.com）を推奨します。</strong>会社のGoogle Workspaceアカウントは、組織のセキュリティポリシーによって鍵の作成が禁止されている場合があります。</p>
         </div>
 
-        <!-- 手動でつなぐ -->
-        <p style="margin-top:18px;font-size:13.5px;line-height:1.8;">自分で直接つなぎたい人は、お使いのツールを開いてください👇</p>
+        <!-- おすすめ枠：指示書まるごとコピー -->
+        <div class="rec-box" style="margin-top:14px;">
+          <div class="rec-head">👑 おすすめ：下の指示書をそのままAIに渡すだけ</div>
+          <p class="rec-lead">手順を覚えなくてOK。AIが自分の環境を診断して、必要な作業をすべて案内してくれます。<strong>以下の全文をコピーして、お使いのAIに貼り付けてください👇</strong></p>
+          <pre class="copy-pre"># AIに渡すセットアップ指示書
+## 一括登録シートV5 ― Google Sheets MCP 設定ガイド
+
+---
+
+## ▼ まずここを読んでください（人間向け・1分）
+
+この文書は、あなたの代わりにAIがすべての設定作業を行うための指示書です。
+
+**基本はやることが3つです。環境によって増えることがあります**
+
+1. この文書全体をコピーして、自分のAI（Claude Code / Codex / Gemini）に貼り付ける ★☆☆
+2. ブラウザが開いたらGoogleアカウントでログインして承認する ★☆☆
+3. AIが教えてくれるメールアドレスを、翻訳に使うスプレッドシートの「共有」に貼って「編集者」にする ★☆☆
+
+**環境によって増える可能性がある作業**
+
+- gcloud（Google公式ツール）やNode.jsがパソコンに入っていない場合、AIがインストールの案内をすることがあります。画面の指示に従ってください。
+- AIがコマンドを実行するたびに「許可しますか？」と聞いてくる場合は、その都度「はい（Allow）」を選んでください。
+
+**使うGoogleアカウントについて**
+
+個人のGoogleアカウント（gmail.com）を使ってください。会社のGoogle Workspaceアカウントは、組織のセキュリティポリシーによって鍵の作成が禁止されている場合があります。
+
+**セキュリティについて（重要）**
+
+このあとAIがJSONファイル（鍵ファイル）を作ります。これはパスワードと同じ大切なファイルです。GitHubやSNS・チャットに貼らない、他人に渡さないよう注意してください。
+
+---
+
+## ▼ ここからはAIへの指示です（AIが読んで実行する）
+
+---
+
+# AI実行指示書：Google Sheets MCP セットアップ
+
+## 【全体ゴール】
+
+mcp-gsheets（サービスアカウント方式）を自分のツールに登録し、ユーザーの一括登録シートV5スプレッドシートへの書き込みができる状態にする。
+
+---
+
+## ステップA：自己診断（最初に必ず実行）
+
+作業を始める前に、以下を確認して内容を報告してください。
+
+1. 自分のツール種別（Claude Code CLI / Gemini CLI / Codex CLI / Codex App / その他）
+2. OS（Mac / Windows / Linux）
+3. 以下のコマンドが使えるか確認する
+
+Mac/Linuxの場合：
+  which gcloud 2>/dev/null && echo "gcloud: あり" || echo "gcloud: なし"
+  which node 2>/dev/null && echo "node: あり" || echo "node: なし"
+  which npx 2>/dev/null && echo "npx: あり" || echo "npx: なし"
+
+確認結果をユーザーに報告してから次のステップに進んでください。
+
+---
+
+## ステップB：サービスアカウントと鍵ファイルを作成する
+
+### gcloudがある場合（コマンドで自動作成）
+
+以下を順番に実行してください。[PROJECT_ID]は自分で名前を決めます（例：sheets-mcp-myname）。英小文字・数字・ハイフンのみ、6〜30文字。
+
+  gcloud auth login
+  gcloud projects create [PROJECT_ID]
+  gcloud config set project [PROJECT_ID]
+  gcloud services enable sheets.googleapis.com
+  gcloud iam service-accounts create sheets-mcp --display-name="Sheets MCP"
+  mkdir -p ~/.config/gcp
+  gcloud iam service-accounts keys create ~/.config/gcp/sheets-mcp-credentials.json \
+    --iam-account=sheets-mcp@[PROJECT_ID].iam.gserviceaccount.com
+  chmod 600 ~/.config/gcp/sheets-mcp-credentials.json
+
+Windowsの場合の鍵保存先：C:\Users\名前\sheets-mcp-key.json
+
+### gcloudがない場合（Google Cloud Consoleで手動作成）
+
+ブラウザで https://console.cloud.google.com/ を開き、以下を1ステップずつユーザーに案内してください。
+
+1. プロジェクトを作成する（左上のプロジェクト選択 → 新しいプロジェクト）
+2. Google Sheets APIを有効にする（APIとサービス → ライブラリ → "Google Sheets API"を検索 → 有効にする）
+   ※ Drive APIは不要です
+3. サービスアカウントを作成する（IAMと管理 → サービスアカウント → 作成。名前：sheets-mcp）
+4. 鍵ファイル（JSON）をダウンロードする（作成したアカウントの「キー」タブ → 鍵を追加 → JSON → 作成）
+5. ダウンロードしたファイルを安全な場所に移動する
+   Mac：~/.config/gcp/sheets-mcp-credentials.json に移動後、chmod 600 を実行
+   Windows：C:\Users\名前\sheets-mcp-key.json に移動
+
+---
+
+## ステップC：google-sheets MCPをAIのツールに登録する
+
+ステップAで確認したツール種別に合わせて実行してください。
+
+### Claude Code CLI の場合
+公式リファレンス: https://code.claude.com/docs/en/mcp
+
+重要な構文ルール（公式ドキュメントに明記）：
+--env フラグの直後にサーバー名を置くと、CLIがサーバー名を環境変数のペアとして読み取り拒否します。
+--env と サーバー名の間には、必ず --transport stdio などの別オプションを挟んでください。
+-- (ダブルダッシュ) の後がサーバーの実行コマンドです。
+
+  claude mcp add --scope user \
+    --env GOOGLE_APPLICATION_CREDENTIALS=<鍵パス> \
+    --env GOOGLE_PROJECT_ID=<ProjectID> \
+    --transport stdio \
+    google-sheets \
+    -- npx -y mcp-gsheets@latest
+
+設定は ~/.claude.json（userスコープ）に保存されます。
+登録確認：claude mcp list
+
+### Gemini CLI の場合
+公式リファレンス: https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
+
+重要な構文ルール（公式ドキュメントに明記）：
+gemini mcp add では -- 区切りは不要です。--transport stdio はデフォルトのため省略できます。
+
+  gemini mcp add --scope user \
+    -e GOOGLE_APPLICATION_CREDENTIALS=<鍵パス> \
+    -e GOOGLE_PROJECT_ID=<ProjectID> \
+    google-sheets npx -y mcp-gsheets@latest
+
+または ~/.gemini/settings.json に直接記述する方法（公式に記載あり）：
+  {
+    "mcpServers": {
+      "google-sheets": {
+        "command": "npx",
+        "args": ["-y", "mcp-gsheets@latest"],
+        "env": {
+          "GOOGLE_APPLICATION_CREDENTIALS": "<鍵パス>",
+          "GOOGLE_PROJECT_ID": "<ProjectID>"
+        }
+      }
+    }
+  }
+
+### Codex CLI の場合
+公式リファレンス: https://developers.openai.com/codex/config-reference
+
+設定ファイル ~/.codex/config.toml を開き、以下を末尾に追記してください（既存の内容は消さないこと）。
+
+Mac/Linux：
+  [mcp_servers.google-sheets]
+  command = "npx"
+  args = ["-y", "mcp-gsheets@latest"]
+
+  [mcp_servers.google-sheets.env]
+  GOOGLE_APPLICATION_CREDENTIALS = "/Users/名前/.config/gcp/sheets-mcp-credentials.json"
+  GOOGLE_PROJECT_ID = "<ProjectID>"
+
+Windows（公式手順）：
+  [mcp_servers.google-sheets]
+  command = "npx"
+  args = ["-y", "mcp-gsheets@latest"]
+
+  [mcp_servers.google-sheets.env]
+  GOOGLE_APPLICATION_CREDENTIALS = "C:\\Users\\名前\\sheets-mcp-key.json"
+  GOOGLE_PROJECT_ID = "<ProjectID>"
+
+※ Windowsで npx が起動に失敗する場合の回避策（公式記載ではなく、コミュニティで報告されている方法）：
+  [mcp_servers.google-sheets]
+  command = "cmd"
+  args = ["/c", "npx", "-y", "mcp-gsheets@latest"]
+まず公式の npx のままで試し、動作しない場合にこの回避策を試してください。
+
+### Codex App（GUIアプリ）の場合
+※ Unknown（未確認）：Codex Appの設定が画面上の設定メニューから行えるか、または config.toml を直接書き換えることで反映されるかはバージョンによって異なる可能性があります。
+
+以下の両方を試してください：
+方法1：上記「Codex CLI の場合」と同じ内容を ~/.codex/config.toml に追記し、アプリを再起動する。
+方法2：アプリ内の Settings または Plugins メニューを探し、MCPサーバーの追加項目があれば以下を入力する：
+  - サーバー名：google-sheets
+  - コマンド：npx
+  - 引数：-y mcp-gsheets@latest
+  - 環境変数：GOOGLE_APPLICATION_CREDENTIALS=<鍵パス>、GOOGLE_PROJECT_ID=<ProjectID>
+
+---
+
+## ステップD：サービスアカウントのメールアドレスをユーザーに伝える
+
+鍵ファイル（JSON）の中の client_email を読み取り、ユーザーに以下の形式で伝えてください。
+
+📋 スプレッドシートの共有設定をお願いします
+
+以下のメールアドレスを、翻訳に使うスプレッドシートの「共有」に追加して、
+権限を「編集者」にしてください。
+
+  [ここにclient_emailの値を表示]
+
+手順：
+1. スプレッドシートを開く
+2. 右上の「共有」ボタンをクリック
+3. 上のメールアドレスを貼り付ける
+4. 権限を「編集者」にして「送信」または「完了」をクリック
+
+完了したら教えてください。
+
+---
+
+## ステップE：動作確認
+
+ユーザーがシートの共有設定を完了したら、ツールを再起動してから以下を実行してください。
+
+1. メタデータ取得：google-sheets MCPを使って、対象スプレッドシートのシート名一覧を取得する。
+2. テスト書き込み：シートの末尾の空行に「MCP接続テスト OK」と書き込む。
+3. 読み戻し確認：同じセルの値を読み取り、書き込んだ内容と一致するか確認する。
+4. テスト内容を削除する。
+
+主なエラーと対処：
+- unknown_action / MCPが見つからない → MCP未接続（登録未完了 or 再起動未実施）。ステップCを再確認する。
+- 401 Unauthorized → 鍵ファイルのパスが間違っている、または鍵ファイルが壊れている。
+- 403 Forbidden → シートの共有設定が未完了、または権限が「閲覧者」になっている。ステップDのメールアドレスを「編集者」で共有し直す。
+- 404 Not Found → スプレッドシートIDが間違っている。</pre>
+          <p class="ic-note-small">💡 Googleログインの承認ボタンは人が押す操作です。AIは「やり方を案内・実行する」ところまでで、最後の承認はあなたが行います。</p>
+          <p class="ic-note-small" style="margin-top:6px;">🔐 鍵ファイル（JSON）はパスワードと同等の機密情報です。GitHubやSNS・チャットに貼らないでください。</p>
+        </div>
+
+        <!-- 各ツールのコマンド早見 -->
+        <p style="margin-top:20px;font-size:13.5px;line-height:1.8;font-weight:900;">各ツールのMCP登録コマンド早見（上の指示書から抜粋）</p>
 
         <details class="manual-details">
-          <summary>🅰 Codex app の手順</summary>
+          <summary>🅱 Claude Code CLI のコマンド</summary>
           <div class="det-body">
-            <ol>
-              <li>左の「プラグイン」を開く</li>
-              <li>Google Sheets の連携を追加（インストール）</li>
-              <li>対象シートを編集できるGoogleアカウントで認証</li>
-              <li>Codexアプリを再起動</li>
-              <li>新しいチャットで実行</li>
-            </ol>
-            <p style="font-size:13px;font-weight:900;color:var(--ink-soft);margin-bottom:6px;">再実行のときの指示文</p>
-            <pre class="copy-pre">ebay-translation スキルを実行してください。
-シートの読み書きには Google Sheets MCP を使用してください。
-Sheets API への curl 直接書込や、doGet URL による書込は行わないでください。</pre>
-            <p class="ic-note-small">この一文を添えないと、AIが「Sheets APIを直接叩く」「GAS URLで書く」と遠回りして、また <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">unknown_action</code> や <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">401</code> に逆戻りすることがあります。</p>
+            <p style="font-size:13px;margin-bottom:8px;">公式リファレンス: <a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener" style="color:#2f7fd1;">https://code.claude.com/docs/en/mcp</a></p>
+            <p style="font-size:13px;margin-bottom:8px;font-weight:700;">公式ドキュメントに明記されている構文ルール：<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">--env</code> の直後にサーバー名を置くとCLIが拒否します。<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">--transport stdio</code> を間に挟んでください。</p>
+            <pre class="copy-pre">claude mcp add --scope user \
+  --env GOOGLE_APPLICATION_CREDENTIALS=&lt;鍵パス&gt; \
+  --env GOOGLE_PROJECT_ID=&lt;ProjectID&gt; \
+  --transport stdio \
+  google-sheets \
+  -- npx -y mcp-gsheets@latest</pre>
+            <p class="ic-note-small">登録確認: <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">claude mcp list</code> / 設定は <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">~/.claude.json</code> に保存されます。</p>
           </div>
         </details>
 
         <details class="manual-details">
-          <summary>🅱 Claude Code の手順</summary>
+          <summary>🅲 Gemini CLI のコマンド</summary>
           <div class="det-body">
-            <ol>
-              <li>google-sheets MCP サーバーを登録（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">claude mcp add</code> ／ 設定ファイル）</li>
-              <li>編集できるGoogleアカウントで認証</li>
-              <li>新しいセッションで実行</li>
-            </ol>
+            <p style="font-size:13px;margin-bottom:8px;">公式リファレンス: <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md" target="_blank" rel="noopener" style="color:#2f7fd1;">gemini-cli / mcp-server.md</a></p>
+            <p style="font-size:13px;margin-bottom:8px;font-weight:700;">公式ドキュメントに明記されている構文ルール：<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">gemini mcp add</code> では <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">--</code> 区切りは不要。<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">--transport stdio</code> はデフォルトなので省略できます。</p>
+            <pre class="copy-pre">gemini mcp add --scope user \
+  -e GOOGLE_APPLICATION_CREDENTIALS=&lt;鍵パス&gt; \
+  -e GOOGLE_PROJECT_ID=&lt;ProjectID&gt; \
+  google-sheets npx -y mcp-gsheets@latest</pre>
+            <p style="font-size:13px;margin-top:10px;margin-bottom:4px;font-weight:700;">または <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">~/.gemini/settings.json</code> に直接記述（公式に記載あり）：</p>
+            <pre class="copy-pre">{
+  "mcpServers": {
+    "google-sheets": {
+      "command": "npx",
+      "args": ["-y", "mcp-gsheets@latest"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "&lt;鍵パス&gt;",
+        "GOOGLE_PROJECT_ID": "&lt;ProjectID&gt;"
+      }
+    }
+  }
+}</pre>
           </div>
         </details>
 
         <details class="manual-details">
-          <summary>🅲 Gemini CLI の手順</summary>
+          <summary>🅰 Codex CLI のコマンド（config.toml）</summary>
           <div class="det-body">
-            <ol>
-              <li>設定ファイルの <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">mcpServers</code> に google-sheets を追加</li>
-              <li>編集できるGoogleアカウントで認証</li>
-              <li>再起動して実行</li>
-            </ol>
+            <p style="font-size:13px;margin-bottom:8px;">公式リファレンス: <a href="https://developers.openai.com/codex/config-reference" target="_blank" rel="noopener" style="color:#2f7fd1;">https://developers.openai.com/codex/config-reference</a></p>
+            <p style="font-size:13px;margin-bottom:8px;"><code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">~/.codex/config.toml</code> の末尾に追記します（既存の内容は消さないこと）。</p>
+            <pre class="copy-pre">[mcp_servers.google-sheets]
+command = "npx"
+args = ["-y", "mcp-gsheets@latest"]
+
+[mcp_servers.google-sheets.env]
+GOOGLE_APPLICATION_CREDENTIALS = "/Users/名前/.config/gcp/sheets-mcp-credentials.json"
+GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
+            <p class="ic-note-small" style="margin-top:8px;">Windows では鍵パスを <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">"C:\\Users\\名前\\sheets-mcp-key.json"</code> に変更してください。Windowsで <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">npx</code> が起動しない場合の回避策（公式記載ではなく、コミュニティで報告されている方法）として <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">command = "cmd"</code> / <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">args = ["/c", "npx", "-y", "mcp-gsheets@latest"]</code> に書き換える方法があります。まず公式手順を試してください。</p>
           </div>
         </details>
 
-        <div class="ic-note-small" style="margin-top:14px;">⚠️ どの方法でも、「Google Drive」ではなく「Google Sheets」を選んでください（Driveだけだと特定タブへの行の書き込みに対応していないことが多いです）。</div>
+        <details class="manual-details">
+          <summary>🅳 Codex App（GUIアプリ）の登録方法</summary>
+          <div class="det-body">
+            <p style="font-size:13px;line-height:1.8;"><strong>Unknown（未確認）：</strong>Codex Appで設定画面（Settings / Plugins）からMCPを追加できるか、または <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">config.toml</code> の直接編集で反映されるかは、バージョンによって異なる可能性があります。</p>
+            <p style="font-size:13px;line-height:1.8;margin-top:8px;"><strong>方法1：</strong>上記「Codex CLI」と同じ内容を <code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">~/.codex/config.toml</code> に追記し、アプリを再起動して確認する。</p>
+            <p style="font-size:13px;line-height:1.8;margin-top:8px;"><strong>方法2：</strong>アプリ内の Settings または Plugins メニューを探し、MCP追加項目があれば以下を入力する：</p>
+            <ul style="font-size:13px;line-height:1.85;margin:6px 0 0;padding-left:20px;">
+              <li>サーバー名：<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">google-sheets</code></li>
+              <li>コマンド：<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">npx</code></li>
+              <li>引数：<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">-y mcp-gsheets@latest</code></li>
+              <li>環境変数：<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">GOOGLE_APPLICATION_CREDENTIALS=&lt;鍵パス&gt;</code>、<code style="font-size:11.5px;background:rgba(58,50,69,0.06);padding:1px 4px;border-radius:4px;font-family:ui-monospace,monospace;">GOOGLE_PROJECT_ID=&lt;ProjectID&gt;</code></li>
+            </ul>
+          </div>
+        </details>
+
+        <div class="ic-note-small" style="margin-top:14px;">⚠️ どの方法でも、「Google Drive」ではなく「Google Sheets」（セル・行を書き込めるもの）を選んでください。Driveだけだと特定タブへの行の書き込みに対応していないことがあります。</div>
 
         <div class="ic-link-note">それでも書き込めないときは → <a href="#troubleshoot-write">下の「🆘 書き込めないとき」へ</a></div>
       </div>
@@ -670,11 +914,11 @@ Sheets API への curl 直接書込や、doGet URL による書込は行わな�
         <div class="step s1">
           <span class="num" aria-hidden="true">1</span>
           <div class="st-title">スプレッドシートの共有設定を変える</div>
-          <p><strong>外部のAIツールに読み取り・書き込みをさせるため</strong>、最初に一度だけシートの共有設定を変えます。メニュー <span class="ui set">ファイル</span> → <span class="ui">共有</span> → <span class="ui">他のユーザーと共有</span> を開きます。</p>
-          <p>共有ダイアログの <span class="ui">一般的なアクセス</span> を <span class="ui">リンクを知っている全員</span> にして、右側の権限を <span class="pick">編集者</span> に変更し、<span class="ui">完了</span> を押します。</p>
+          <p><strong>外部のAIツール（サービスアカウント）に読み取り・書き込みをさせるため</strong>、最初に一度だけシートの共有設定を変えます。メニュー <span class="ui set">ファイル</span> → <span class="ui">共有</span> → <span class="ui">他のユーザーと共有</span> を開きます。</p>
+          <p>共有ダイアログの入力欄に、<strong>AIが作った鍵ファイルに書かれているサービスアカウントのメールアドレス</strong>（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">〜@〜.iam.gserviceaccount.com</code>）を貼り付け、権限を <span class="pick">編集者</span> にして <span class="ui">送信</span> を押します。</p>
+          <p class="ic-note-small" style="margin-top:6px;">💡 サービスアカウントのメールアドレスの確認方法など詳細は、上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」をご覧ください。</p>
           <div class="shot-row">
-            <div class="shot-slot has-img" data-img="images/ex-15.jpg" data-alt="ファイル→共有→他のユーザーと共有を開く">📷 ①共有を開く</div>
-            <div class="shot-slot has-img" data-img="images/ex-16.jpg" data-alt="一般的なアクセスを「リンクを知っている全員」にして、権限を「編集者」にする">📷 ②リンク共有・編集者に</div>
+            <div class="shot-slot has-img" data-img="images/ex-15.jpg" data-alt="ファイル→共有→他のユーザーと共有を開き、サービスアカウントのメールアドレスを入力して編集者で共有する">📷 ①共有を開く</div>
           </div>
         </div>
 
@@ -935,12 +1179,12 @@ Sheets API への curl 直接書込や、doGet URL による書込は行わな�
 
         <div class="warn safe">
           <div class="w-title"><span aria-hidden="true">🔍</span>原因は共有設定ではありません</div>
-          <p>ebay-translation は、画像取得にGASのURL、シートの読み書きに Google Sheets MCP を使う設計です。GAS URLは画像取得専用で書き込み機能がありません（だから書込を投げると <code style="font-size:12px;background:rgba(43,212,160,0.12);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> になります）。書き込みの本体である Google Sheets MCP が、そのAI環境に接続されていない――これが原因です。MCPが無いと、シートを「編集者」にしても、そのAI側にGoogle認証が無いので書き込めません。</p>
+          <p>ebay-translation は、画像取得にGASのURL、シートの読み書きに Google Sheets MCP を使う設計です。GAS URLは画像取得専用で書き込み機能がありません（だから書込を投げると <code style="font-size:12px;background:rgba(43,212,160,0.12);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> になります）。書き込みの本体である Google Sheets MCP が、そのAI環境に接続されていない――これが原因です。MCP接続にはサービスアカウント（鍵ファイル）の作成が必要で、シートを「編集者」にするだけでは不十分です。</p>
         </div>
 
         <div class="warn">
           <div class="w-title"><span aria-hidden="true">🛠️</span>直し方</div>
-          <p>上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」に戻って、お使いのAIにMCPを接続してください。いちばん簡単なのは、そこにある「👑 おすすめ：AIに聞いて、そのまま繋ぐ」のプロンプトをそのままAIに貼る方法です。</p>
+          <p>上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」に戻って、AIにMCPを接続してください。いちばん簡単なのは、そこにある「👑 おすすめ：下の指示書をそのままAIに渡すだけ」の指示書全体をコピーして、お使いのAIに貼り付ける方法です。AIが自動でサービスアカウントの作成から鍵ファイル生成・MCPの登録まで案内してくれます。最後にAIが教えてくれるメールアドレスを、スプレッドシートの「共有」→「編集者」で追加すれば完了です。</p>
         </div>
 
         <div class="warn safe">
