@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>携帯アプリからシート翻訳を実行する手順書</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #5c6773;
+      --line: #d8dee5;
+      --paper: #ffffff;
+      --soft: #f4f7fa;
+      --blue: #0f5f99;
+      --green: #247a57;
+      --red: #a63a3a;
+      --yellow: #f2c94c;
+      --shadow: 0 10px 28px rgba(23, 32, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", sans-serif;
+      color: var(--ink);
+      background: #eef2f6;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f5f99 0%, #247a57 100%);
+      color: #fff;
+      padding: 44px 18px 36px;
+    }
+
+    .wrap {
+      width: min(1060px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 28px;
+      align-items: end;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .meta {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    main {
+      padding: 28px 0 56px;
+    }
+
+    nav {
+      margin: -18px auto 26px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: var(--soft);
+      font-size: 14px;
+    }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin: 22px 0;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 26px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .notice {
+      border-left: 5px solid var(--yellow);
+      background: #fff9e6;
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin: 14px 0;
+    }
+
+    .danger {
+      border-left-color: var(--red);
+      background: #fff1f1;
+    }
+
+    .ok {
+      border-left-color: var(--green);
+      background: #eef8f3;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .step:first-child {
+      border-top: 0;
+      padding-top: 4px;
+    }
+
+    .num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      vertical-align: top;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    th {
+      background: #eaf1f7;
+      font-weight: 800;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    code {
+      background: #eef2f6;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #111827;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      background: #fbfcfd;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    .tag {
+      display: inline-block;
+      background: #eaf1f7;
+      color: #264b63;
+      border: 1px solid #c7d7e3;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 2px 4px 2px 0;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .checklist li {
+      margin: 7px 0;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 10px 0 40px;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 18px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <h1>携帯アプリからシート翻訳を実行する手順書</h1>
+        <p class="lead">パソコンで進めているGoogleスプレッドシート翻訳作業を、携帯のCodexアプリへ引き継ぎ、外出先から続きの作業を進めるための運用記事です。</p>
+      </div>
+      <div class="meta">
+        <strong>作成日:</strong> 2026/06/11<br>
+        <strong>対象:</strong> 任意の翻訳用シート<br>
+        <strong>参照スキル:</strong> ebay-translation<br>
+        <strong>目的:</strong> 携帯から迷わず安全に翻訳作業を引き継ぐ
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav aria-label="目次">
+      <a href="#summary">全体像</a>
+      <a href="#handoff">PCから携帯へ引き継ぐ</a>
+      <a href="#mobile">携帯での実行手順</a>
+      <a href="#setup">初期設定</a>
+      <a href="#prompt">送信文テンプレ</a>
+      <a href="#ai-guide">AIに渡す手順書</a>
+      <a href="#skill">スキル本文の要点</a>
+      <a href="#qa">確認リスト</a>
+    </nav>
+
+    <section id="summary">
+      <h2>全体像</h2>
+      <p>携帯からの操作は、基本的に「AIにチェックボックス列を作ってもらう」→「翻訳したい行にチェックを入れる」→「Codexアプリへ依頼文を送る」→「Codexが翻訳スキルに従ってeBay用データを書き込む」という流れです。</p>
+      <div class="notice ok">
+        <strong>ポイント:</strong> シート名は固定ではありません。自分の運用に合わせて、任意のシート名をAIへ伝えれば使えます。この記事では例として <code>翻訳元シート</code>、<code>eBay出品用シート</code>、<code>タグ参照シート</code> と書きます。
+      </div>
+      <div class="notice danger">
+        <strong>重要:</strong> eBay出品データは売上とアカウント安全に直結します。翻訳は「1行ずつ商品として精査」が最優先です。複数行を雑にまとめて判断しない運用にしてください。
+      </div>
+    </section>
+
+    <section id="handoff">
+      <h2>PC作業を携帯Codexアプリへ引き継ぐ</h2>
+      <p>Codexはパソコンだけでなく、携帯アプリからも同じように依頼できます。パソコンで作っている翻訳ルール、シート設定、作業の続きは、携帯のCodexアプリに「この作業を引き継ぎたい」と伝えることで、外出先から続けられます。</p>
+      <div class="notice ok">
+        <strong>伝えたいこと:</strong> 家ではパソコンで準備や確認を行い、外では携帯からチェック済み行の翻訳を依頼できます。外出先でも、Googleスプレッドシートアプリでチェックを入れ、Codexアプリに実行依頼を送れば作業を進められます。
+      </div>
+      <h3>携帯Codexへ最初に送る引き継ぎ文</h3>
+<pre>パソコンで進めているeBay用スプレッドシート翻訳作業を、携帯のCodexアプリで引き継ぎたいです。
+この手順書に従って、チェック済みの商品行を翻訳し、eBay出品用シートへ書き込んでください。
+作業前に、使用するシート名、読込元、書込先、タグ参照シート、チェック列を確認してください。</pre>
+    </section>
+
+    <section id="mobile">
+      <h2>携帯アプリでの実行手順</h2>
+      <div class="step">
+        <div class="num">1</div>
+        <div>
+          <h3>AIにチェックボックス列を作ってもらう</h3>
+          <p>初回だけ、AIに「翻訳対象を選ぶためのチェックボックス列」を作ってもらいます。基本はA列をチェック列にします。</p>
+<pre>このスプレッドシートで、翻訳対象を選ぶためのチェックボックス列を作ってください。
+翻訳元シートのA列をチェック列にして、3行目以降の商品行にチェックボックスを入れてください。
+A列の見出しは「翻訳対象」にしてください。</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div>
+          <h3>Googleスプレッドシートを開く</h3>
+          <p>携帯のGoogleスプレッドシートアプリで対象シートを開きます。シート名は任意です。自分の運用で使っている翻訳元シートを開いてください。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div>
+          <h3>翻訳したい行のA列にチェックを入れる</h3>
+          <p>対象商品の行だけ、A列のチェックボックスをオンにします。チェック済み行は連続範囲として扱うため、できるだけ途中に空き行を作らないでください。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div>
+          <h3>Codexアプリで依頼文を送る</h3>
+          <p>Codexに <code>スプレッドシート翻訳</code> と送ります。Codexが「どのシートで実行しますか？」と聞いたら、自分が使っている任意のシート名やプロファイル名を返信します。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div>
+          <h3>完了後に書込先シートを確認する</h3>
+          <p>書込先のeBay出品用シートを開き、タイトル、説明、カテゴリID、タグ、Item Specificsが入っているか確認します。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="setup">
+      <h2>初期設定でAIに伝える内容</h2>
+      <p>個人用のシート名やURLは記事に固定で書かず、使う人が自分のシート名に置き換えてAIへ伝えます。</p>
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>例</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>読込元</td>
+            <td>翻訳元シート</td>
+            <td>日本語の商品情報が入っているシートです。</td>
+          </tr>
+          <tr>
+            <td>書込先</td>
+            <td>eBay出品用シート</td>
+            <td>英語タイトル、説明、カテゴリID、Item Specificsを書き込むシートです。</td>
+          </tr>
+          <tr>
+            <td>タグ参照</td>
+            <td>タグ参照シート</td>
+            <td>使用できる配送タグや分類タグを管理するシートです。</td>
+          </tr>
+          <tr>
+            <td>チェック列</td>
+            <td>A列</td>
+            <td>翻訳対象の商品だけチェックする列です。</td>
+          </tr>
+          <tr>
+            <td>担当者名</td>
+            <td>Codex</td>
+            <td>書込先シートの担当者欄に入れる名前です。</td>
+          </tr>
+          <tr>
+            <td>doGet URL</td>
+            <td>GAS WebアプリURL</td>
+            <td>画像取得に使います。わからない場合は、AIに既存設定を確認してもらいます。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <details>
+        <summary>AIに初期設定を依頼する文面</summary>
+<pre>このスプレッドシートを、携帯CodexアプリからeBay翻訳できるように設定してください。
+
+やってほしいこと:
+1. 翻訳元シートのA列にチェックボックス列を作る
+2. A列の見出しを「翻訳対象」にする
+3. チェック済み行だけを翻訳対象にする運用にする
+4. 読込元シート名、書込先シート名、タグ参照シート名、doGet URL、担当者名を確認する
+5. 確認した内容を、次回から携帯Codexアプリで使える手順としてまとめる
+
+注意:
+既存の商品データや書込先の既存行は上書きしないでください。
+書込先は、仕入れ先コード列が空の最初の行から追記してください。</pre>
+      </details>
+      <p class="small">doGet URLは画像取得に使う内部設定です。通常、携帯から毎回手入力する必要はありません。</p>
+    </section>
+
+    <section id="prompt">
+      <h2>携帯から送る文面テンプレ</h2>
+      <div class="grid">
+        <div>
+          <h3>通常の入口</h3>
+<pre>スプレッドシート翻訳</pre>
+          <p>Codexが確認してきたら、対象のシート名またはプロファイル名だけ返信します。</p>
+<pre>自分の翻訳用シート名</pre>
+          <p>または</p>
+<pre>今回使うプロファイル名</pre>
+        </div>
+        <div>
+          <h3>対象を最初から指定する場合</h3>
+<pre>スプレッドシート翻訳を「自分の翻訳用シート名」で実行してください。</pre>
+<pre>チェック済み行だけを、eBay出品用シートへ翻訳して書き込んでください。</pre>
+          <p>ただし、運用ルール上は最初に <code>スプレッドシート翻訳</code> とだけ送る形が一番安全です。</p>
+        </div>
+      </div>
+      <div class="notice">
+        <strong>入口ルール:</strong> ユーザーが「スプレッドシート翻訳」とだけ送った場合、Codexは即実行せず、まず「どのシートで実行しますか？」と1問だけ確認します。
+      </div>
+    </section>
+
+    <section id="ai-guide">
+      <h2>AIに渡す手順書</h2>
+      <p>以下を携帯Codexアプリや別のAIに渡すと、作業の前提を共有できます。個人用のシート名は、実際に使う名前へ置き換えてください。</p>
+<pre>あなたはeBay出品用のスプレッドシート翻訳を担当します。
+
+目的:
+日本語の商品データを、eBay用の英語タイトル、説明、カテゴリID、タグ、Item Specificsに変換し、書込先シートへ追記してください。
+
+最初に確認すること:
+1. 使用するスプレッドシート
+2. 読込元シート名
+3. 書込先シート名
+4. タグ参照シート名
+5. 画像取得用doGet URL
+6. チェック列
+7. 担当者名
+
+初期設定:
+読込元シートのA列に、翻訳対象を選ぶチェックボックス列を作ってください。
+A列の見出しは「翻訳対象」にしてください。
+3行目以降の商品行にチェックボックスを入れてください。
+
+実行条件:
+チェック済み行だけを翻訳対象にしてください。
+チェック済み行は連続範囲として扱ってください。
+書込先シートの既存行は上書きせず、仕入れ先コード列が空の最初の行から追記してください。
+
+品質ルール:
+1商品ずつ、商品として精査してください。
+元データが新品・未使用でも、eBay用には中古品または保管品として扱ってください。
+Title / Description / Item Specificsに New / Brand New を使わないでください。
+Descriptionは480字以内、英語、1行にしてください。
+配送、梱包、値下げ、返品、出品者都合の説明は入れないでください。
+タグは許可リストから0個または1個だけ選んでください。
+カテゴリIDは空欄のままにしないでください。
+書込後は必ず読み戻して、列ずれ、タイトル文字数、タグ、カテゴリID、Item Specificsを確認してください。
+
+停止条件:
+画像と商品行が一致しない場合、同じエラーが続く場合、カテゴリIDが大量に空欄の場合、eBay禁止語や危険素材ワードが見える場合は、作業を止めて報告してください。</pre>
+    </section>
+
+    <section id="skill">
+      <h2>ebay-translation スキル本文の要点</h2>
+      <p>この手順は、ローカルの <code>ebay-translation</code> スキルに基づいています。携帯からの依頼でも、実際の翻訳品質はこのスキル本文のルールに従います。</p>
+      <p>
+        <span class="tag">1行ずつ精査</span>
+        <span class="tag">中古品前提</span>
+        <span class="tag">画像はdoGet優先</span>
+        <span class="tag">タグは0個または1個</span>
+        <span class="tag">カテゴリID必須確認</span>
+        <span class="tag">書込後QA必須</span>
+      </p>
+
+      <details open>
+        <summary>第一ルール: 情報精査は1行ずつ</summary>
+<pre>これは商品です。データ行ではありません。1件1件が実際に販売される商品です。
+
+情報精査（ソーステキスト読込・画像確認・タグ判定・カテゴリ判定・Title/Description/Item Specifics生成）は必ず1行ずつ実行する。
+
+バッチ処理で複数行を一度に判定してはならない。</pre>
+      </details>
+
+      <details>
+        <summary>携帯運用で特に重要なルール</summary>
+<pre>・元データが「新品」「未使用」「未開封」でも、eBay出品では基本的に中古品 / used-stored collectible 扱いにする。
+・Title / Description / Item Specificsで New / Brand New は使わない。
+・Descriptionは480字以内、ASCII、1行のみ。
+・配送方法、梱包条件、値下げ、返品、出品者都合の説明は入れない。
+・タグはタグ参照シートA列の許可リストから0個または1個だけ。
+・categoryIdが空欄のまま残る場合は、完了前に必ず補完を試みる。
+・書込後に必ず読み戻して、列ずれ、タイトル文字数、タグ、カテゴリID、Item Specificsを確認する。</pre>
+      </details>
+
+      <details>
+        <summary>画像取得ルールの抜粋</summary>
+<pre>商品画像はユーザーのGAS Webアプリ（doGet）からbase64で取得する。
+
+safeImagesがあれば、それだけをvisionに渡す。
+safeImagesが空の行だけmercariUrlsを使う。
+
+doGet URLが指示文またはプロファイルに無ければエラーで停止する。
+=IMAGEのメルカリURLに勝手に落とさない。</pre>
+      </details>
+
+      <details>
+        <summary>書込位置ルールの抜粋</summary>
+<pre>対象行範囲はソースシートの行範囲のみを指す。
+書込先シートには H列（仕入れ先コード列）が空の最初の行を毎バッチ再取得して特定し、その行から順次書き込む。
+絶対に書込先シートの既存データを上書きしない。</pre>
+      </details>
+    </section>
+
+    <section id="qa">
+      <h2>実行前後の確認リスト</h2>
+      <h3>実行前</h3>
+      <ul class="checklist">
+        <li>翻訳したい商品のA列だけチェックされている。</li>
+        <li>チェック行ができるだけ連続している。</li>
+        <li>日本語タイトル、説明、価格、URL、画像が元シートに入っている。</li>
+        <li>今回使うシート名、読込元、書込先を間違えていない。</li>
+      </ul>
+
+      <h3>実行後</h3>
+      <ul class="checklist">
+        <li>書込先のeBay出品用シートに新しい行が追加されている。</li>
+        <li>M列の英語タイトルが80文字以内で、商品内容に合っている。</li>
+        <li>N列の説明に配送・梱包・値下げ・返品などの不要文が入っていない。</li>
+        <li>D列タグが1つ以内、F列カテゴリIDが空欄ではない。</li>
+        <li>P列以降のItem Specificsが商品に合っている。</li>
+        <li>元データが新品でも、eBay側で <code>New</code> / <code>Brand New</code> と書かれていない。</li>
+      </ul>
+
+      <div class="notice danger">
+        <strong>停止すべき状態:</strong> 画像の商品と行の商品が違う、カテゴリIDが大量に空欄、タイトルに根拠のないRare/Limitedが入る、同じエラーが続く、eBay禁止語や危険素材ワードが見える場合は、追加作業を止めて確認してください。
+      </div>
+    </section>
+
+    <section>
+      <h2>この記事の根拠</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th>Fact</th>
+            <td><code>~/.codex/ebay-translation-profiles.json</code> の構造を確認し、シート名、読込元、書込先、タグ参照、チェック列、担当者名をプロファイル化できることを確認しました。個人用のシート名は本文から伏せています。</td>
+          </tr>
+          <tr>
+            <th>Fact</th>
+            <td><code>~/.codex/skills/ebay-translation/SKILL.md</code> のスキル本文から、1行ずつ精査、中古品前提、doGet画像取得、書込後QAなどのルールを確認しました。</td>
+          </tr>
+          <tr>
+            <th>Inference</th>
+            <td>携帯アプリでは細かいJSONやURLを毎回手入力させず、最初にAIへ設定を作らせ、以後は短い入口文と任意のシート名で実行する運用が最もミスが少ないと判断しました。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    このHTMLはローカル手順書です。外部公開する場合は、スプレッドシートID、内部URL、個人用シート名を入れないでください。
+  </footer>
+</body>
+</html>

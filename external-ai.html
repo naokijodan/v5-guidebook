@@ -980,6 +980,197 @@ GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
     </div>
   </section>
 
+  <!-- ========== V5移行時の注意点 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">📌</span>
+        <h2>V5移行時の注意点</h2>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji" aria-hidden="true">⚙️</span>
+          <span class="ic-title">初期設定に関して</span>
+        </div>
+        <p>初期設定は、必ず、<strong>EAGLEとの連携から</strong>行い、次に初期設定で<strong>V5のところでチェック</strong>を入れます。この順番でないと、ご自身の使われるテンプレートやポリシーが正しく判定されず、エラーになります。</p>
+        <p>以下の動画をご覧ください。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="初期設定 2026-06-11 12.44.06" src="https://player.vimeo.com/video/1200317360?h=c8fdbc2167&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji peach" aria-hidden="true">🚢</span>
+          <span class="ic-title">Tagshippingシートの設定について</span>
+        </div>
+        <p>現在、配布用に入っているTagshippingのシート内のデータは<strong>参考のダミーデータ</strong>ですので、ご自身用にアレンジしてください。特に、<strong>テンプレートの設定、配送方法、DDU・DDPの切り替え</strong>などです。</p>
+        <p>詳しくは、こちらの動画で説明します。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Tagshipping 2026-06-11 12.49.40" src="https://player.vimeo.com/video/1200318203?h=33409a30d3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji mint" aria-hidden="true">🧹</span>
+          <span class="ic-title">データの消去、クリアの方法</span>
+        </div>
+        <p>作業終了後のデータのクリアは、シートごとに次のとおりです。</p>
+        <ul class="ic-list" style="margin-top:10px;">
+          <li><span class="ui set">インポート用</span> → デリート、クリア、行の削除、どれでもOKです。</li>
+          <li><span class="ui set">v5インポート</span> → デリート、クリア、行の削除、どれでもOKです。</li>
+          <li><span class="ui set">作業シート</span> → 行を選択して、左上部にあるメニューボタン（クリアのみなどのボタン）でのクリアが<strong>必須</strong>です。</li>
+        </ul>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="データクリア方法　2026-06-11 12.56.18" src="https://player.vimeo.com/video/1200318623?h=146e4f34be&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Codexアプリなどとの連携のコツ ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🤝</span>
+        <h2>Codexアプリなどとの連携のコツ</h2>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji sun" aria-hidden="true">🔌</span>
+          <span class="ic-title">MCP「google-sheets」の接続</span>
+        </div>
+        <p>これは、かなり躓く方が多いステップです。</p>
+        <p>ただ、基本的にAIが進めていく方法を実践するだけではありますが、煩雑で新しい言葉がたくさん出てきます。こういう時のコツがあります。それは<strong>AIにお願いする！</strong>です。</p>
+        <p>今のAIはブラウザ（インターネットの画面）を直接開いて操作することができます。なので、<strong>AIが指示してくる内容自体をAIに任せてしまう</strong>のです。その中で、人間の作業が必須の作業がいくつかあります。ログイン作業であったり認証作業であったり、そういった作業だけをご自身に指示するように、AIに伝えてください。そうすると、AIが頑張ってくれます。</p>
+        <p>ここをクリアすると、AIマスターになれます！</p>
+        <p class="ic-note-small">（ここで大事なことは、AIは時々、推測をするということ。なので、<strong>推測ではなく、裏付けのある情報をください</strong>と指示するのが安全な運用への第一ステップです）</p>
+        <p class="ic-note-small" style="margin-top:8px;">💡 接続手順そのものは、上の「<a href="#mcp-connect" style="color:#2f7fd1;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」をご覧ください。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="MCP「google-sheets」の接続2026-06-11 13.00.35" src="https://player.vimeo.com/video/1200319731?h=ff942123ea&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji grape" aria-hidden="true">💬</span>
+          <span class="ic-title">AIに聞いてみる</span>
+        </div>
+        <p>例えばなのですが、V5の記事を自分で読むのは大変ですよね。そんな時<strong>そのURLをAIに渡して読ませてみてください</strong>。すると、AIが理解してくれます。これ、かなりAIマスターへの道なんです。</p>
+        <p>巷にある情報のURLを渡す→自分用に説明書を作ってもらう→わかりにくい時はもっと簡単な資料にしてもらう（<strong>HTML形式にして</strong>っていうと読みやすい資料にできます）</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="AIに聞いてみる2026-06-11 13.09.20" src="https://player.vimeo.com/video/1200320628?h=eb278de2b8&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6/11・v5スキル変更点 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🆕</span>
+        <h2>6/11・v5スキル変更点</h2>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji" aria-hidden="true">🃏</span>
+          <span class="ic-title">１、トレカやスポーツトレカのカテゴリID指定</span>
+        </div>
+        <p>トレカやスポーツトレカの登録時のエラー解消のため、<strong>カテゴリIDを指定</strong>しています。</p>
+        <p>これは、トレカにはCCGと言われる対戦型カードとそれ以外に分かれていたり、スポーツトレカもいく種類かあるのですが、それごとにコンディション要件が違い、カテゴリIDが違うと登録できません。</p>
+        <ul class="ic-list" style="margin-top:10px;">
+          <li>トレカシングル（CCG）　<code style="font-size:12.5px;background:rgba(58,50,69,0.06);padding:1px 6px;border-radius:5px;font-family:ui-monospace,monospace;">183454</code></li>
+          <li>トレカまとめ売り（CCG）　<code style="font-size:12.5px;background:rgba(58,50,69,0.06);padding:1px 6px;border-radius:5px;font-family:ui-monospace,monospace;">183455</code></li>
+          <li>スポーツカードシングル　<code style="font-size:12.5px;background:rgba(58,50,69,0.06);padding:1px 6px;border-radius:5px;font-family:ui-monospace,monospace;">261328</code></li>
+          <li>スポーツカードまとめ　<code style="font-size:12.5px;background:rgba(58,50,69,0.06);padding:1px 6px;border-radius:5px;font-family:ui-monospace,monospace;">261329</code></li>
+        </ul>
+        <p style="margin-top:10px;">このような感じです。もし、非対戦型も分ける場合は、専用のテンプレートが必要になります。</p>
+        <p>また、トレカのPSAに関しましては、今までと同じ要件になります。</p>
+        <div style="margin-top:12px;background:var(--cream);border-radius:14px;padding:12px 15px;border:1px dashed rgba(255,138,101,0.4);font-size:13.5px;line-height:1.8;">
+          📥 上記の点をスキルに追加していますので、スキルをダウンロードして、AIに渡して、<strong>「差分をスキルに追加してください」</strong>と指示するだけで、スキルをアップデートしてくれます。
+        </div>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="トレカ用スキル2026-06-11 13.22.41" src="https://player.vimeo.com/video/1200322166?h=ad66220ffb&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji mint" aria-hidden="true">✅</span>
+          <span class="ic-title">２、最終チェックのスキルの追加</span>
+        </div>
+        <p>前回ご案内したのは、最終チェックの文言をダウンロードして、毎回貼り付ける方法でしたが、<strong>「最終チェック」と指示するだけで</strong>、全部チェックしてくれるようになります。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="最終チェック2026-06-11 13.28.01" src="https://player.vimeo.com/video/1200322550?h=664e6b2830&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6/11・新スキルの追加（再出品） ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🔁</span>
+        <h2>6/11・新スキルの追加（再出品用スキル）</h2>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji grape" aria-hidden="true">✨</span>
+          <span class="ic-title">再出品用のスキルを追加しました</span>
+        </div>
+        <p>新しく、再出品用のスキルを追加しました。過去出品したものを取り下げて、Item Specificなどを追加して<strong>再出品</strong>することが可能になります。</p>
+        <p><strong>専用のシートは不要</strong>で、現在のシートで対応できます。EAGLEからダウンロードするデータには２つのタイプがありますが、その２つに対応しています。</p>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji" aria-hidden="true">📥</span>
+          <span class="ic-title">１、旧バージョンでの再出品とりこみ</span>
+        </div>
+        <p>まず、スキルをダウンロードして、呼び出しコマンド<strong>「再出品実行」</strong>とAIに伝えると、商品のファイルパスと書き込みシートのURLを求められますので、それを渡すと後はAIに任せてください。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="再出品とりこみ旧バージョン 2026-06-11 13.31.27" src="https://player.vimeo.com/video/1200323813?h=941befaf11&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji peach" aria-hidden="true">📝</span>
+          <span class="ic-title">２、旧バージョンでの再出品データ生成</span>
+        </div>
+        <p>再出品翻訳用のスキルをダウンロードします。１の手順でデータがインポートされたら、<strong>「再出品翻訳」</strong>と入れます。するとモードを聞かれます。</p>
+        <p>モード２から説明しますが、<strong>モード２</strong>は、そこにある英語の文字からだけタイトルやItem Specificを生成します。<strong>モード１</strong>では、それに加えて、実際の仕入れ先にアクセスして情報をとってきます。精度は高いですが、大量にしたときにメルカリなどから制限がかけられるリスクもあります。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="旧バージョン翻訳 2026-06-11 16.39.23" src="https://player.vimeo.com/video/1200355888?h=abfbd78e40&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji mint" aria-hidden="true">📥</span>
+          <span class="ic-title">３、新バージョン（Item Specific込み）データの再出品</span>
+        </div>
+        <p>こちらも同じスキルです。<strong>AIがファイルが新バージョンか旧バージョンか判断します</strong>。呼び出しコマンド<strong>「再出品実行」</strong>とAIに伝えると、商品のファイルパスと書き込みシートのURLを求められますので、それを渡すと後はAIに任せてください。</p>
+      </div>
+
+      <div class="info-card">
+        <div class="ic-head">
+          <span class="ic-emoji sun" aria-hidden="true">📝</span>
+          <span class="ic-title">４、新バージョンでの再出品データ生成</span>
+        </div>
+        <p>再出品翻訳用のスキルをダウンロードします。１の手順でデータがインポートされたら、<strong>「再出品翻訳」</strong>と入れます。するとモードを聞かれます。</p>
+        <p>モード２から説明しますが、<strong>モード２</strong>は、そこにある英語の文字からだけタイトルやItem Specificを生成します。<strong>モード１</strong>では、それに加えて、実際の仕入れ先にアクセスして情報をとってきます。精度は高いですが、大量にしたときにメルカリなどから制限がかけられるリスクもあります。</p>
+        <p>新バージョンの場合は、元のItem Specificもあるので、<strong>タイトルの入れ替えだけで十分</strong>だとは思いますが、ご自身の運用に合わせてください。</p>
+        <div style="padding:64.95% 0 0 0;position:relative;margin-top:14px;border-radius:14px;overflow:hidden;"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" title="新バージョン再出品2026-06-11 16.55.43" src="https://player.vimeo.com/video/1200362325?h=aa069660d0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 携帯アプリからの実行手順 ========== -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">📱</span>
+        <h2>携帯アプリからシート翻訳を実行する</h2>
+        <p class="sub">携帯のCodexアプリからシート翻訳を実行する手順を、別ページにまとめました。</p>
+      </div>
+      <div class="nextstep">
+        <a class="big-btn secondary" href="mobile-sheet-translation-guide.html"><span class="b-emoji" aria-hidden="true">📱</span>携帯アプリからの実行手順を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
   <!-- ========== ページ下部ナビ ========== -->
   <section>
     <div class="wrap">
