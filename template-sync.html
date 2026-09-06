@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>一括シートV5を導入する — 一括登録シート V5</title>
+<title>新規テンプレート作成後の、一括シートとの同期方法 — 一括登録シート V5</title>
 <style>
   :root {
     --ink: #3a3245;
@@ -291,7 +291,6 @@
     .lightbox .lb-nav { transition: none; }
   }
 </style>
-<link rel="stylesheet" href="videos/video-modal.css">
 </head>
 <body>
   <!-- ========== Top nav ========== -->
@@ -305,30 +304,19 @@
   <!-- ========== Header ========== -->
   <header>
     <div class="wrap">
-      <span class="eyebrow">🚀 導入ガイド ・ 一括登録シート V5</span>
-      <h1>一括シートV5を<span class="hl">導入する</span> 🚀</h1>
-      <p class="lead">配布用のシートを手に入れて、かんたんに始めましょう。</p>
+      <span class="eyebrow">🔄 一括登録シート V5</span>
+      <h1>新規テンプレート作成後の、一括シートとの同期方法</h1>
+      <p class="lead">EAGLEで新しいテンプレートを作成した後、一括シートV5に反映させる手順です。</p>
     </div>
   </header>
 
-  <!-- ========== CTA ========== -->
-  <section>
-    <div class="wrap">
-      <div class="cta-wrap">
-        <a class="cta-sheet" href="https://docs.google.com/spreadsheets/d/1EMGy24CkZNmTfYf6HmnP0YL30vJzAWhqlM475edCwh0/edit?gid=1499391446#gid=1499391446" target="_blank" rel="noopener noreferrer">📊 配布用シートを開く →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== 設定のしかた ========== -->
+  <!-- ========== 同期の手順 ========== -->
   <section>
     <div class="wrap">
       <div class="section-head">
-        <span class="emoji">⚙️</span>
-        <h2>設定のしかた</h2>
+        <span class="emoji">🔄</span>
+        <h2>同期の手順</h2>
       </div>
-
-      <div class="video-btn-wrap"><button class="video-btn" data-video="videos/02_intro.mp4">▶ 動画で見る</button></div>
 
       <div class="steps">
 
@@ -336,11 +324,9 @@
         <div class="step">
           <span class="num" aria-hidden="true">1</span>
           <span class="st-body">
-            <span class="st-title">シートをコピーする</span>
-            <span class="st-text">上のボタンからシートを開き、「ファイル」→「コピーを作成」で自分のGoogleドライブに複製します。</span>
+            <span class="st-text">まず、設定メニューからEAGLEデータ更新を選びます。</span>
             <div class="shot-row">
-              <div class="shot-slot has-img" data-img="images/setup-01.jpg" data-alt="シートのファイルメニューから「コピーを作成」を選ぶ">📷 画像①</div>
-              <div class="shot-slot has-img" data-img="images/setup-02.jpg" data-alt="「ドキュメントをコピー」ダイアログで名前を確認して「コピーを作成」を押す">📷 画像②</div>
+              <div class="shot-slot has-img" data-img="images/template-sync-01.jpg" data-alt="まず、設定メニューからEAGLEデータ更新を選びます。">📷 画像を見る</div>
             </div>
           </span>
         </div>
@@ -349,60 +335,42 @@
         <div class="step">
           <span class="num" aria-hidden="true">2</span>
           <span class="st-body">
-            <span class="st-title">初回の承認をする</span>
-            <span class="st-text">初回はメニューを開くと承認（スクリプトの実行許可）を求められるので許可します。途中で「このアプリはGoogleで確認されていません」と出ますが、ご自身が作ったシートなので、画像の順に進めて大丈夫です。</span>
+            <span class="st-text">ポップアップが出たら、いいえを選びます。</span>
             <div class="shot-row">
-              <div class="shot-slot has-img" data-img="images/auth-01.jpg" data-alt="「認証が必要です」→ OK を押す">📷 画像①</div>
-              <div class="shot-slot has-img" data-img="images/auth-02.jpg" data-alt="「このアプリはGoogleで確認されていません」→ 詳細 をクリック">📷 画像②</div>
-              <div class="shot-slot has-img" data-img="images/auth-03.jpg" data-alt="詳細を開き「（安全ではないページ）に移動」をクリック">📷 画像③</div>
-              <div class="shot-slot has-img" data-img="images/auth-04.jpg" data-alt="アクセス権限を確認して「許可」を押す">📷 画像④</div>
+              <div class="shot-slot has-img" data-img="images/template-sync-02.jpg" data-alt="ポップアップが出たら、いいえを選びます。">📷 画像を見る</div>
             </div>
           </span>
         </div>
 
-        <!-- Step 3: EAGLE -->
+        <!-- Step 3 -->
         <div class="step">
           <span class="num" aria-hidden="true">3</span>
           <span class="st-body">
-            <span class="st-title">EAGLE連携を設定する</span>
-            <span class="step-alert">⚠️ 重要：初期設定より先に、このEAGLE連携を行ってください。順番が逆だと、ポリシーやテンプレートが正しく反映されません。</span>
-            <span class="st-text">設定メニューの「EAGLEデータ更新（初回/定期更新）」を開き、APIトークンを入力します。初回は「テンプレート・ポリシーも取得する」をONにして「保存して開始」を押すと、Policy_Master（テンプレート・配送ポリシー）が自動で作成されます。</span>
+            <span class="st-text">テンプレート・ポリシーも取得する、にチェックを入れます。</span>
             <div class="shot-row">
-              <div class="shot-slot has-img" data-img="images/eagle-01.jpg" data-alt="設定メニューから「EAGLEデータ更新（初回/定期更新）」を開く">📷 画像①</div>
-              <div class="shot-slot has-img" data-img="images/eagle-02.jpg" data-alt="「初回セットアップ」→ OK を押す">📷 画像②</div>
-              <div class="shot-slot has-img" data-img="images/eagle-03.jpg" data-alt="APIトークンを貼り付け、「テンプレート・ポリシーも取得する」をON">📷 画像③</div>
-              <div class="shot-slot has-img" data-img="images/eagle-04.jpg" data-alt="取得する列を選び「保存して開始」を押す">📷 画像④</div>
-              <div class="shot-slot has-img" data-img="images/eagle-05.jpg" data-alt="完了：Policy_Master（テンプレート・ポリシー）が作成される">📷 画像⑤</div>
+              <div class="shot-slot has-img" data-img="images/template-sync-03.jpg" data-alt="テンプレート・ポリシーも取得する、にチェックを入れます。">📷 画像を見る</div>
             </div>
-            <span class="st-text">EAGLEで新しいテンプレートを作った後の同期手順はこちら → <a href="template-sync.html">新規テンプレート作成後の、一括シートとの同期方法</a></span>
           </span>
         </div>
 
-        <!-- Step 4: 初期設定 -->
+        <!-- Step 4 -->
         <div class="step">
           <span class="num" aria-hidden="true">4</span>
           <span class="st-body">
-            <span class="st-title">初期設定をする</span>
-            <span class="st-text">V5ではAPIキーの入力は不要（任意）です。設定メニューの「初期設定」を開き、「V5用シート設定」の『V5ルートを使う』にチェックして「保存」します。「APIキー未設定でも保存しますか？」と出たら「OK」を押します。</span>
+            <span class="st-text">保存して開始を押して、同期完了まで待ちます。</span>
             <div class="shot-row">
-              <div class="shot-slot has-img" data-img="images/init-01.jpg" data-alt="設定メニューから「初期設定」を開く">📷 画像①</div>
-              <div class="shot-slot has-img" data-img="images/init-02.jpg" data-alt="初期設定（統合版）。APIキーは任意なので空欄でOK">📷 画像②</div>
-              <div class="shot-slot has-img" data-img="images/init-03.jpg" data-alt="下にスクロールし「V5用シート設定」を開く">📷 画像③</div>
-              <div class="shot-slot has-img" data-img="images/init-04.jpg" data-alt="「V5ルートを使う」にチェックして「保存」を押す">📷 画像④</div>
-              <div class="shot-slot has-img" data-img="images/init-05.jpg" data-alt="「APIキー未設定でも保存しますか？」→ OK を押す">📷 画像⑤</div>
+              <div class="shot-slot has-img" data-img="images/template-sync-04.jpg" data-alt="保存して開始を押して、同期完了まで待ちます。">📷 画像を見る</div>
             </div>
           </span>
         </div>
 
-        <!-- Step 5: カテゴリーIDで登録する場合 -->
+        <!-- Step 5 -->
         <div class="step">
           <span class="num" aria-hidden="true">5</span>
           <span class="st-body">
-            <span class="st-title">カテゴリーIDで登録する場合</span>
-            <span class="st-text">通常はシートの「D2」セルが「参考eBay ID」になっています。参考ID（参考eBay ID）を使わず、カテゴリーIDで登録する場合は、D2セルを「カテゴリーID設定」に切り替えます。</span>
+            <span class="st-text">同期が終わったら、設定メニューから初期設定を開きます。</span>
             <div class="shot-row">
-              <div class="shot-slot has-img" data-img="images/refid-01.jpg" data-alt="通常：D2セルが「参考eBay ID」">📷 参考IDの場合</div>
-              <div class="shot-slot has-img" data-img="images/catid-01.jpg" data-alt="切り替え後：D2セルを「カテゴリーID設定」に">📷 カテゴリーIDの場合</div>
+              <div class="shot-slot has-img" data-img="images/template-sync-05.jpg" data-alt="同期が終わったら、設定メニューから初期設定を開きます。">📷 画像を見る</div>
             </div>
           </span>
         </div>
@@ -411,20 +379,17 @@
         <div class="step">
           <span class="num" aria-hidden="true">6</span>
           <span class="st-body">
-            <span class="st-title">タグを設定する</span>
-            <span class="st-text">「TagShipping」シートにタグを設定します（→ <a href="tags.html">タグ設定のページへ</a>）。</span>
+            <span class="st-text">ポップアップが出たら保存を押して、作業終了まで待ちます。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/template-sync-06.jpg" data-alt="ポップアップが出たら保存を押して、作業終了まで待ちます。">📷 画像を見る</div>
+            </div>
           </span>
         </div>
 
-        <!-- Step 7 -->
-        <div class="step">
-          <span class="num" aria-hidden="true">7</span>
-          <span class="st-body">
-            <span class="st-title">翻訳パターンを選ぶ</span>
-            <span class="st-text">使う翻訳パターンを選び、各ページの手順で設定します（→ <a href="patterns.html">3つの翻訳パターンへ</a>）。</span>
-          </span>
-        </div>
+      </div>
 
+      <div class="cta-wrap" style="margin-top:34px;">
+        <p class="lead">以上で、新しいテンプレートが各所に設定されます。</p>
       </div>
     </div>
   </section>
@@ -433,13 +398,12 @@
   <section>
     <div class="wrap">
       <div class="section-head">
-        <span class="emoji">🚀</span>
-        <h2>次に進む</h2>
+        <span class="emoji">🧭</span>
+        <h2>もどる</h2>
       </div>
       <div class="nextstep">
-        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">←</span>トップにもどる</a>
-        <a class="big-btn secondary" href="tags.html"><span class="b-emoji" aria-hidden="true">🏷️</span>タグ設定のページ →</a>
-        <a class="big-btn primary" href="patterns.html"><span class="b-emoji" aria-hidden="true">🔀</span>3つの翻訳パターン →</a>
+        <a class="big-btn secondary" href="setup.html"><span class="b-emoji" aria-hidden="true">←</span>設定のしかたにもどる</a>
+        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">🏠</span>トップに戻る</a>
       </div>
     </div>
   </section>
@@ -659,6 +623,5 @@
     });
   })();
   </script>
-<script src="videos/video-modal.js"></script>
 </body>
 </html>
