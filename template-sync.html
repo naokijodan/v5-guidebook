@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>新規テンプレート作成後の、一括シートとの同期方法 — 一括登録シート V5</title>
+<title>新しいポリシーやテンプレート作成後の、V5シートへの反映方法 — 一括登録シート V5</title>
 <style>
   :root {
     --ink: #3a3245;
@@ -113,6 +113,7 @@
   .step .st-title { font-size: 16.5px; font-weight: 800; margin-bottom: 5px; line-height: 1.5; }
   .step .st-text { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
   .step .step-alert { display: block; margin: 4px 0 10px; padding: 11px 14px; background: rgba(255,170,60,0.14); border: 2px solid rgba(255,170,60,0.55); border-radius: 14px; font-size: 12.5px; font-weight: 800; color: #9a6a00; line-height: 1.7; }
+  .wrap > .step-alert { display: block; margin: 4px 0 10px; padding: 11px 14px; background: rgba(255,170,60,0.14); border: 2px solid rgba(255,170,60,0.55); border-radius: 14px; font-size: 12.5px; font-weight: 800; color: #9a6a00; line-height: 1.7; }
   .step .st-text strong { color: var(--ink); }
   .step .st-text a { color: var(--pink); font-weight: 800; text-decoration: none; border-bottom: 2px solid rgba(255,111,165,0.35); }
   .step .st-text a:hover { border-bottom-color: var(--pink); }
@@ -305,8 +306,8 @@
   <header>
     <div class="wrap">
       <span class="eyebrow">🔄 一括登録シート V5</span>
-      <h1>新規テンプレート作成後の、一括シートとの同期方法</h1>
-      <p class="lead">EAGLEで新しいテンプレートを作成した後、一括シートV5に反映させる手順です。</p>
+      <h1>新しいポリシーやテンプレート作成後の、V5シートへの反映方法</h1>
+      <p class="lead">EAGLEで新しいポリシーやテンプレートを作成した後、一括シートV5に反映させる手順です。シートの最初の設定と同じ流れです。</p>
     </div>
   </header>
 
@@ -315,8 +316,10 @@
     <div class="wrap">
       <div class="section-head">
         <span class="emoji">🔄</span>
-        <h2>同期の手順</h2>
+        <h2>反映の手順</h2>
       </div>
+
+      <span class="step-alert">⚠️ テンプレート・ポリシーの同期の後、初期設定をしないと反映されない仕様です。「EAGLE同期 → 初期設定（シートに値や式を書き込み）」の順で行ってください。</span>
 
       <div class="steps">
 
@@ -389,7 +392,7 @@
       </div>
 
       <div class="cta-wrap" style="margin-top:34px;">
-        <p class="lead">以上で、新しいテンプレートが各所に設定されます。</p>
+        <p class="lead">以上で、新しいポリシーやテンプレートが各所に設定され、使えるようになります。</p>
       </div>
     </div>
   </section>
