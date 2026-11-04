@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アメリカ向け関税免除商品を送料無料で出品する方法 — 一括登録シート V5</title>
+<style>
+  :root {
+    --ink: #3a3245;
+    --ink-soft: #7b7387;
+    --cream: #fff9f0;
+    --card: #ffffff;
+    --peach: #ff8a65;
+    --mint: #2bd4a0;
+    --sky: #4fa8ff;
+    --grape: #9b6bff;
+    --sun: #ffc94d;
+    --pink: #ff6fa5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,201,77,0.18), transparent 28%),
+      radial-gradient(circle at 88% 14%, rgba(79,168,255,0.16), transparent 30%),
+      radial-gradient(circle at 70% 88%, rgba(255,111,165,0.14), transparent 32%),
+      var(--cream);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Top nav ---------- */
+  .topnav { padding: 22px 0 0; }
+  .topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .home-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    text-decoration: none; font-weight: 800; font-size: 14px; color: var(--ink-soft);
+    background: rgba(255,255,255,0.8); padding: 9px 16px; border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(160,140,120,0.12);
+    transition: transform .15s, box-shadow .15s, color .15s;
+  }
+  .home-link:hover { transform: translateY(-2px); color: var(--peach); box-shadow: 0 10px 20px rgba(160,140,120,0.18); }
+  .brand-tag {
+    font-size: 12.5px; font-weight: 800; color: #fff; padding: 7px 15px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--sky), var(--grape));
+    box-shadow: 0 6px 14px rgba(79,168,255,0.30);
+  }
+
+  /* ---------- Header ---------- */
+  header { padding: 48px 0 50px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+    color: #fff; padding: 8px 20px; border-radius: 999px; margin-bottom: 24px;
+    background: linear-gradient(90deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 18px rgba(255,111,165,0.35);
+  }
+  h1 { font-size: clamp(25px, 4.4vw, 40px); font-weight: 900; line-height: 1.35; margin-bottom: 22px; }
+  .lead {
+    font-size: clamp(15px, 2.2vw, 17px); color: var(--ink-soft); max-width: 900px; margin: 0 auto;
+    background: rgba(255,255,255,0.7); border-radius: 18px; padding: 16px 22px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 48px 0; }
+  .section-head { text-align: center; margin-bottom: 34px; }
+  .section-head h2 { font-size: clamp(22px, 3.6vw, 30px); font-weight: 900; }
+  .section-head .emoji { font-size: 30px; display: block; margin-bottom: 6px; }
+
+  /* ---------- Intro cards ---------- */
+  .intro { display: grid; gap: 14px; }
+  .info-card {
+    border-radius: 20px; padding: 18px 22px; font-size: 14.5px; line-height: 1.85;
+    background: var(--card); border: 2px solid rgba(0,0,0,0.03);
+    box-shadow: 0 8px 20px rgba(160,140,120,0.10);
+  }
+  .info-card .ic-title { display: block; font-weight: 900; font-size: 15.5px; margin-bottom: 4px; }
+  .info-card.c-sky { background: rgba(79,168,255,0.10); border-color: rgba(79,168,255,0.35); }
+  .info-card.c-sun { background: rgba(255,201,77,0.16); border-color: rgba(255,201,77,0.55); }
+  .info-card.c-mint { background: rgba(43,212,160,0.10); border-color: rgba(43,212,160,0.4); }
+  .info-card.c-alert { background: rgba(255,111,165,0.10); border-color: rgba(255,111,165,0.6); }
+  .info-card ol { margin: 6px 0 0 1.4em; }
+  .info-card ol li { margin-bottom: 6px; }
+  .info-card a { color: var(--pink); font-weight: 800; text-decoration: none; border-bottom: 2px solid rgba(255,111,165,0.35); }
+  .info-card a:hover { border-bottom-color: var(--pink); }
+  .info-card ul { margin: 6px 0 0 1.3em; }
+
+  /* ---------- Steps ---------- */
+  .steps { display: grid; gap: 18px; }
+  .step {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--card); border-radius: 24px; padding: 24px 24px;
+    box-shadow: 0 10px 26px rgba(160,140,120,0.12);
+    border: 2px solid rgba(0,0,0,0.03);
+  }
+  .step .num {
+    flex: 0 0 48px; width: 48px; height: 48px; border-radius: 16px;
+    display: grid; place-items: center; font-size: 22px; font-weight: 900; color: #fff;
+  }
+  .step:nth-child(1) .num { background: linear-gradient(135deg, var(--mint), var(--sun)); }
+  .step:nth-child(2) .num { background: linear-gradient(135deg, var(--sun), var(--peach)); }
+  .step:nth-child(3) .num { background: linear-gradient(135deg, var(--sky), var(--grape)); }
+  .step:nth-child(4) .num { background: linear-gradient(135deg, var(--mint), var(--sky)); }
+  .step:nth-child(5) .num { background: linear-gradient(135deg, var(--pink), var(--grape)); }
+  .step:nth-child(6) .num { background: linear-gradient(135deg, var(--grape), var(--peach)); }
+  .step .st-body { flex: 1; min-width: 0; }
+  .step .st-title { display: block; font-size: 16.5px; font-weight: 800; margin-bottom: 5px; line-height: 1.5; }
+  .step .st-text { font-size: 14px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 6px; }
+  .step .st-text strong { color: var(--ink); }
+  .step .st-note { font-size: 12.5px; font-weight: 800; color: #9a6a00; background: rgba(255,170,60,0.14); border: 2px solid rgba(255,170,60,0.55); border-radius: 14px; padding: 10px 14px; margin-top: 12px; line-height: 1.7; }
+
+  /* ---------- Inline images ---------- */
+  .shot { display: block; margin-top: 14px; cursor: zoom-in; }
+  .shot img {
+    display: block; width: 100%; height: auto;
+    border-radius: 14px; box-shadow: 0 10px 26px rgba(160,140,120,0.25);
+    border: 1px solid rgba(79,168,255,0.25); background: #fff;
+  }
+  .shot:focus-visible { outline: 3px solid rgba(79,168,255,0.55); outline-offset: 3px; border-radius: 14px; }
+  .zoom-hint { display: block; margin-top: 6px; font-size: 11.5px; font-weight: 800; color: #2f7fd1; text-align: center; }
+
+  /* ---------- OK / NG cards ---------- */
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .vs-card { border-radius: 18px; padding: 16px 18px; font-size: 14px; line-height: 1.85; color: var(--ink); }
+  .vs-card .vs-title { display: block; font-weight: 900; font-size: 15px; margin-bottom: 6px; }
+  .vs-card.ok { background: rgba(43,212,160,0.10); border: 2px solid rgba(43,212,160,0.5); }
+  .vs-card.ng { background: rgba(255,111,165,0.09); border: 2px solid rgba(255,111,165,0.45); }
+  .vs-card ul { margin: 6px 0 0 1.2em; }
+  .vs-card li { margin-bottom: 4px; }
+
+  /* ---------- Glossary ---------- */
+  details.glossary {
+    background: var(--card); border-radius: 20px; padding: 6px 22px;
+    box-shadow: 0 8px 20px rgba(160,140,120,0.10); border: 2px solid rgba(0,0,0,0.03);
+  }
+  details.glossary summary { cursor: pointer; font-weight: 900; font-size: 16px; padding: 14px 0; }
+  details.glossary dl { padding-bottom: 14px; }
+  details.glossary dt { font-weight: 900; color: var(--grape); margin-top: 10px; }
+  details.glossary dd { font-size: 14px; color: var(--ink-soft); }
+
+  /* ---------- Next-step buttons ---------- */
+  .nextstep { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .big-btn {
+    flex: 1 1 260px; max-width: 320px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; text-align: center;
+    padding: 22px 24px; border-radius: 22px;
+    font-weight: 900; font-size: clamp(15px, 2.4vw, 18px); color: #fff;
+    box-shadow: 0 12px 26px rgba(79,168,255,0.30);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .big-btn .b-emoji { font-size: 24px; }
+  .big-btn.secondary { background: linear-gradient(90deg, var(--sky), var(--grape)); }
+  .big-btn.ghost { background: #fff; color: var(--ink-soft); box-shadow: 0 10px 22px rgba(160,140,120,0.14); border: 2px solid rgba(0,0,0,0.05); }
+  .big-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(79,168,255,0.42); }
+  .big-btn.ghost:hover { box-shadow: 0 16px 30px rgba(160,140,120,0.2); color: var(--ink); }
+
+  footer { padding: 50px 0 76px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+  @media (max-width: 600px) {
+    header { padding: 36px 0 40px; }
+    .step { padding: 20px 18px; gap: 14px; }
+    .vs { grid-template-columns: 1fr; }
+    .nextstep { flex-direction: column; align-items: stretch; }
+    .big-btn { max-width: none; }
+    .topnav .wrap { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .big-btn, .home-link { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    display: none; align-items: center; justify-content: center;
+    padding: 24px; background: rgba(40,32,50,0.72);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox .lb-content { position: relative; max-width: 92vw; max-height: 88vh; display: flex; align-items: center; justify-content: center; }
+  .lightbox .lb-content img {
+    display: block; max-width: 92vw; max-height: 88vh; width: auto; height: auto;
+    border-radius: 16px; background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  }
+  .lightbox .lb-close {
+    position: absolute; top: -14px; right: -14px; width: 44px; height: 44px; border-radius: 50%;
+    border: none; cursor: pointer; display: grid; place-items: center;
+    font-size: 24px; font-weight: 900; line-height: 1; color: #fff;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    box-shadow: 0 8px 20px rgba(255,111,165,0.5);
+  }
+  .lightbox .lb-close:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="wrap">
+      <a class="home-link" href="index.html"><span aria-hidden="true">🏠</span>トップにもどる</a>
+      <span class="brand-tag">一括登録シート V5</span>
+    </div>
+  </nav>
+
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">🔄 一括登録シート V5</span>
+      <h1>アメリカ向け関税免除商品を<br>送料無料で出品する方法</h1>
+      <p class="lead">新しいシッピングポリシー（eco_used_taxfree）を使い、アメリカ向けの送料を国際エアパケットの料金で計算して、送料無料（フリーシッピング）で出品する手順です。</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">📌</span>
+        <h2>はじめに</h2>
+      </div>
+      <div class="intro">
+        <div class="info-card c-alert">
+          <span class="ic-title">⚠️ 使う前に必ず読んでください</span>
+          <ol>
+            <li>この手法とこのポリシーは、<strong>アメリカ向けの関税の免除が確実な商品だけ</strong>に使えます。対象の商品は<a href="https://naokijodan.github.io/ebay-eu-game-shipping-guide/" target="_blank" rel="noopener">「エコノミー発送の送り方ガイド（アメリカ・EU）」</a>のアメリカの章と<a href="https://naokijodan.github.io/ebay-eu-game-shipping-guide/#codes" target="_blank" rel="noopener">「申告に使うコード」</a>の欄で確認してください。</li>
+            <li>ゲームソフトやCDなどは、<strong>HSコードを正しく入力しないと課税対象</strong>になります。関税がかかった分はそのまま赤字になるので、HSコードは必ず正しく入れてください。</li>
+            <li>この手法は、<strong>アメリカ向けは国際エアパケット（日本郵便）で送る</strong>ことが前提です。CPaSSエコノミー（SpeedPAK Economy）で送ってしまうと関税がかかり、送料も高くなります。</li>
+            <li>この3点を必ず理解してから使ってください。</li>
+          </ol>
+        </div>
+        <div class="info-card c-sky">
+          <span class="ic-title">この方法が使えるとき</span>
+          「アメリカ宛てで関税がかからない商品」を「国際エアパケット（日本郵便）」で送るときに使えます。
+        </div>
+        <div class="info-card c-sun">
+          <span class="ic-title">新しいポリシーは4本</span>
+          eco_used_taxfree_0500／1000／1500／2000 の4本です。下4けたは重さの上限を表します。
+          <ul>
+            <li>0500 ＝ 500g以下</li>
+            <li>1000 ＝ 1,000g以下</li>
+            <li>1500 ＝ 1,500g以下</li>
+            <li>2000 ＝ 2,000g以下</li>
+          </ul>
+        </div>
+        <div class="info-card c-mint">
+          <span class="ic-title">関税がかからない商品とは</span>
+          対象の商品は上の注意カードのリンク先で確認してください。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🚚</span>
+        <h2>設定の手順</h2>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <span class="num" aria-hidden="true">0</span>
+          <div class="st-body">
+            <span class="st-title">最初に EAGLE と同期して、新しいポリシーをシートに取り込む</span>
+            <p class="st-text">はじめに、<a href="template-sync.html" target="_blank" rel="noopener">新しいポリシーやテンプレート作成後の、V5シートへの反映方法</a> の手順（EAGLEデータ更新で「テンプレート・ポリシーも取得する」にチェックして同期 → 初期設定で保存）を行ってください。</p>
+            <p class="st-note">これをしないと、TagShipping シートの R列「DDP/DDU設定」のドロップダウンに DDP_TF_（重さ）の選択肢が出ません。</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">1</span>
+          <div class="st-body">
+            <span class="st-title">TagShipping シートの R列で DDP_TF_（重さ）を選ぶ</span>
+            <p class="st-text">TagShipping シートの R列「DDP/DDU設定」のドロップダウンから、そのタグの商品の重さに合う <strong>DDP_TF_（重さ）</strong>を選びます。下4けたは重さの上限で、例えば DDP_TF_0500 は 500g 以下です。</p>
+            <a class="shot" href="images/taxfree/step1-tagshipping-r.png" data-lb><img src="images/taxfree/step1-tagshipping-r.png" alt="TagShippingシートのR列「DDP/DDU設定」でDDP_TF_0500を選んでいる画面"><span class="zoom-hint">クリックで拡大</span></a>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">2</span>
+          <div class="st-body">
+            <span class="st-title">B列に国際エアパケットの送料を入れ、L列を EP にする</span>
+            <p class="st-text">B列「EP送料」に、<strong>国際エアパケットの料金（円）</strong>を入れます。L列「低価格配送」は <strong>EP（日本郵便エコノミー）</strong>にします。</p>
+            <a class="shot" href="images/taxfree/step2-tagshipping-b-l.png" data-lb><img src="images/taxfree/step2-tagshipping-b-l.png" alt="TagShippingシートのB列EP送料に2,500を入力し、L列低価格配送をEPにしている画面"><span class="zoom-hint">クリックで拡大</span></a>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">3</span>
+          <div class="st-body">
+            <span class="st-title">初期設定を開いて「保存」を押す</span>
+            <p class="st-text">設定メニューの「初期設定（統合版）」を開き、<strong>何も変えずに「保存」を押すだけ</strong>です。これで作業シートに新しい式が入ります。</p>
+            <a class="shot" href="images/taxfree/step3-initial-settings-save.png" data-lb><img src="images/taxfree/step3-initial-settings-save.png" alt="初期設定（統合版）の画面で保存ボタンを押すところ"><span class="zoom-hint">クリックで拡大</span></a>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">4</span>
+          <div class="st-body">
+            <span class="st-title">作業シートで確認する（式の意味）</span>
+            <div class="vs">
+              <div class="vs-card ok">
+                <span class="vs-title">⭕️ 仕入価格が送料切替基準より小さいとき</span>
+                TagShipping の N列「送料切替基準」より仕入価格が小さいと、eco_used_taxfree_（重さ）のアメリカ向け送料無料ポリシーが選ばれ、価格はアメリカ向けの DDP 価格になります。
+                <ul>
+                  <li>価格に足されるのは「ゾノス（Zonos）の手数料」「Ship&amp;co の手数料の概算」「DDP にすることで価格が上がる分の eBay 手数料」です。</li>
+                  <li>作業シートの AD列「想定関税」に出る 2.95 がそれです。</li>
+                  <li>B列の「関税込み価格」で出品されます。</li>
+                </ul>
+              </div>
+              <div class="vs-card ng">
+                <span class="vs-title">❌ 仕入価格が送料切替基準以上のとき</span>
+                速達（クーリエ）になり、今までどおりの DDU 計算です。
+              </div>
+            </div>
+            <p class="st-note">2.95 は参考例です。手数料率などの設定で変わります。</p>
+            <a class="shot" href="images/taxfree/step4-worksheet-ad-b.png" data-lb><img src="images/taxfree/step4-worksheet-ad-b.png" alt="作業シートのAD列「想定関税」が2.95、B列が関税込み価格になっている画面"><span class="zoom-hint">クリックで拡大</span></a>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">5</span>
+          <div class="st-body">
+            <span class="st-title">ポリシーの中身（500g以下の例）</span>
+            <p class="st-text">アメリカ宛ては <strong>Economy International Shipping（日本郵便エコノミー）で送料 $0</strong>、つまり送料無料です。</p>
+            <p class="st-text">ヨーロッパ宛てには、国際エアパケットと SpeedPAK エコノミーの差額を埋めるための送料が設定されています。そのためヨーロッパにはかなり高い送料が表示されます。</p>
+            <p class="st-text">この差額は重さの帯で違うので、ポリシーを4つの重さの帯（500g／1,000g／1,500g／2,000g 以下）に分けています。</p>
+            <a class="shot" href="images/taxfree/step5-policy-0500.png" data-lb><img src="images/taxfree/step5-policy-0500.png" alt="eco_used_taxfree_0500ポリシーの配送サービス一覧。アメリカ宛てEconomy International Shippingが$0、ヨーロッパ宛てが$23"><span class="zoom-hint">クリックで拡大</span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">📖</span>
+        <h2>ことばメモ</h2>
+      </div>
+      <details class="glossary">
+        <summary>ことばの意味を見る</summary>
+        <dl>
+          <dt>EP</dt>
+          <dd>日本郵便のエコノミー（国際エアパケット）のことです。</dd>
+          <dt>DDP</dt>
+          <dd>関税を売り手側で前払いする出し方です。買い手は受け取り時に関税を払いません。</dd>
+          <dt>DDU</dt>
+          <dd>関税を買い手が受け取り時に払う出し方です（今までどおり）。</dd>
+          <dt>送料切替基準</dt>
+          <dd>TagShipping の N列です。仕入価格がこれより小さければ低価格配送、以上なら高価格配送（速達）になります。</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🧭</span>
+        <h2>もどる</h2>
+      </div>
+      <div class="nextstep">
+        <a class="big-btn secondary" href="tags.html"><span class="b-emoji" aria-hidden="true">🏷️</span>タグ設定</a>
+        <a class="big-btn secondary" href="shipping-settings.html"><span class="b-emoji" aria-hidden="true">🚚</span>送料設定ガイド</a>
+        <a class="big-btn ghost" href="index.html"><span class="b-emoji" aria-hidden="true">🏠</span>トップに戻る</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">一括登録シート V5 😊</div></footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="画像の拡大表示" aria-hidden="true">
+    <div class="lb-content" id="lbContent">
+      <button type="button" class="lb-close" id="lbClose" aria-label="閉じる">×</button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lbContent = document.getElementById('lbContent');
+    var lbClose = document.getElementById('lbClose');
+    var lastFocused = null, media = null;
+
+    function open(link) {
+      var src = link.querySelector('img');
+      media = document.createElement('img');
+      media.src = src.getAttribute('src');
+      media.alt = src.getAttribute('alt') || '';
+      lbContent.appendChild(media);
+      lastFocused = document.activeElement;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+    function close() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (media && media.parentNode) media.parentNode.removeChild(media);
+      media = null;
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-lb]'), function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); open(a); });
+    });
+    lbClose.addEventListener('click', close);
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) close();
+    });
+  })();
+  </script>
+</body>
+</html>
