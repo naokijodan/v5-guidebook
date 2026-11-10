@@ -294,6 +294,44 @@
     overflow-x: auto;
     margin: 0;
   }
+  /* ---------- あなたがやるのは3つだけ ---------- */
+  .three-box {
+    background: linear-gradient(180deg, #f2fffa, #fff);
+    border: 3px solid rgba(43,212,160,0.55);
+    border-radius: 24px;
+    padding: 24px 22px 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 28px rgba(43,212,160,0.16);
+  }
+  .three-head { font-size: 20px; font-weight: 900; line-height: 1.5; color: #137a5a; text-align: center; margin-bottom: 14px; }
+  .three-big { font-size: 30px; color: #e8590c; margin: 0 4px; }
+  .three-list { list-style: none; margin: 0; padding: 0; }
+  .three-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+  .three-list li:last-child { margin-bottom: 0; }
+  .three-list .tn {
+    flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint), var(--sky));
+    color: #fff; font-weight: 900; font-size: 17px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .three-list li > div { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+  .copy-wrap { position: relative; }
+  .copy-btn {
+    display: block; margin: 10px 0 0 auto;
+    font: inherit; font-size: 14px; font-weight: 900;
+    padding: 10px 18px; border: 0; border-radius: 999px; cursor: pointer;
+    color: #fff; background: linear-gradient(135deg, var(--sky), var(--grape));
+    box-shadow: 0 6px 14px rgba(79,168,255,0.32);
+  }
+  .copy-btn:focus-visible { outline: 3px solid #4fa8ff; outline-offset: 2px; }
+  .manual-details .det-body { overflow-wrap: anywhere; }
+  @media (max-width: 560px) {
+    .three-box { padding: 20px 16px 16px; }
+    .three-head { font-size: 17px; }
+    .three-big { font-size: 25px; }
+    .three-list li { font-size: 14px; }
+  }
+
   /* 小さな注記 */
   .ic-note-small {
     margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.75;
@@ -542,61 +580,53 @@
       <div class="section-head">
         <span class="emoji">🎒</span>
         <h2>準備するもの</h2>
-        <p class="sub">はじめる前に、3つを用意します👇</p>
+        <p class="sub">むずかしい作業は、AIがやります👇</p>
       </div>
 
-      <div class="info-card">
-        <div class="ic-head">
-          <span class="ic-emoji peach" aria-hidden="true">🛠️</span>
-          <span class="ic-title">使えるAIツール</span>
-        </div>
-        <p>次のいずれかがあればOKです。</p>
-        <ul class="ic-list">
-          <li><span class="ui tool">Codex app</span></li>
-          <li><span class="ui tool">Codex CLI</span></li>
-          <li><span class="ui tool">Claude Code</span></li>
-          <li><span class="ui tool">Gemini CLI</span></li>
-        </ul>
-        <p class="guide-note">「Codex アプリ」の導入がまだの方へ。インストール手順は別ガイドにまとめています👇</p>
-        <a class="guide-btn" href="https://naokijodan.github.io/codex-app-guide/" target="_blank" rel="noopener">📘 Codexアプリ導入ガイドを見る →</a>
+      <!-- あなたがやるのは3つだけ -->
+      <div class="three-box">
+        <div class="three-head">あなたがやるのは<span class="three-big">3つだけ</span></div>
+        <ol class="three-list">
+          <li><span class="tn">1</span><div>使っているAI（<strong>Codexアプリ</strong> または <strong>Claude Code</strong>）に、下の<strong>1文をコピーして貼る</strong></div></li>
+          <li><span class="tn">2</span><div>ログインや「許可」の画面が出たら<strong>押す</strong>（パスワードを聞かれたら入れる）</div></li>
+          <li><span class="tn">3</span><div><strong>終わるまで待つ</strong></div></li>
+        </ol>
+        <p class="ic-note-small" style="margin-top:12px;">インストール・鍵の作成・MCPの登録・シートの共有・スキルの登録・動作確認は、すべてAIがやります。</p>
       </div>
 
       <div class="info-card" id="mcp-connect">
         <div class="ic-head">
-          <span class="ic-emoji sun" aria-hidden="true">🔌</span>
-          <span class="ic-title">MCP「google-sheets」の接続 ＝ ここがいちばん大事</span>
+          <span class="ic-emoji sun" aria-hidden="true">📋</span>
+          <span class="ic-title">①で貼る1文（コピーして使います）</span>
         </div>
-        <p>シートの読み込みと、翻訳結果の <span class="ui set">v5インポート</span> への書き戻しを担当するのが Google Sheets MCP です。これが無いと、AIは翻訳できてもシートに書き戻せません（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> や <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">認証エラー(401)</code> の原因はほぼこれ）。</p>
-
-        <ul class="role-list" style="margin-top:12px;">
-          <li>📊 <strong>Google Sheets MCP</strong> … シートの読み書き（本体）</li>
-          <li>🖼️ <strong>GAS（doGet）URL</strong> … 画像取得専用（書き込み機能なし）</li>
-        </ul>
-
-        <!-- ユーザーがやること -->
-        <div class="rec-box" style="margin-top:18px;background:linear-gradient(180deg,#f8fff8,#fff);border-color:rgba(43,212,160,0.45);">
-          <div class="rec-head" style="color:#137a5a;">✅ ユーザーがやることは基本3つ（環境により増えることがあります）</div>
-          <ol style="font-size:13.5px;line-height:1.9;margin:8px 0 0;padding:0 0 0 20px;">
-            <li>下の指示書全体をコピーして、自分のAI（Claude Code / Codex / Gemini）に貼り付ける</li>
-            <li>ブラウザが開いたらGoogleアカウントでログイン・承認する</li>
-            <li>AIが教えてくれるメールアドレスを、翻訳に使うスプレッドシートの「共有」に貼って「編集者」にする</li>
-          </ol>
-          <p class="ic-note-small" style="margin-top:10px;">💡 gcloud（Google公式ツール）やNode.jsがパソコンに入っていない場合、AIがインストールを案内することがあります。AIがコマンド実行の許可を求めたら「はい（Allow）」を選んでください。</p>
-          <p class="ic-note-small" style="margin-top:6px;">🔑 <strong>使うGoogleアカウントは個人アカウント（gmail.com）を推奨します。</strong>会社のGoogle Workspaceアカウントは、組織のセキュリティポリシーによって鍵の作成が禁止されている場合があります。</p>
+        <div class="copy-wrap">
+          <pre class="copy-pre" id="copyText">次のページを読んで、書いてある通りに全部セットアップしてください。私がするのはログインと許可だけです。
+https://raw.githubusercontent.com/naokijodan/v5-guidebook/main/ai-setup-guide.md
+翻訳に使うシートはこれです：（ここに自分のシートのURL）</pre>
+          <button type="button" class="copy-btn" id="copyBtn" data-target="copyText">📋 コピー</button>
         </div>
+        <p class="ic-note-small" style="margin-top:10px;">💡 最後の「（ここに自分のシートのURL）」を、翻訳に使うスプレッドシートのURLに書き換えてから貼ってください。</p>
+        <p class="ic-note-small" style="margin-top:6px;">🔑 <strong>使うGoogleアカウントは個人アカウント（gmail.com）を推奨します。</strong>会社のGoogle Workspaceアカウントは、組織のセキュリティポリシーによって鍵の作成が禁止されている場合があります。</p>
+        <p class="ic-note-small" style="margin-top:6px;">🔐 AIが作る鍵ファイル（JSON）はパスワードと同じ大切なファイルです。GitHubやSNS・チャットに貼らない、他人に渡さないでください。</p>
+        <p class="ic-note-small" style="margin-top:6px;">💡 AIがURLを開けない場合は、上のURLをブラウザで開き、表示された内容をすべてコピーしてAIに貼り付けてください。</p>
 
-        <!-- おすすめ枠：AIにURLを渡すだけ -->
-        <div class="rec-box" style="margin-top:14px;">
-          <div class="rec-head">👑 おすすめ：AIにこのURLを渡すだけ</div>
-          <p class="rec-lead">下のURLをコピーして、自分のAI（Claude Code / Codex / Gemini）に「このページを読んで、書いてある通りにセットアップして」と伝えるだけです。AIがURLの内容を読み取り、鍵作成からMCP接続までを代行します。</p>
-          <pre class="copy-pre">https://raw.githubusercontent.com/naokijodan/v5-guidebook/main/ai-setup-guide.md</pre>
-          <p class="ic-note-small" style="margin-top:8px;">💡 AIがURLを開けない（ネット制限など）場合は、上のURLをブラウザで開き、表示された内容をすべてコピーしてAIに貼り付けてください。</p>
-          <p class="ic-note-small" style="margin-top:6px;">🔐 鍵ファイル（JSON）はパスワードと同等の機密情報です。GitHubやSNS・チャットに貼らないでください。</p>
-        </div>
+        <details class="manual-details" style="margin-top:16px;">
+          <summary>🧭 Codex CLI / Gemini CLI を使う人へ</summary>
+          <div class="det-body">
+            <p style="font-size:13px;line-height:1.8;">この2つは、ブラウザを操作できません。そのため、<strong>シートの共有</strong>と<strong>スキル本文のコピー</strong>の2か所だけは、AIが1つずつ「これを押してください」とお願いしてきます。言われた1つを押して「できました」と返せばOKです。ほかの作業はAIがやります。</p>
+            <p style="font-size:13px;line-height:1.8;margin-top:8px;">ブラウザを操作できる <strong>Codexアプリ</strong> または <strong>Claude Code</strong>（Chrome拡張 Claude in Chrome あり）なら、このお願いも出ません。おすすめです。</p>
+          </div>
+        </details>
 
-        <!-- 各ツールのコマンド早見 -->
-        <p style="margin-top:20px;font-size:13.5px;line-height:1.8;font-weight:900;">各ツールのMCP登録コマンド早見</p>
-
+        <details class="manual-details">
+          <summary>🔧 AI・詳しい人向け：各ツールのMCP登録コマンド早見</summary>
+          <div class="det-body">
+            <p style="font-size:13px;line-height:1.8;margin-bottom:6px;">ふだんは見なくて大丈夫です。AIが自分で登録します。AIが迷ったときの確認用です。</p>
+            <p style="font-size:13px;line-height:1.8;margin-bottom:6px;">シートの読み込みと、翻訳結果の <span class="ui set">v5インポート</span> への書き戻しを担当するのが Google Sheets MCP です。これが無いと、AIは翻訳できてもシートに書き戻せません（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">unknown_action</code> や <code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">認証エラー(401)</code> の原因はほぼこれ）。</p>
+            <ul class="role-list" style="margin:8px 0 12px;">
+              <li>📊 <strong>Google Sheets MCP</strong> … シートの読み書き（本体）</li>
+              <li>🖼️ <strong>GAS（doGet）URL</strong> … 画像取得専用（書き込み機能なし）</li>
+            </ul>
         <details class="manual-details">
           <summary>🅱 Claude Code CLI のコマンド</summary>
           <div class="det-body">
@@ -668,7 +698,10 @@ GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
           </div>
         </details>
 
-        <div class="ic-note-small" style="margin-top:14px;">⚠️ どの方法でも、「Google Drive」ではなく「Google Sheets」（セル・行を書き込めるもの）を選んでください。Driveだけだと特定タブへの行の書き込みに対応していないことがあります。</div>
+
+            <div class="ic-note-small" style="margin-top:14px;">⚠️ どの方法でも、「Google Drive」ではなく「Google Sheets」（セル・行を書き込めるもの）を選んでください。Driveだけだと特定タブへの行の書き込みに対応していないことがあります。</div>
+          </div>
+        </details>
 
         <div class="ic-link-note">それでも書き込めないときは → <a href="#troubleshoot-write">下の「🆘 書き込めないとき」へ</a></div>
       </div>
@@ -689,7 +722,7 @@ GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
       <div class="section-head">
         <span class="emoji">⚙️</span>
         <h2>初期設定</h2>
-        <p class="sub">最初に一度だけ。順番にすすめれば大丈夫です😊</p>
+        <p class="sub">ここはAIが自動でやります。あなたの作業は、下の「翻訳設定（任意）」だけです😊</p>
       </div>
 
       <div class="video-btn-wrap"><button class="video-btn" data-video="videos/06_ex_setup.mp4">▶ 動画で見る</button></div>
@@ -697,52 +730,27 @@ GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
       <div class="steps">
 
         <div class="step s1">
-          <span class="num" aria-hidden="true">1</span>
-          <div class="st-title">スプレッドシートの共有設定を変える</div>
-          <p><strong>外部のAIツール（サービスアカウント）に読み取り・書き込みをさせるため</strong>、最初に一度だけシートの共有設定を変えます。メニュー <span class="ui set">ファイル</span> → <span class="ui">共有</span> → <span class="ui">他のユーザーと共有</span> を開きます。</p>
-          <p>共有ダイアログの入力欄に、<strong>AIが作った鍵ファイルに書かれているサービスアカウントのメールアドレス</strong>（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">〜@〜.iam.gserviceaccount.com</code>）を貼り付け、権限を <span class="pick">編集者</span> にして <span class="ui">送信</span> を押します。</p>
-          <p class="ic-note-small" style="margin-top:6px;">💡 サービスアカウントのメールアドレスの確認方法など詳細は、上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」をご覧ください。</p>
+          <span class="num" aria-hidden="true">🤖</span>
+          <div class="st-title">AIがやること（参考）</div>
+          <p>ここは、<strong>あなたの作業ではありません</strong>。AIが自分で行います。どんなことをしているのかを知りたい人向けの説明です。ログインや「許可」の画面が出たときだけ押してください。</p>
+          <div class="st-sub">
+            <span class="opt-h">AIがしてくれること</span>
+            <ul>
+              <li><strong>シートの共有：</strong>AIがシートを開き、<span class="ui set">共有</span> にサービスアカウントのメールアドレス（<code style="font-size:12px;background:rgba(58,50,69,0.06);padding:1px 5px;border-radius:5px;font-family:ui-monospace,monospace;">〜@〜.iam.gserviceaccount.com</code>）を入れ、権限を <span class="pick">編集者</span> にして <span class="ui">送信</span> します。</li>
+              <li><strong>スキル本文の入手：</strong>シートのメニュー <span class="ui set">🌐 eBay 翻訳 (AI)</span> → <span class="ui">📄 スキル本文をダウンロード</span> から本文を取り出します。<span class="ui path">===（ここから下をコピーしてスキルに登録）===</span> より下だけを使います。最終チェック文（ebay-final-check.txt）も一緒に保存します。</li>
+              <li><strong>スキルの登録：</strong><span class="ui tool">Codex app</span> は Skills、<span class="ui tool">Claude Code</span> は <span class="ui path">~/.claude/skills/ebay-translation/SKILL.md</span>、<span class="ui tool">Gemini CLI</span> は skill フォルダに登録します。</li>
+            </ul>
+          </div>
           <div class="shot-row">
             <div class="shot-slot has-img" data-img="images/ex-15.jpg" data-alt="ファイル→共有→他のユーザーと共有を開き、サービスアカウントのメールアドレスを入力して編集者で共有する">📷 ①共有を開く</div>
+            <div class="shot-slot has-img" data-img="images/ex-01.jpg" data-alt="メニュー「eBay 翻訳 (AI)→スキル本文をダウンロード」を開く">📷 ①メニューを開く</div>
+            <div class="shot-slot has-img" data-img="images/ex-02.jpg" data-alt="「ファイルとしてダウンロード」または「クリップボードにコピー」を押す（どちらでもOK）">📷 ②DL／コピー</div>
+            <div class="shot-slot has-img" data-img="images/ex-03.jpg" data-alt="コピーした本文をCodexに貼り付けると、スキルを作ってくれる">📷 ③登録</div>
           </div>
         </div>
 
         <div class="step s2">
           <span class="num" aria-hidden="true">2</span>
-          <div class="st-title">スキル本文を入手</div>
-          <p>シートのメニュー <span class="ui set">🌐 eBay 翻訳 (AI)</span> →　<span class="ui">📄 スキル本文をダウンロード</span> を開き、<span class="ui">📥 ファイルとしてダウンロード</span> または <span class="ui">📋 クリップボードにコピー</span> を押します。</p>
-          <div class="st-sub">
-            📌 本文中の <span class="ui path">===（ここから下をコピーしてスキルに登録）===</span> より<strong>下</strong>を登録に使います。上は人向けの変更履歴なので、登録は不要です。
-          </div>
-          <div class="st-sub">
-            📋 同じ画面の下に <span class="ui">最終チェック文をダウンロード（ebay-final-check.txt）</span> もあります。<strong>これも保存しておく</strong>と、翻訳のあとの再チェック（基本の使い方の手順6）に使えます。
-          </div>
-          <div class="shot-row">
-            <div class="shot-slot has-img" data-img="images/ex-01.jpg" data-alt="メニュー「eBay 翻訳 (AI)→スキル本文をダウンロード」を開く">📷 ①メニューを開く</div>
-            <div class="shot-slot has-img" data-img="images/ex-02.jpg" data-alt="「ファイルとしてダウンロード」または「クリップボードにコピー」を押す（どちらでもOK）">📷 ②DL／コピー</div>
-          </div>
-        </div>
-
-        <div class="step s3">
-          <span class="num" aria-hidden="true">3</span>
-          <div class="st-title">AIにスキルとして登録</div>
-          <p>お使いのAIに合わせて、本文を登録します。</p>
-          <div class="st-sub">
-            <span class="opt-h">登録のしかた</span>
-            <ul>
-              <li><span class="ui tool">Codex app</span>：<span class="ui">Skills</span> 設定で新規Skillを作成し、本文を貼り付け</li>
-              <li><span class="ui tool">Claude Code</span>：<span class="ui path">~/.claude/skills/ebay-translation/SKILL.md</span> に保存</li>
-              <li><span class="ui tool">Gemini CLI</span>：skillフォルダに配置（対応）</li>
-            </ul>
-          </div>
-          <p>コピーした本文を <strong>AIに渡すと、スキルを作ってくれます</strong>（Codex app なら貼り付けて実行するだけ）。</p>
-          <div class="shot-row">
-            <div class="shot-slot has-img" data-img="images/ex-03.jpg" data-alt="コピーした本文をCodexに貼り付けると、スキルを作ってくれる">📷 画像</div>
-          </div>
-        </div>
-
-        <div class="step s4">
-          <span class="num" aria-hidden="true">4</span>
           <div class="st-title">翻訳設定（任意）</div>
           <p>メニュー <span class="ui set">⚙️ 設定</span> で、こまかい動きを保存できます。<strong>基本は規定値のままでOK</strong>です。</p>
           <div class="st-sub">
@@ -969,7 +977,7 @@ GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
 
         <div class="warn">
           <div class="w-title"><span aria-hidden="true">🛠️</span>直し方</div>
-          <p>上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">🔌 MCP「google-sheets」の接続</a>」に戻って、AIにMCPを接続してください。いちばん簡単なのは、そこにある「👑 おすすめ：下の指示書をそのままAIに渡すだけ」の指示書全体をコピーして、お使いのAIに貼り付ける方法です。AIが自動でサービスアカウントの作成から鍵ファイル生成・MCPの登録まで案内してくれます。最後にAIが教えてくれるメールアドレスを、スプレッドシートの「共有」→「編集者」で追加すれば完了です。</p>
+          <p>上の「<a href="#mcp-connect" style="color:#b07d00;font-weight:800;text-decoration:none;">📋 ①で貼る1文</a>」をコピーして、お使いのAIに貼り付けてください。「次のページを読んで、書いてある通りに全部セットアップしてください」と頼めば、AIがサービスアカウントの作成・鍵ファイルの生成・MCPの登録・シートの共有までをやり直します。あなたがするのは、ログインや「許可」を押すだけです。</p>
         </div>
 
         <div class="warn safe">
@@ -1198,6 +1206,29 @@ GOOGLE_PROJECT_ID = "&lt;ProjectID&gt;"</pre>
     </div>
   </div>
 
+  <script>
+  (function () {
+    var btn = document.getElementById('copyBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      var text = el ? el.innerText : '';
+      function done(ok) {
+        btn.textContent = ok ? '✅ コピーしました' : '手動で選択してコピーしてください';
+        setTimeout(function () { btn.textContent = '📋 コピー'; }, 2500);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else {
+        try {
+          var r = document.createRange(); r.selectNodeContents(el);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          done(document.execCommand('copy'));
+        } catch (e) { done(false); }
+      }
+    });
+  })();
+  </script>
   <script>
   (function () {
     var lightbox = document.getElementById('lightbox');
