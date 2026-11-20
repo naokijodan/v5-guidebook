@@ -432,6 +432,47 @@
   @media (prefers-reduced-motion: reduce) {
     .lightbox .lb-nav { transition: none; }
   }
+
+  /* ---------- SKU自動付与（sku-auto）追加スタイル ---------- */
+  .ui {
+    display: inline-block; font-size: 12.5px; font-weight: 800;
+    background: rgba(79,168,255,0.14); color: #2f7fd1;
+    padding: 1px 9px; border-radius: 8px; white-space: nowrap; line-height: 1.7;
+  }
+  .sku-lead { font-size: 15px; line-height: 1.9; color: var(--ink); margin-bottom: 18px; }
+  .sku-form { background: var(--card); border-radius: 24px; padding: 24px 20px; box-shadow: 0 10px 26px rgba(160,140,120,0.12); border: 2px solid rgba(0,0,0,0.04); margin-bottom: 22px; }
+  .sku-form .sf-eyebrow { display: block; text-align: center; font-size: 12.5px; font-weight: 800; color: var(--ink-soft); margin-bottom: 12px; }
+  .sku-blocks { display: flex; align-items: stretch; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .sku-block { border-radius: 16px; padding: 12px 18px; text-align: center; min-width: 120px; }
+  .sku-block .sb-code { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 24px; font-weight: 900; line-height: 1.4; }
+  .sku-block .sb-name { display: block; font-size: 12.5px; font-weight: 800; margin-top: 2px; }
+  .sku-block.b1 { background: rgba(255,201,77,0.28); color: #8a5a00; }
+  .sku-block.b2 { background: rgba(79,168,255,0.18); color: #1f66b3; }
+  .sku-block.b3 { background: rgba(43,212,160,0.2); color: #0d7a59; }
+  .sku-plus, .sku-eq { align-self: center; font-size: 22px; font-weight: 900; color: var(--ink-soft); }
+  .sku-result { text-align: center; margin: 14px 0 4px; }
+  .sku-result code { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 22px; font-weight: 900; background: var(--cream); border: 2px dashed rgba(255,138,101,0.5); border-radius: 14px; padding: 6px 18px; color: var(--ink); word-break: break-all; }
+  .sku-meaning { font-size: 14px; line-height: 1.85; color: var(--ink); margin-top: 12px; }
+  .sku-meaning .sku-ex { display: inline-block; font-size: 12px; font-weight: 800; background: rgba(255,138,101,0.16); color: #c4553a; padding: 1px 10px; border-radius: 999px; margin-right: 6px; }
+  .sku-ideas { margin-top: 20px; }
+  .sku-ideas .caution .c-example { display: inline-block; margin-top: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; font-weight: 800; background: var(--cream); border-radius: 10px; padding: 3px 12px; color: var(--ink); }
+  .sku-ideas-head { font-size: 15px; font-weight: 800; margin: 26px 0 12px; }
+  .sku-check { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 26px rgba(160,140,120,0.12); border: 2px solid rgba(0,0,0,0.04); }
+  .sku-check th, .sku-check td { padding: 13px 16px; font-size: 14px; line-height: 1.75; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .sku-check th { background: rgba(255,201,77,0.2); font-weight: 800; font-size: 13px; }
+  .sku-check tr:last-child td { border-bottom: none; }
+  .sku-check .ck-ng { font-weight: 800; white-space: nowrap; }
+  .sku-note { font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; margin-top: 14px; }
+  @media (max-width: 600px) {
+    .sku-blocks { flex-wrap: nowrap; gap: 4px; }
+    .sku-block { min-width: 0; flex: 1 1 0; padding: 10px 4px; }
+    .sku-block .sb-code { font-size: 14px; letter-spacing: -0.02em; }
+    .sku-block .sb-name { font-size: 11.5px; }
+    .sku-plus { font-size: 16px; flex: 0 0 auto; }
+    .sku-result code { font-size: 17px; }
+    .sku-check th, .sku-check td { padding: 10px 10px; font-size: 13px; }
+    .sku-check .ck-ng { white-space: normal; }
+  }
 </style>
 <link rel="stylesheet" href="videos/video-modal.css">
 </head>
@@ -611,7 +652,7 @@
             <ul class="setlist">
               <li><b>送料</b>：EP送料・CE送料・CF/CD送料の3種類を入力</li>
               <li><b>参考eBay ID</b>：将来カテゴリIDに変わると不要。今はここに入力する</li>
-              <li><b>SKU略称</b>：タグごとでも自由な形でもOK。空欄でもよい</li>
+              <li><b>SKU略称</b>：タグごとでも自由な形でもOK。空欄でもよい <a href="#sku-auto">→ SKUを自動で付ける</a></li>
               <li><b>テンプレート名</b><span class="must">必須</span>：このタグに使うテンプレートをドロップダウンから選ぶ</li>
               <li><b>送料上限カテゴリ</b>：必ず正しく選ぶ（例：ゲーム など）。ここで<b>O列「想定関税閾値」</b>が決まる</li>
               <li><b>利益率・広告費率・手数料率</b>：任意の値。カテゴリごと／販売価格ごとの利益率・広告比率を調整できる（タグ名の工夫で）</li>
@@ -628,6 +669,144 @@
           </span>
         </div>
 
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKUを自動で付ける ========== -->
+  <section id="sku-auto">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="emoji">🔖</span>
+        <h2>SKUを自動で付ける</h2>
+      </div>
+
+      <p class="sku-lead">V5シートは、ボタン1つでSKU（作業シートの <span class="ui">label</span> 列）を自動で付けられます。</p>
+      <p class="sku-note" style="margin-top:-8px; margin-bottom:18px;">すでに出品している商品に付けたいときは → <a href="#sku-existing">こちら</a></p>
+
+      <div class="sku-form">
+        <span class="sf-eyebrow">🧩 SKUの形（これは「例」です）</span>
+        <div class="sku-blocks">
+          <div class="sku-block b1"><span class="sb-code">ad12an</span><span class="sb-name">頭文字</span></div>
+          <span class="sku-plus" aria-hidden="true">＋</span>
+          <div class="sku-block b2"><span class="sb-code">261120</span><span class="sb-name">年月日</span></div>
+          <span class="sku-plus" aria-hidden="true">＋</span>
+          <div class="sku-block b3"><span class="sb-code">001</span><span class="sb-name">何個目</span></div>
+        </div>
+        <div class="sku-result"><span class="sku-eq" aria-hidden="true">＝</span> <code>ad12an261120001</code></div>
+        <p class="sku-meaning"><span class="sku-ex">例</span>「頭文字 ad12an」で、日付が「2026年11月20日」の「1個目」の商品、という意味です。年月日は作業シートの「日付」（A列）から入ります。空のときは、ボタンを押した日になります。同じ頭文字・同じ日で続けて作ると、末尾が <strong>002、003…</strong> と増えます。</p>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <span class="num" aria-hidden="true">1</span>
+          <span class="st-body">
+            <span class="st-title">🏷️ タグごとに「頭文字」を入れる</span>
+            <span class="st-text">「TagShipping」シートの<strong>F列「SKU略称」</strong>に、タグごとに頭文字を入れます。<strong>半角の英数字</strong>で入れてください。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/sku-01.jpg" data-alt="TagShipping シートのF列『SKU略称』にタグごとの頭文字を入れる">📷 画像①（SKU略称を入れる列）</div>
+            </div>
+          </span>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">2</span>
+          <span class="st-body">
+            <span class="st-title">🔘 ボタンを押してSKUを付ける</span>
+            <span class="st-text">作業シートで、SKUを付けたい行を選んで（範囲指定して）、左上の <span class="ui">翻訳orSKU</span> ボタンを押します。<strong>label列（C列）</strong>にSKUが入ります。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/sku-02.jpg" data-alt="作業シートで行を範囲指定し、左上の「翻訳orSKU」ボタンを押す">📷 画像②（翻訳orSKUボタン）</div>
+            </div>
+          </span>
+        </div>
+
+      </div>
+
+      <p class="sku-ideas-head">💡 頭文字の使い方のアイデア（自由にアレンジできます）</p>
+      <div class="cautions sku-ideas">
+        <div class="caution">
+          <span class="c-emoji" aria-hidden="true">🗂️</span>
+          <span class="c-title">カテゴリごとに分ける</span>
+          <span class="c-text">ジャンルごとに頭文字を変えて、あとで見分けやすくします。</span>
+          <span class="c-example">例：wt（時計）</span>
+        </div>
+        <div class="caution">
+          <span class="c-emoji" aria-hidden="true">🧑‍💼</span>
+          <span class="c-title">外注さんの名前（担当者）で分ける</span>
+          <span class="c-text">担当者ごとに頭文字を決めると、誰が作った商品かが分かります。</span>
+        </div>
+        <div class="caution">
+          <span class="c-emoji" aria-hidden="true">📣</span>
+          <span class="c-title">広告比率で分ける</span>
+          <span class="c-text">広告の比率ごとに頭文字を変える使い方もできます。</span>
+          <span class="c-example">例：ad12</span>
+        </div>
+      </div>
+
+      <p class="sku-ideas-head">🔍 SKUが付かないときの確認</p>
+      <table class="sku-check">
+        <thead><tr><th>こんなとき</th><th>こうします</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ck-ng">❌ その行のタグ（作業シートD列）が空</span></td><td>⭕️ タグを選びます</td></tr>
+          <tr><td><span class="ck-ng">❌ そのタグの「SKU略称」が空</span></td><td>⭕️ TagShippingのF列に頭文字を入れます</td></tr>
+          <tr><td><span class="ck-ng">❌ 頭文字に半角英数字以外（日本語・記号・空白）が入っている</span></td><td>⭕️ 半角英数字に直します</td></tr>
+          <tr><td><span class="ck-ng">❌ label列にすでに値が入っている行</span></td><td>⭕️ 上書きされません（自分で入れたSKUはそのまま残ります）。付け直したいときは label を空にしてからボタンを押します</td></tr>
+        </tbody>
+      </table>
+      <p class="sku-note">📌 頭文字を大文字で入れても、SKUでは小文字になります。</p>
+
+      <p class="sku-ideas-head" id="sku-existing">📦 すでに出品している商品にSKUを付ける</p>
+      <p class="sku-lead">すでに出品している商品は、EAGLEの「データ一括更新」でSKUをまとめて付けられます。出品し直す必要はありません。</p>
+
+      <div class="steps">
+
+        <div class="step">
+          <span class="num" aria-hidden="true">1</span>
+          <span class="st-body">
+            <span class="st-title">🔎 SKUが空の商品を集める</span>
+            <span class="st-text">EAGLEの「出品管理」で、一覧の見出し<span class="ui">custom_label (SKU)</span>を押すと、SKUの順に並び替わります。SKUが入っていない商品がひとかたまりになります。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/sku-03.jpg" data-alt="EAGLE出品管理の一覧。見出し『custom_label (SKU)』を押して並び替えると、SKUが空の商品がまとまる">📷 画像（SKUで並び替え）</div>
+            </div>
+          </span>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">2</span>
+          <span class="st-body">
+            <span class="st-title">⬇️ 更新用のデータをダウンロードする</span>
+            <span class="st-text">SKUを付けたい商品にチェックを入れ、ダウンロードの設定で、フォーマットは<span class="ui">更新用フォーマット</span>、範囲は<span class="ui">チェックのみ</span>を選んで、<span class="ui">ダウンロード</span>を押します。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/sku-04.jpg" data-alt="ダウンロードの設定。フォーマットは『更新用フォーマット』、範囲は『チェックのみ』を選んで『ダウンロード』を押す">📷 画像（ダウンロードの設定）</div>
+            </div>
+          </span>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">3</span>
+          <span class="st-body">
+            <span class="st-title">✏️ H列にSKUを書く</span>
+            <span class="st-text">ダウンロードしたファイルの<strong>H列「custom_label」</strong>に、付けたいSKUを書き込みます。SKUは自由に決められます。ほかの列は変えません。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/sku-05.jpg" data-alt="ダウンロードしたファイルのH列『custom_label』にSKUを書き込む">📷 画像（H列にSKU）</div>
+            </div>
+          </span>
+        </div>
+
+        <div class="step">
+          <span class="num" aria-hidden="true">4</span>
+          <span class="st-body">
+            <span class="st-title">📋 EAGLEに貼り付けて登録する</span>
+            <span class="st-text">EAGLEのホームから<span class="ui">データ一括更新</span>を開き、<span class="ui">新規作成</span>を押します。「登録内容」の欄に、ファイルのデータの行をコピーして貼り付け、<span class="ui">登録完了</span>を押せば終わりです。</span>
+            <div class="shot-row">
+              <div class="shot-slot has-img" data-img="images/sku-06.jpg" data-alt="EAGLEのホームで『データ一括更新』を開く">📷 画像①（データ一括更新を開く）</div>
+              <div class="shot-slot has-img" data-img="images/sku-07.jpg" data-alt="データ一括更新の一覧で『新規作成』を押す">📷 画像②（新規作成）</div>
+              <div class="shot-slot has-img" data-img="images/sku-08.jpg" data-alt="『登録内容』の欄にデータの行を貼り付けて『登録完了』を押す">📷 画像③（貼り付けて登録完了）</div>
+            </div>
+          </span>
+        </div>
 
       </div>
     </div>
